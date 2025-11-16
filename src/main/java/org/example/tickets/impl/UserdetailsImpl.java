@@ -2,7 +2,7 @@ package org.example.tickets.impl;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.example.hairsalon.model.User;
+import org.example.tickets.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
