@@ -5,19 +5,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Видео по уходу за волосами | Парикмахерская "Элегант"</title>
+    <title>Поезда | Железнодорожные перевозки</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #6a4c93;
-            --secondary-color: #8a5a44;
-            --accent-color: #f8bbd0;
-            --light-color: #f9f9f9;
-            --dark-color: #333;
-            --sidebar-width: 280px;
-            --sidebar-collapsed-width: 80px;
-            --transition-speed: 0.3s;
+            --purple: #8A2BE2;
+            --dark-purple: #6A1B9A;
+            --light-purple: #E6E6FA;
+            --ivory: #FFFFF0;
+            --charcoal: #36454F;
+            --slate: #708090;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --danger: #F44336;
         }
 
         * {
@@ -28,153 +29,111 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #f5f7fa;
-            color: var(--dark-color);
-            overflow-x: hidden;
-            transition: all var(--transition-speed) ease;
+            background-color: var(--ivory);
+            color: var(--charcoal);
+            line-height: 1.6;
         }
 
-        /* Сайдбар */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;
-            width: var(--sidebar-width);
-            background: linear-gradient(180deg, var(--primary-color) 0%, #5a3d7d 100%);
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
-            transition: width var(--transition-speed) ease;
-            z-index: 1000;
-            overflow: hidden;
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
         }
 
-        .sidebar.collapsed {
-            width: var(--sidebar-collapsed-width);
+        .admin-sidebar {
+            background: linear-gradient(to bottom, #FFFFFF, #F8F8F8);
+            box-shadow: 5px 0 15px rgba(0,0,0,0.05);
+            border-right: 1px solid rgba(138, 43, 226, 0.3);
         }
 
-        .sidebar-header {
+        .admin-header {
+            padding: 30px 25px;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .admin-title {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 20px;
-            height: 80px;
-            background-color: rgba(0, 0, 0, 0.1);
+            font-family: 'Playfair Display', serif;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            color: white;
-            text-decoration: none;
-            font-size: 1.5rem;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .logo-icon {
+        .admin-title i {
             font-size: 2rem;
             margin-right: 15px;
-            color: var(--accent-color);
+            color: var(--purple);
         }
 
-        .logo-text {
-            opacity: 1;
-            transition: opacity var(--transition-speed);
-        }
-
-        .sidebar.collapsed .logo-text {
-            opacity: 0;
-        }
-
-        .toggle-btn {
-            background: none;
-            border: none;
-            color: white;
+        .admin-title h1 {
             font-size: 1.5rem;
-            cursor: pointer;
-            transition: transform var(--transition-speed);
+            font-weight: 600;
+            color: var(--charcoal);
+            position: relative;
         }
 
-        .sidebar.collapsed .toggle-btn {
-            transform: rotate(180deg);
-        }
-
-        .nav-links {
-            padding: 20px 0;
-            height: calc(100vh - 80px);
-            overflow-y: auto;
+        .admin-title h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--purple);
         }
 
         .nav-item {
-            list-style: none;
             margin-bottom: 5px;
-            padding: 0 15px;
         }
 
         .nav-link {
             display: flex;
             align-items: center;
-            padding: 15px 20px;
-            color: rgba(255, 255, 255, 0.8);
+            padding: 14px 20px;
+            color: var(--slate);
             text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s;
-            white-space: nowrap;
-        }
-
-        .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-
-        .nav-link.active {
-            background-color: var(--accent-color);
-            color: var(--primary-color);
+            border-radius: 4px;
+            transition: all 0.3s ease;
             font-weight: 500;
         }
 
-        .nav-icon {
-            font-size: 1.3rem;
-            margin-right: 20px;
-            min-width: 24px;
+        .nav-link:hover {
+            background: rgba(138, 43, 226, 0.1);
+            color: var(--charcoal);
+            transform: translateX(5px);
+        }
+
+        .nav-link.active {
+            background: rgba(138, 43, 226, 0.15);
+            color: var(--charcoal);
+            border-left: 3px solid var(--purple);
+            font-weight: 600;
+        }
+
+        .nav-link i {
+            width: 24px;
+            margin-right: 12px;
+            color: var(--purple);
             text-align: center;
         }
 
-        .nav-text {
-            opacity: 1;
-            transition: opacity var(--transition-speed);
+        .admin-content {
+            padding: 40px;
+            background-color: #FFF;
         }
 
-        .sidebar.collapsed .nav-text {
-            opacity: 0;
-        }
-
-        /* Основное содержимое */
-        .main-content {
-            margin-left: var(--sidebar-width);
-            padding: 30px;
-            min-height: 100vh;
-            transition: margin-left var(--transition-speed);
-        }
-
-        .sidebar.collapsed ~ .main-content {
-            margin-left: var(--sidebar-collapsed-width);
-        }
-
-        /* Заголовок */
-        .header {
+        .page-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
             padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.2);
         }
 
         .page-title {
             font-family: 'Playfair Display', serif;
             font-size: 1.8rem;
-            color: var(--primary-color);
+            color: var(--charcoal);
             position: relative;
         }
 
@@ -185,7 +144,29 @@
             left: 0;
             width: 60px;
             height: 2px;
-            background: var(--primary-color);
+            background: var(--purple);
+        }
+
+        .info-card {
+            background: #FFF;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--purple);
+        }
+
+        .info-card h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--charcoal);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .info-card p {
+            color: var(--slate);
+            line-height: 1.8;
+            margin-bottom: 15px;
         }
 
         .data-table {
@@ -200,13 +181,12 @@
         }
 
         .data-table th {
-            background: var(--primary-color);
+            background: var(--purple);
             color: #fff;
             padding: 15px 20px;
             text-align: left;
             font-weight: 500;
             font-family: 'Playfair Display', serif;
-            text-transform: uppercase;
         }
 
         .data-table td {
@@ -220,7 +200,7 @@
         }
 
         .data-table tr:hover td {
-            background: rgba(106, 76, 147, 0.1);
+            background: rgba(138, 43, 226, 0.1);
             transition: background-color 0.3s ease;
         }
 
@@ -228,109 +208,44 @@
             background: #f9f9f9;
         }
 
-        .data-table td:first-child,
-        .data-table th:first-child {
-            border-radius: 8px 0 0 8px;
-        }
-
-        .data-table td:last-child,
-        .data-table th:last-child {
-            border-radius: 0 8px 8px 0;
-        }
-
-        .action-btn {
-            background-color: var(--accent-color);
-            color: var(--primary-color);
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .action-btn:hover {
-            background-color: var(--secondary-color);
-            color: #fff;
-        }
-
-
-
-
-        .action-btn i {
-            margin-right: 5px;
-        }
-
-        /* Адаптивность */
         @media (max-width: 992px) {
-            .sidebar {
-                width: var(--sidebar-collapsed-width);
+            .admin-layout {
+                grid-template-columns: 1fr;
             }
 
-            .sidebar .logo-text,
-            .sidebar .nav-text {
-                opacity: 0;
-            }
-
-            .main-content {
-                margin-left: var(--sidebar-collapsed-width);
-            }
-
-            .sidebar:hover {
-                width: var(--sidebar-width);
-            }
-
-            .sidebar:hover .logo-text,
-            .sidebar:hover .nav-text {
-                opacity: 1;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 0;
-            }
-
-            .main-content {
-                margin-left: 0;
-                padding: 20px;
+            .admin-sidebar {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
-<!-- Боковая панель -->
-<div class="sidebar">
-    <div class="sidebar-header">
-        <a href="/" class="logo">
-            <i class="fas fa-scissors logo-icon"></i>
-            <span class="logo-text">Элегант</span>
-        </a>
-        <button class="toggle-btn" onclick="toggleSidebar()">
-            <i class="fas fa-angle-left"></i>
-        </button>
+<div class="admin-layout">
+    <div class="admin-sidebar">
+        <div class="admin-header">
+            <div class="admin-title">
+                <i class="fas fa-train"></i>
+                <h1>ЖД-Портал</h1>
+            </div>
     </div>
 
     <ul class="nav-links">
         <li class="nav-item">
-            <a href="${pageContext.request.contextPath}/serviceUser" class="nav-link">
-                <i class="fas fa-cut nav-icon"></i>
-                <span class="nav-text">Услуги</span>
+            <a href="${pageContext.request.contextPath}/userHome" class="nav-link">
+                <i class="fas fa-user nav-icon"></i>
+                <span class="nav-text">Профиль</span>
             </a>
         </li>
         <li class="nav-item">
-            <a href="${pageContext.request.contextPath}/userMaster" class="nav-link active">
-                <i class="fas fa-user-tie nav-icon"></i>
-                <span class="nav-text">Мастера</span>
+            <a href="${pageContext.request.contextPath}/serviceUser" class="nav-link">
+                <i class="fas fa-route nav-icon"></i>
+                <span class="nav-text">Маршруты</span>
             </a>
         </li>
         <li class="nav-item">
             <a href="${pageContext.request.contextPath}/booking" class="nav-link">
-                <i class="fas fa-calendar-check nav-icon"></i>
-                <span class="nav-text">Запись</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="${pageContext.request.contextPath}/video" class="nav-link">
-                <i class="fas fa-spa nav-icon"></i>
-                <span class="nav-text">Уход за волосами</span>
+                <i class="fas fa-ticket-alt nav-icon"></i>
+                <span class="nav-text">Мои билеты</span>
             </a>
         </li>
         <li class="nav-item">
@@ -339,14 +254,7 @@
                 <span class="nav-text">Отзывы</span>
             </a>
         </li>
-
         <li class="nav-item" style="margin-top: 30px;">
-            <a href="${pageContext.request.contextPath}/userHome" class="nav-link">
-                <i class="fas fa-user nav-icon"></i>
-                <span class="nav-text">Профиль</span>
-            </a>
-        </li>
-        <li class="nav-item">
             <a href="javascript:void(0);" class="nav-link" onclick="logout()">
                 <i class="fas fa-sign-out-alt nav-icon"></i>
                 <span class="nav-text">Выход</span>
@@ -355,69 +263,75 @@
     </ul>
 </div>
 
-<!-- Основное содержимое -->
-<div class="main-content">
-    <div class="header">
-        <h2 class="page-title">Мастера "Элегант"</h2>
+    <div class="admin-content">
+        <div class="page-header">
+            <h2 class="page-title">Поезда</h2>
     </div>
 
-    <div class="about-section" style="background-color: var(--light-color); padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
-        <h3 style="font-family: 'Playfair Display', serif; color: var(--primary-color); margin-bottom: 10px;">Лучшие мастера</h3>
-        <p style="font-size: 1rem; line-height: 1.6; color: var(--dark-color);">
-            Добро пожаловать в наш салон красоты! Наши мастера — это профессионалы с многолетним опытом,
-            которые знают все тонкости своего дела. Мы предлагаем высококачественные услуги по уходу за волосами,
-            используя только проверенные материалы и современные техники.
+        <div class="info-card">
+            <h3><i class="fas fa-train" style="color: var(--purple); margin-right: 10px;"></i>Наш парк поездов</h3>
+            <p>
+                Мы предлагаем современный и комфортабельный подвижной состав для ваших путешествий. 
+                Наши поезда оснащены всеми необходимыми удобствами для комфортной поездки.
         </p>
-        <p style="font-size: 1rem; line-height: 1.6; color: var(--dark-color);">
-            Мы гарантируем индивидуальный подход к каждому клиенту, чтобы вы остались довольны результатом.
-            Доверьтесь нам — и ваш стиль станет воплощением элегантности!
+            <p>
+                Каждый поезд проходит регулярное техническое обслуживание и соответствует всем стандартам безопасности. 
+                Выберите подходящий поезд для вашего маршрута!
         </p>
     </div>
 
     <table class="data-table">
         <thead>
         <tr>
-            <th>Имя</th>
-            <th>Специализация</th>
-            <th>Стаж</th>
+                <th>Номер поезда</th>
+                <th>Тип</th>
+                <th>Количество мест</th>
         </tr>
         </thead>
-        <tbody id="mastersTableBody">
+            <tbody id="trainsTableBody">
         <!-- Данные будут загружены с помощью JavaScript -->
         </tbody>
     </table>
+    </div>
 </div>
 
 <script>
-    async function loadMasters() {
-        const response = await fetch('/api/masters');
-        const masters = await response.json();
+    async function loadTrains() {
+        try {
+            const response = await fetch('/api/trains');
+            if (!response.ok) throw new Error('Ошибка загрузки данных');
+            const trains = await response.json();
 
-        const tableBody = document.getElementById('mastersTableBody');
-        tableBody.innerHTML = ''; // Очищаем таблицу
+            const tableBody = document.getElementById('trainsTableBody');
+            tableBody.innerHTML = '';
 
-        masters.forEach(master => {
+            if (trains.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: 30px; color: var(--slate);">Поезда не найдены</td></tr>';
+                return;
+            }
+
+            trains.forEach(train => {
             const row = document.createElement('tr');
             row.innerHTML =
-                '<td>' + master.fullName + '</td>' +
-                '<td>' + master.specialization + '</td>' +
-                '<td>' + master.experience + '</td>';
+                    '<td>' + (train.trainNumber || train.number || 'N/A') + '</td>' +
+                    '<td>' + (train.type || 'Стандарт') + '</td>' +
+                    '<td>' + (train.totalSeats || train.seats || 'N/A') + '</td>';
             tableBody.appendChild(row);
         });
+        } catch (error) {
+            console.error('Ошибка загрузки поездов:', error);
+            document.getElementById('trainsTableBody').innerHTML = 
+                '<tr><td colspan="3" style="text-align: center; padding: 30px; color: var(--danger);">Ошибка загрузки данных</td></tr>';
+        }
     }
 
-    document.addEventListener('DOMContentLoaded', loadMasters);
+    document.addEventListener('DOMContentLoaded', loadTrains);
 
     function logout() {
-        // Удаляем токен из localStorage (или sessionStorage, cookies)
-        localStorage.removeItem("jwtToken");  // Для localStorage
-        sessionStorage.removeItem("jwtToken");  // Для sessionStorage
-
-        // Также можно удалить cookie (если хранится в cookies)
+        localStorage.removeItem("jwtToken");
+        sessionStorage.removeItem("jwtToken");
         document.cookie = "jwtToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-
-        // Перенаправляем пользователя на страницу входа
-        window.location.href = "/home";  // Замените "/login" на нужный URL
+        window.location.href = "/home";
     }
 </script>
 </body>

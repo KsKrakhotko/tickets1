@@ -4,18 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вход | Парикмахерская "Элегант"</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Вход | Железнодорожные перевозки</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #6a4c93;
-            --secondary-color: #8a5a44;
-            --accent-color: #f8bbd0;
-            --light-color: #f9f9f9;
-            --dark-color: #333;
-            --error-color: #ff4444;
-            --success-color: #00C851;
+            --purple: #8A2BE2;
+            --dark-purple: #6A1B9A;
+            --light-purple: #E6E6FA;
+            --ivory: #FFFFF0;
+            --charcoal: #36454F;
+            --slate: #708090;
+            --success: #4CAF50;
+            --danger: #F44336;
         }
 
         * {
@@ -26,7 +27,7 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            background-color: var(--ivory);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -36,51 +37,11 @@
 
         .login-container {
             display: flex;
-            max-width: 1000px;
+            max-width: 500px;
             width: 100%;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .login-image {
-            flex: 1;
-            background: url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
-            position: relative;
-            display: none;
-        }
-
-        .login-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to right, rgba(106, 76, 147, 0.7), rgba(138, 90, 68, 0.6));
-        }
-
-        .image-content {
-            position: relative;
-            z-index: 1;
-            color: white;
-            padding: 40px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-        }
-
-        .image-content h2 {
-            font-size: 2.2rem;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .image-content p {
-            font-size: 1rem;
-            line-height: 1.6;
-            opacity: 0.9;
         }
 
         .login-form {
@@ -90,6 +51,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            width: 100%;
         }
 
         .logo {
@@ -99,13 +61,27 @@
 
         .logo i {
             font-size: 2.5rem;
-            color: var(--primary-color);
+            color: var(--purple);
+            margin-bottom: 15px;
         }
 
         .logo h1 {
+            font-family: 'Playfair Display', serif;
             font-size: 1.8rem;
-            color: var(--primary-color);
+            color: var(--charcoal);
             margin-top: 10px;
+            position: relative;
+        }
+
+        .logo h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            background: var(--purple);
         }
 
         .form-group {
@@ -124,7 +100,7 @@
             position: absolute;
             left: 15px;
             top: 42px;
-            color: var(--primary-color);
+            color: var(--purple);
         }
 
         .form-control {
@@ -137,30 +113,30 @@
         }
 
         .form-control:focus {
-            border-color: var(--primary-color);
+            border-color: var(--purple);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(106, 76, 147, 0.2);
+            box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.2);
         }
 
         .btn {
             display: block;
             width: 100%;
             padding: 14px;
-            background: var(--primary-color);
+            background: var(--purple);
             color: white;
             border: none;
             border-radius: 10px;
             font-size: 16px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
             margin-top: 10px;
         }
 
         .btn:hover {
-            background: #5a3d7d;
+            background: var(--dark-purple);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(106, 76, 147, 0.3);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
         }
 
         .btn:active {
@@ -184,7 +160,7 @@
         }
 
         .forgot-password {
-            color: var(--primary-color);
+            color: var(--purple);
             text-decoration: none;
             font-weight: 500;
         }
@@ -200,7 +176,7 @@
         }
 
         .register-link a {
-            color: var(--primary-color);
+            color: var(--purple);
             text-decoration: none;
             font-weight: 500;
         }
@@ -210,7 +186,7 @@
         }
 
         .error-message {
-            color: var(--error-color);
+            color: var(--danger);
             font-size: 14px;
             margin-top: 5px;
             display: none;
@@ -248,36 +224,40 @@
 
         .modal-icon {
             font-size: 3rem;
-            color: var(--error-color);
+            color: var(--danger);
             margin-bottom: 20px;
         }
 
         .modal-title {
+            font-family: 'Playfair Display', serif;
             font-size: 1.5rem;
             margin-bottom: 15px;
-            color: var(--dark-color);
+            color: var(--charcoal);
         }
 
         .modal-message {
             font-size: 1rem;
             margin-bottom: 25px;
-            color: var(--dark-color);
+            color: var(--slate);
             line-height: 1.5;
         }
 
         .modal-btn {
             padding: 10px 25px;
-            background: var(--primary-color);
+            background: var(--purple);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
         }
 
         .modal-btn:hover {
-            background: #5a3d7d;
+            background: var(--dark-purple);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
         }
 
         @keyframes modalFadeIn {
@@ -302,12 +282,6 @@
         }
 
         /* Медиа запросы */
-        @media (min-width: 768px) {
-            .login-image {
-                display: block;
-            }
-        }
-
         @media (max-width: 576px) {
             .login-form {
                 padding: 40px 25px;
@@ -317,17 +291,10 @@
 </head>
 <body>
 <div class="login-container">
-    <div class="login-image">
-        <div class="image-content">
-            <h2>Добро пожаловать!</h2>
-            <p>Войдите в свой аккаунт, чтобы записаться на прием к нашим мастерам и получить доступ к персональным предложениям.</p>
-        </div>
-    </div>
-
     <div class="login-form">
         <div class="logo">
-            <i class="fas fa-scissors"></i>
-            <h1>Парикмахерская "Элегант"</h1>
+            <i class="fas fa-train"></i>
+            <h1>ЖД-Портал</h1>
         </div>
 
         <form id="loginForm">
@@ -481,9 +448,9 @@
 
         // Анимация при фокусе
         $(".form-control").focus(function() {
-            $(this).parent().find("label").css("color", "var(--primary-color)");
+            $(this).parent().find("label").css("color", "var(--purple)");
         }).blur(function() {
-            $(this).parent().find("label").css("color", "var(--dark-color)");
+            $(this).parent().find("label").css("color", "var(--charcoal)");
         });
     });
 </script>

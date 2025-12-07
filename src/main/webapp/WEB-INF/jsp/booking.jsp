@@ -5,19 +5,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мои записи | Парикмахерская "Элегант"</title>
+    <title>Мои билеты | Железнодорожные перевозки</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #6a4c93;
-            --secondary-color: #8a5a44;
-            --accent-color: #f8bbd0;
-            --light-color: #f9f9f9;
-            --dark-color: #333;
-            --sidebar-width: 280px;
-            --sidebar-collapsed-width: 80px;
-            --transition-speed: 0.3s;
+            --purple: #8A2BE2;
+            --dark-purple: #6A1B9A;
+            --light-purple: #E6E6FA;
+            --ivory: #FFFFF0;
+            --charcoal: #36454F;
+            --slate: #708090;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --danger: #F44336;
         }
 
         * {
@@ -28,153 +29,111 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #f5f7fa;
-            color: var(--dark-color);
-            overflow-x: hidden;
-            transition: all var(--transition-speed) ease;
+            background-color: var(--ivory);
+            color: var(--charcoal);
+            line-height: 1.6;
         }
 
-        /* Сайдбар */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;
-            width: var(--sidebar-width);
-            background: linear-gradient(180deg, var(--primary-color) 0%, #5a3d7d 100%);
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
-            transition: width var(--transition-speed) ease;
-            z-index: 1000;
-            overflow: hidden;
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
         }
 
-        .sidebar.collapsed {
-            width: var(--sidebar-collapsed-width);
+        .admin-sidebar {
+            background: linear-gradient(to bottom, #FFFFFF, #F8F8F8);
+            box-shadow: 5px 0 15px rgba(0,0,0,0.05);
+            border-right: 1px solid rgba(138, 43, 226, 0.3);
         }
 
-        .sidebar-header {
+        .admin-header {
+            padding: 30px 25px;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .admin-title {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 20px;
-            height: 80px;
-            background-color: rgba(0, 0, 0, 0.1);
+            font-family: 'Playfair Display', serif;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            color: white;
-            text-decoration: none;
-            font-size: 1.5rem;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .logo-icon {
+        .admin-title i {
             font-size: 2rem;
             margin-right: 15px;
-            color: var(--accent-color);
+            color: var(--purple);
         }
 
-        .logo-text {
-            opacity: 1;
-            transition: opacity var(--transition-speed);
-        }
-
-        .sidebar.collapsed .logo-text {
-            opacity: 0;
-        }
-
-        .toggle-btn {
-            background: none;
-            border: none;
-            color: white;
+        .admin-title h1 {
             font-size: 1.5rem;
-            cursor: pointer;
-            transition: transform var(--transition-speed);
+            font-weight: 600;
+            color: var(--charcoal);
+            position: relative;
         }
 
-        .sidebar.collapsed .toggle-btn {
-            transform: rotate(180deg);
-        }
-
-        .nav-links {
-            padding: 20px 0;
-            height: calc(100vh - 80px);
-            overflow-y: auto;
+        .admin-title h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--purple);
         }
 
         .nav-item {
-            list-style: none;
             margin-bottom: 5px;
-            padding: 0 15px;
         }
 
         .nav-link {
             display: flex;
             align-items: center;
-            padding: 15px 20px;
-            color: rgba(255, 255, 255, 0.8);
+            padding: 14px 20px;
+            color: var(--slate);
             text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s;
-            white-space: nowrap;
-        }
-
-        .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-
-        .nav-link.active {
-            background-color: var(--accent-color);
-            color: var(--primary-color);
+            border-radius: 4px;
+            transition: all 0.3s ease;
             font-weight: 500;
         }
 
-        .nav-icon {
-            font-size: 1.3rem;
-            margin-right: 20px;
-            min-width: 24px;
+        .nav-link:hover {
+            background: rgba(138, 43, 226, 0.1);
+            color: var(--charcoal);
+            transform: translateX(5px);
+        }
+
+        .nav-link.active {
+            background: rgba(138, 43, 226, 0.15);
+            color: var(--charcoal);
+            border-left: 3px solid var(--purple);
+            font-weight: 600;
+        }
+
+        .nav-link i {
+            width: 24px;
+            margin-right: 12px;
+            color: var(--purple);
             text-align: center;
         }
 
-        .nav-text {
-            opacity: 1;
-            transition: opacity var(--transition-speed);
+        .admin-content {
+            padding: 40px;
+            background-color: #FFF;
         }
 
-        .sidebar.collapsed .nav-text {
-            opacity: 0;
-        }
-
-        /* Основное содержимое */
-        .main-content {
-            margin-left: var(--sidebar-width);
-            padding: 30px;
-            min-height: 100vh;
-            transition: margin-left var(--transition-speed);
-        }
-
-        .sidebar.collapsed ~ .main-content {
-            margin-left: var(--sidebar-collapsed-width);
-        }
-
-        /* Заголовок */
-        .header {
+        .page-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
             padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.2);
         }
 
         .page-title {
             font-family: 'Playfair Display', serif;
             font-size: 1.8rem;
-            color: var(--primary-color);
+            color: var(--charcoal);
             position: relative;
         }
 
@@ -185,7 +144,7 @@
             left: 0;
             width: 60px;
             height: 2px;
-            background: var(--primary-color);
+            background: var(--purple);
         }
 
         /* Стили для таблицы */
@@ -205,7 +164,7 @@
         }
 
         .appointments-table th {
-            background-color: var(--primary-color);
+            background-color: var(--purple);
             color: white;
             padding: 15px 20px;
             text-align: left;
@@ -233,7 +192,7 @@
         }
 
         .appointments-table tr:hover td {
-            background-color: rgba(106, 76, 147, 0.05);
+            background-color: rgba(138, 43, 226, 0.1);
         }
 
         .appointments-table tr:nth-child(even) {
@@ -277,15 +236,50 @@
             background-color: rgba(226, 74, 74, 0.2);
         }
 
+        .btn-purple {
+            background-color: var(--purple);
+            color: white;
+            margin-left: 5px;
+        }
+
+        .btn-purple:hover {
+            background-color: var(--dark-purple);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(138, 43, 226, 0.3);
+        }
+
+        .badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .badge-success {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+        }
+
+        .badge-danger {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: var(--danger);
+        }
+
+        .badge-warning {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: var(--warning);
+        }
+
         .btn-outline-purple {
             background-color: transparent;
-            border: 1px solid var(--primary-color);
-            color: var(--primary-color);
+            border: 1px solid var(--purple);
+            color: var(--purple);
             padding: 8px 16px;
         }
 
         .btn-outline-purple:hover {
-            background-color: rgba(106, 76, 147, 0.1);
+            background-color: rgba(138, 43, 226, 0.1);
         }
 
         .btn-outline-purple:disabled {
@@ -304,7 +298,7 @@
 
         .page-info {
             font-size: 0.9rem;
-            color: var(--dark-color);
+            color: var(--charcoal);
             min-width: 120px;
             text-align: center;
         }
@@ -324,38 +318,18 @@
             display: block;
         }
 
-        /* Адаптивность */
         @media (max-width: 992px) {
-            .sidebar {
-                width: var(--sidebar-collapsed-width);
+            .admin-layout {
+                grid-template-columns: 1fr;
             }
 
-            .sidebar .logo-text,
-            .sidebar .nav-text {
-                opacity: 0;
-            }
-
-            .main-content {
-                margin-left: var(--sidebar-collapsed-width);
-            }
-
-            .sidebar:hover {
-                width: var(--sidebar-width);
-            }
-
-            .sidebar:hover .logo-text,
-            .sidebar:hover .nav-text {
-                opacity: 1;
+            .admin-sidebar {
+                display: none;
             }
         }
 
         @media (max-width: 768px) {
-            .sidebar {
-                width: 0;
-            }
-
-            .main-content {
-                margin-left: 0;
+            .admin-content {
                 padding: 20px;
             }
 
@@ -372,41 +346,32 @@
     </style>
 </head>
 <body>
-<!-- Боковая панель -->
-<div class="sidebar">
-    <div class="sidebar-header">
-        <a href="/" class="logo">
-            <i class="fas fa-scissors logo-icon"></i>
-            <span class="logo-text">Элегант</span>
-        </a>
-        <button class="toggle-btn" onclick="toggleSidebar()">
-            <i class="fas fa-angle-left"></i>
-        </button>
+<div class="admin-layout">
+    <div class="admin-sidebar">
+        <div class="admin-header">
+            <div class="admin-title">
+                <i class="fas fa-train"></i>
+                <h1>ЖД-Портал</h1>
+            </div>
     </div>
 
     <ul class="nav-links">
         <li class="nav-item">
-            <a href="${pageContext.request.contextPath}/serviceUser" class="nav-link">
-                <i class="fas fa-cut nav-icon"></i>
-                <span class="nav-text">Услуги</span>
+            <a href="${pageContext.request.contextPath}/userHome" class="nav-link">
+                <i class="fas fa-user nav-icon"></i>
+                <span class="nav-text">Профиль</span>
             </a>
         </li>
         <li class="nav-item">
-            <a href="${pageContext.request.contextPath}/userMaster" class="nav-link">
-                <i class="fas fa-user-tie nav-icon"></i>
-                <span class="nav-text">Мастера</span>
+            <a href="${pageContext.request.contextPath}/serviceUser" class="nav-link">
+                <i class="fas fa-route nav-icon"></i>
+                <span class="nav-text">Маршруты</span>
             </a>
         </li>
         <li class="nav-item">
             <a href="${pageContext.request.contextPath}/booking" class="nav-link active">
-                <i class="fas fa-calendar-check nav-icon"></i>
-                <span class="nav-text">Запись</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="${pageContext.request.contextPath}/video" class="nav-link">
-                <i class="fas fa-spa nav-icon"></i>
-                <span class="nav-text">Уход за волосами</span>
+                <i class="fas fa-ticket-alt nav-icon"></i>
+                <span class="nav-text">Мои билеты</span>
             </a>
         </li>
         <li class="nav-item">
@@ -415,14 +380,7 @@
                 <span class="nav-text">Отзывы</span>
             </a>
         </li>
-
         <li class="nav-item" style="margin-top: 30px;">
-            <a href="${pageContext.request.contextPath}/userHome" class="nav-link">
-                <i class="fas fa-user nav-icon"></i>
-                <span class="nav-text">Профиль</span>
-            </a>
-        </li>
-        <li class="nav-item">
             <a href="javascript:void(0);" class="nav-link" onclick="logout()">
                 <i class="fas fa-sign-out-alt nav-icon"></i>
                 <span class="nav-text">Выход</span>
@@ -431,26 +389,29 @@
     </ul>
 </div>
 
-<!-- Основное содержимое -->
-<div class="main-content">
-    <div class="header">
-        <h2 class="page-title">Мои записи</h2>
+    <div class="admin-content">
+        <div class="page-header">
+            <h2 class="page-title">Мои билеты</h2>
     </div>
 
     <div class="table-container">
         <table class="appointments-table">
             <thead>
             <tr>
-                <th>Услуга</th>
-                <th>Дата и время</th>
-                <th>Мастер</th>
+                    <th>PNR код</th>
+                    <th>Маршрут</th>
+                    <th>Дата отправления</th>
+                    <th>Время отправления</th>
+                    <th>Время прибытия</th>
+                    <th>Место</th>
+                    <th>Тип вагона</th>
                 <th>Цена</th>
+                    <th>Статус</th>
                 <th>Действия</th>
             </tr>
             </thead>
             <tbody id="appointmentsTableBody">
-            <!-- Пример записи (будет заменено динамическим контентом) -->
-
+                <!-- Данные будут загружены динамически -->
             </tbody>
         </table>
     </div>
@@ -464,108 +425,125 @@
             Вперед <i class="fas fa-chevron-right"></i>
         </button>
     </div>
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    function toggleSidebar() {
-        document.querySelector('.sidebar').classList.toggle('collapsed');
-    }
-
     $(document).ready(function () {
         const token = localStorage.getItem("jwtToken");
 
         if (!token) {
             console.error("Токен не найден. Пожалуйста, войдите в систему.");
+                $('#appointmentsTableBody').html('<tr><td colspan="10" class="no-records"><i class="far fa-ticket-alt"></i><p>Пожалуйста, войдите в систему</p></td></tr>');
             return;
         }
 
         try {
-            // Декодируем токен, чтобы получить userId
             const decodedToken = jwt_decode(token);
-            const userId = decodedToken.id; // Предполагается, что в токене есть поле `id`
+            const userId = decodedToken.id;
             console.log("ID пользователя:", userId);
 
-            // Выполняем запрос для получения записей пользователя
-            fetch("/records/user/" + userId + "/records")
+            // Загрузка билетов пользователя
+            fetch("/tickets/user/" + userId)
                 .then(response => {
-                    console.log("Ответ сервера:", response); // Логируем полный объект ответа
+                    if (!response.ok) throw new Error('Ошибка загрузки билетов');
                     return response.json();
                 })
                 .then(data => {
-                    console.log("Данные от сервера:", data);
-
+                    console.log("Данные билетов:", data);
                     const tableBody = $('#appointmentsTableBody');
-                    tableBody.empty(); // Очистка таблицы
+                    tableBody.empty();
 
                     if (data.length === 0) {
                         tableBody.append(
-                            '<tr><td colspan="5" class="no-records">' +
-                            '<i class="far fa-calendar-times"></i>' +
-                            '<p>У вас пока нет записей</p>' +
+                            '<tr><td colspan="10" class="no-records">' +
+                            '<i class="far fa-ticket-alt"></i>' +
+                            '<p>У вас пока нет билетов</p>' +
                             '</td></tr>'
                         );
                         return;
                     }
 
-                    data.forEach(record => {
-                        // Преобразуем дату и время
-                        const rawDate = new Date(record.hairService.date); // Используем поле date из Record
-                        const formattedDate = rawDate.toLocaleDateString('ru-RU', {
+                    data.forEach(ticket => {
+                        const route = ticket.route || {};
+                        const departureStation = route.departureStation || {};
+                        const arrivalStation = route.arrivalStation || {};
+                        const routeName = (departureStation.name || 'Н/Д') + ' → ' + (arrivalStation.name || 'Н/Д');
+                        
+                        const departureDate = route.departureTime ? new Date(route.departureTime) : new Date();
+                        const arrivalDate = route.arrivalTime ? new Date(route.arrivalTime) : new Date();
+                        
+                        const formattedDate = departureDate.toLocaleDateString('ru-RU', {
                             day: '2-digit',
                             month: '2-digit',
                             year: 'numeric',
                         });
-                        const formattedTime = rawDate.toLocaleTimeString('ru-RU', {
+                        const formattedDepartureTime = departureDate.toLocaleTimeString('ru-RU', {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                        });
+                        const formattedArrivalTime = arrivalDate.toLocaleTimeString('ru-RU', {
                             hour: '2-digit',
                             minute: '2-digit',
                         });
 
+                        const status = ticket.status || 'active';
+                        const statusClass = status === 'active' ? 'success' : status === 'cancelled' ? 'danger' : 'warning';
+                        const statusText = status === 'active' ? 'Активен' : status === 'cancelled' ? 'Отменен' : status;
+
                         const row =
                             "<tr>" +
-                            "<td>" + record.hairService.service_name + "</td>" + // Используем поле name из HairService
-                            "<td>" + formattedDate + " " + formattedTime + "</td>" +
-                            "<td>" + (record.hairService.master ? record.hairService.master.fullName : "Не указан") + "</td>" + // Проверяем наличие мастера
-                            "<td>" + record.hairService.price + " Byn</td>" +
+                            "<td><strong>" + (ticket.pnrCode || 'Н/Д') + "</strong></td>" +
+                            "<td>" + routeName + "</td>" +
+                            "<td>" + formattedDate + "</td>" +
+                            "<td>" + formattedDepartureTime + "</td>" +
+                            "<td>" + formattedArrivalTime + "</td>" +
+                            "<td>" + (ticket.seatNumber || 'Не указано') + "</td>" +
+                            "<td>" + (ticket.carriageType || 'Стандарт') + "</td>" +
+                            "<td><strong>" + (ticket.price || route.price || 0) + " BYN</strong></td>" +
+                            "<td><span class='badge badge-" + statusClass + "'>" + statusText + "</span></td>" +
                             "<td>" +
-                            "<button class='btn btn-cancel' onclick='cancelAppointment(" + record.id + ")'><i class='fas fa-times'></i> Отменить</button>" +
+                            (status === 'active' ? 
+                                "<button class='btn btn-cancel' onclick='cancelTicket(" + ticket.id + ")' style='margin-right: 5px;'><i class='fas fa-times'></i> Отменить</button>" +
+                                "<button class='btn btn-purple' onclick='downloadTicketPDF(" + ticket.id + ")'><i class='fas fa-download'></i> PDF</button>" :
+                                "<span style='color: var(--slate);'>-</span>"
+                            ) +
                             "</td>" +
                             "</tr>";
                         tableBody.append(row);
                     });
                 })
-                .catch(error => console.error('Ошибка при загрузке записей:', error));
+                .catch(error => {
+                    console.error('Ошибка при загрузке билетов:', error);
+                    $('#appointmentsTableBody').html('<tr><td colspan="10" class="no-records"><i class="fas fa-exclamation-triangle"></i><p>Ошибка загрузки билетов</p></td></tr>');
+                });
         } catch (err) {
             console.error("Ошибка при декодировании токена:", err);
         }
     });
 
-
-    function cancelAppointment(id) {
-        console.log("Тип ID:", typeof id);
-        if (confirm("Вы действительно хотите отменить эту запись?")) {
-            fetch('/records/' + id, {  // Используем правильный id записи
-                method: 'DELETE', // Используем метод DELETE для удаления
+    function cancelTicket(id) {
+        if (confirm("Вы действительно хотите отменить этот билет?")) {
+            fetch('/tickets/' + id, {
+                method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                 }
             })
                 .then(response => {
                     if (response.ok) {
-                        alert("Запись успешно удалена");
-                        // Удаляем строку из таблицы
-                        $('#appointmentsTableBody').find('button[onclick="cancelAppointment(' + id + ')"]').closest('tr').remove();
+                        alert("Билет успешно отменен");
+                        location.reload();
                     } else {
                         return response.json().then(err => {
-                            throw new Error(err.message || 'Ошибка при удалении записи');
+                            throw new Error(err.message || 'Ошибка при отмене билета');
                         });
                     }
                 })
                 .catch(error => {
                     console.error('Ошибка:', error);
-                    alert("Не удалось удалить запись: " + error.message);
+                    alert("Не удалось отменить билет: " + error.message);
                 });
         }
     }
@@ -573,16 +551,21 @@
 
 
 
+    function downloadTicketPDF(ticketId) {
+        const url = '/payment/ticket/' + ticketId + '/pdf';
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'ticket_' + ticketId + '.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
     function logout() {
-        // Удаляем токен из localStorage (или sessionStorage, cookies)
-        localStorage.removeItem("jwtToken");  // Для localStorage
-        sessionStorage.removeItem("jwtToken");  // Для sessionStorage
-
-        // Также можно удалить cookie (если хранится в cookies)
+        localStorage.removeItem("jwtToken");
+        sessionStorage.removeItem("jwtToken");
         document.cookie = "jwtToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-
-        // Перенаправляем пользователя на страницу входа
-        window.location.href = "/home";  // Замените "/login" на нужный URL
+        window.location.href = "/home";
     }
 </script>
 </body>

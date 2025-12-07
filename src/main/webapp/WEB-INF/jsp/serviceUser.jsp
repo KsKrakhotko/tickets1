@@ -5,19 +5,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Личный кабинет | Парикмахерская "Элегант"</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Маршруты | Железнодорожные перевозки</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #6a4c93;
-            --secondary-color: #8a5a44;
-            --accent-color: #f8bbd0;
-            --light-color: #f9f9f9;
-            --dark-color: #333;
-            --sidebar-width: 280px;
-            --sidebar-collapsed-width: 80px;
-            --transition-speed: 0.3s;
+            --purple: #8A2BE2;
+            --dark-purple: #6A1B9A;
+            --light-purple: #E6E6FA;
+            --ivory: #FFFFF0;
+            --charcoal: #36454F;
+            --slate: #708090;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --danger: #F44336;
         }
 
         * {
@@ -28,152 +29,153 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #f5f7fa;
-            color: var(--dark-color);
-            overflow-x: hidden;
-            transition: all var(--transition-speed) ease;
+            background-color: var(--ivory);
+            color: var(--charcoal);
+            line-height: 1.6;
         }
 
-        /* Сайдбар */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;
-            width: var(--sidebar-width);
-            background: linear-gradient(180deg, var(--primary-color) 0%, #5a3d7d 100%);
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
-            transition: width var(--transition-speed) ease;
-            z-index: 1000;
-            overflow: hidden;
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
         }
 
-        .sidebar.collapsed {
-            width: var(--sidebar-collapsed-width);
+        .admin-sidebar {
+            background: linear-gradient(to bottom, #FFFFFF, #F8F8F8);
+            box-shadow: 5px 0 15px rgba(0,0,0,0.05);
+            border-right: 1px solid rgba(138, 43, 226, 0.3);
         }
 
-        .sidebar-header {
+        .admin-header {
+            padding: 30px 25px;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .admin-title {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 20px;
-            height: 80px;
-            background-color: rgba(0, 0, 0, 0.1);
+            font-family: 'Playfair Display', serif;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            color: white;
-            text-decoration: none;
-            font-size: 1.5rem;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .logo-icon {
+        .admin-title i {
             font-size: 2rem;
             margin-right: 15px;
-            color: var(--accent-color);
+            color: var(--purple);
         }
 
-        .logo-text {
-            opacity: 1;
-            transition: opacity var(--transition-speed);
-        }
-
-        .sidebar.collapsed .logo-text {
-            opacity: 0;
-        }
-
-        .toggle-btn {
-            background: none;
-            border: none;
-            color: white;
+        .admin-title h1 {
             font-size: 1.5rem;
-            cursor: pointer;
-            transition: transform var(--transition-speed);
+            font-weight: 600;
+            color: var(--charcoal);
+            position: relative;
         }
 
-        .sidebar.collapsed .toggle-btn {
-            transform: rotate(180deg);
-        }
-
-        .nav-links {
-            padding: 20px 0;
-            height: calc(100vh - 80px);
-            overflow-y: auto;
+        .admin-title h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--purple);
         }
 
         .nav-item {
-            list-style: none;
             margin-bottom: 5px;
-            padding: 0 15px;
         }
 
         .nav-link {
             display: flex;
             align-items: center;
-            padding: 15px 20px;
-            color: rgba(255, 255, 255, 0.8);
+            padding: 14px 20px;
+            color: var(--slate);
             text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s;
-            white-space: nowrap;
-        }
-
-        .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-
-        .nav-link.active {
-            background-color: var(--accent-color);
-            color: var(--primary-color);
+            border-radius: 4px;
+            transition: all 0.3s ease;
             font-weight: 500;
         }
 
-        .nav-icon {
-            font-size: 1.3rem;
-            margin-right: 20px;
-            min-width: 24px;
+        .nav-link:hover {
+            background: rgba(138, 43, 226, 0.1);
+            color: var(--charcoal);
+            transform: translateX(5px);
+        }
+
+        .nav-link.active {
+            background: rgba(138, 43, 226, 0.15);
+            color: var(--charcoal);
+            border-left: 3px solid var(--purple);
+            font-weight: 600;
+        }
+
+        .nav-link i {
+            width: 24px;
+            margin-right: 12px;
+            color: var(--purple);
             text-align: center;
         }
 
-        .nav-text {
-            opacity: 1;
-            transition: opacity var(--transition-speed);
+        .admin-content {
+            padding: 40px;
+            background-color: #FFF;
         }
 
-        .sidebar.collapsed .nav-text {
-            opacity: 0;
-        }
-
-        /* Основное содержимое */
-        .main-content {
-            margin-left: var(--sidebar-width);
-            padding: 30px;
-            min-height: 100vh;
-            transition: margin-left var(--transition-speed);
-        }
-
-        .sidebar.collapsed ~ .main-content {
-            margin-left: var(--sidebar-collapsed-width);
-        }
-
-        /* Заголовок */
-        .header {
+        .page-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
             padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.2);
         }
 
         .page-title {
-            font-size: 2rem;
-            color: var(--primary-color);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--charcoal);
+            position: relative;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: var(--purple);
+        }
+
+        .route-filter {
+            background: #FFF;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--purple);
+        }
+
+        .route-filter h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--charcoal);
+            margin-bottom: 20px;
+        }
+
+        .route-filter .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            background-color: white;
+        }
+
+        .route-filter .form-control:focus {
+            outline: none;
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.1);
         }
 
         .services-grid {
@@ -183,7 +185,7 @@
             margin-bottom: 40px;
         }
 
-        .service-card{
+        .service-card {
             background: #FFF;
             display: block;
             border-radius: 8px;
@@ -191,7 +193,12 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             transition: all 0.3s ease;
             border-top: 3px solid var(--purple);
-            color: black !important;
+            color: var(--charcoal) !important;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
 
@@ -224,8 +231,13 @@
 
         .service-meta {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 8px;
             margin-bottom: 15px;
+        }
+
+        .service-meta span {
+            display: block;
         }
 
         .service-price {
@@ -245,137 +257,110 @@
         }
 
         .btn-purple {
-            background-color: var(--primary-color);
+            background-color: var(--purple);
             color: #fff;
             border: none;
             padding: 10px 20px;
             font-size: 1rem;
             border-radius: 8px;
             cursor: pointer;
-            transition: all var(--transition-speed) ease;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .btn-purple:hover {
-            background-color: #5a3d7d; /* Более тёмный оттенок фиолетового */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            background-color: var(--dark-purple);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         /* Адаптивность */
         @media (max-width: 992px) {
-            .sidebar {
-                width: var(--sidebar-collapsed-width);
+            .admin-layout {
+                grid-template-columns: 1fr;
             }
 
-            .sidebar .logo-text,
-            .sidebar .nav-text {
-                opacity: 0;
+            .admin-sidebar {
+                display: none;
             }
 
-            .main-content {
-                margin-left: var(--sidebar-collapsed-width);
+            .route-filter > div {
+                grid-template-columns: 1fr !important;
             }
 
-            .sidebar:hover {
-                width: var(--sidebar-width);
-            }
-
-            .sidebar:hover .logo-text,
-            .sidebar:hover .nav-text {
-                opacity: 1;
+            .route-filter #clearFilter {
+                width: 100%;
             }
         }
 
         @media (max-width: 768px) {
-            .sidebar {
-                width: 0;
-            }
-
-            .main-content {
-                margin-left: 0;
+            .admin-content {
                 padding: 20px;
             }
 
-            .mobile-menu-btn {
-                display: block;
-                position: fixed;
-                top: 20px;
-                left: 20px;
-                z-index: 1100;
-                background: var(--primary-color);
-                color: white;
-                border: none;
-                border-radius: 50%;
-                width: 50px;
-                height: 50px;
-                font-size: 1.5rem;
-                cursor: pointer;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            .services-grid {
+                grid-template-columns: 1fr;
             }
 
         }
 
-        /* Анимации */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .profile-card, .info-card, .appointments-table {
-            animation: fadeIn 0.6s ease-out;
-        }
     </style>
 </head>
 <body>
-<!-- Боковая панель -->
-<div class="sidebar">
-    <div class="sidebar-header">
-        <a href="/" class="logo">
-            <i class="fas fa-scissors logo-icon"></i>
-            <span class="logo-text">Элегант</span>
-        </a>
-        <button class="toggle-btn" onclick="toggleSidebar()">
-            <i class="fas fa-angle-left"></i>
-        </button>
+<div class="admin-layout">
+    <div class="admin-sidebar">
+        <div class="admin-header">
+            <div class="admin-title">
+                <i class="fas fa-train"></i>
+                <h1>ЖД-Портал</h1>
+            </div>
     </div>
 
     <ul class="nav-links">
         <li class="nav-item">
-            <a href="/serviceUser" class="nav-link active">
-                <i class="fas fa-cut nav-icon"></i>
-                <span class="nav-text">Услуги</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="/userMaster" class="nav-link">
-                <i class="fas fa-user-tie nav-icon"></i>
-                <span class="nav-text">Мастера</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="/booking" class="nav-link">
-                <i class="fas fa-calendar-check nav-icon"></i>
-                <span class="nav-text">Запись</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="${pageContext.request.contextPath}/video" class="nav-link">
-                <i class="fas fa-spa nav-icon"></i>
-                <span class="nav-text">Уход за волосами</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="/reviews" class="nav-link">
-                <i class="fas fa-star nav-icon"></i>
-                <span class="nav-text">Отзывы</span>
-            </a>
-        </li>
-        <li class="nav-item" style="margin-top: 30px;">
-            <a href="/userHome" class="nav-link">
+            <a href="${pageContext.request.contextPath}/userHome" class="nav-link">
                 <i class="fas fa-user nav-icon"></i>
                 <span class="nav-text">Профиль</span>
             </a>
         </li>
         <li class="nav-item">
+            <a href="${pageContext.request.contextPath}/serviceUser" class="nav-link active">
+                <i class="fas fa-route nav-icon"></i>
+                <span class="nav-text">Маршруты</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="${pageContext.request.contextPath}/booking" class="nav-link">
+                <i class="fas fa-ticket-alt nav-icon"></i>
+                <span class="nav-text">Мои билеты</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="${pageContext.request.contextPath}/reviews" class="nav-link">
+                <i class="fas fa-star nav-icon"></i>
+                <span class="nav-text">Отзывы</span>
+            </a>
+        </li>
+        <li class="nav-item" style="margin-top: 30px;">
             <a href="javascript:void(0);" class="nav-link" onclick="logout()">
                 <i class="fas fa-sign-out-alt nav-icon"></i>
                 <span class="nav-text">Выход</span>
@@ -384,23 +369,45 @@
     </ul>
 </div>
 
-<!-- Основное содержимое -->
-<div class="main-content">
-    <div class="header">
-        <h1 class="page-title">Услуги парикмахерской</h1>
-        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-            <i class="fas fa-bars"></i>
+    <div class="admin-content">
+        <div class="page-header">
+            <h2 class="page-title">Маршруты</h2>
+        </div>
+
+        <!-- Фильтр маршрутов -->
+        <div class="route-filter" style="background: #FFF; border-radius: 12px; padding: 30px; box-shadow: 0 5px 25px rgba(0,0,0,0.05); margin-bottom: 30px; border-top: 4px solid var(--purple);">
+            <h3 style="font-family: 'Playfair Display', serif; color: var(--charcoal); margin-bottom: 20px;">
+                <i class="fas fa-filter" style="color: var(--purple); margin-right: 10px;"></i>
+                Поиск маршрутов
+            </h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 20px; align-items: end;">
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label for="departureStation" style="display: block; margin-bottom: 8px; font-weight: 500; color: var(--charcoal);">Станция отправления</label>
+                    <select id="departureStation" class="form-control" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
+                        <option value="">Все станции</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label for="arrivalStation" style="display: block; margin-bottom: 8px; font-weight: 500; color: var(--charcoal);">Станция прибытия</label>
+                    <select id="arrivalStation" class="form-control" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
+                        <option value="">Все станции</option>
+                    </select>
+                </div>
+                <button id="clearFilter" class="btn" style="background: var(--slate); color: white; padding: 12px 24px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                    <i class="fas fa-times"></i> Сбросить
         </button>
+            </div>
     </div>
 
-    <!-- Список услуг -->
+        <!-- Список маршрутов -->
     <h3 style="margin-bottom: 20px; font-family: 'Playfair Display', serif; color: var(--charcoal);">
-        <i class="fas fa-list" style="color: var(--purple); margin-right: 10px;"></i>
-        Список услуг
+            <i class="fas fa-route" style="color: var(--purple); margin-right: 10px;"></i>
+            Доступные маршруты
     </h3>
 
-    <div class="services-grid">
-        <!-- Список услуг будет загружаться сюда динамически -->
+        <div class="services-grid" id="routesGrid">
+            <!-- Список маршрутов будет загружаться сюда динамически -->
+        </div>
     </div>
 </div>
 
@@ -409,215 +416,213 @@
 <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
 
 <script>
+    let allRoutes = [];
+    let allStations = [];
 
     $(document).ready(function() {
-        // Функция для отображения всех услуг
-        function loadServices() {
+        // Загружаем список станций
+        function loadStations() {
             $.ajax({
-                url: '/services',
+                url: '/api/stations',
                 type: 'GET',
                 dataType: 'json',
-                success: function(response) {
-                    console.log('Полученные данные с сервера:', response);
-                    $('.services-grid').empty();
-
-                    const services = Array.isArray(response) ? response : [];
-
-                    if (!services || services.length === 0) {
-                        $('.services-grid').html('<p>Нет доступных услуг</p>');
-                        return;
-                    }
-
-                    services.forEach(function(service) {
-                        const name = service.service_name ? service.service_name.trim() : 'Не указано';
-                        const price = service.price ? service.price + ' Br' : 'Не указана';
-                        const formattedDate = service.date
-                            ? new Date(service.date).toLocaleString('ru-RU', {
-                                day: '2-digit',
-                                month: '2-digit',
-                                year: 'numeric',
-                                hour: '2-digit',
-                                minute: '2-digit'
-                            })
-                            : 'Не указана';
-
-                        const masterName = service.master && service.master.fullName ? service.master.fullName : 'Не указан';
-                        const serviceCard =
-                            '<div class="service-card">' +
-                            '<div class="service-image">' +
-                            '<img src="/images/elegant.jpg" alt="Изображение услуги" class="service-img">' +
-                            '</div>' +
-                            '<div class="service-body">' +
-                            '<h3 class="service-title">' + name + '</h3>' +
-                            '<div class="service-meta">' +
-                            '<span class="service-price">Цена: ' + price + '</span>' +
-                            '<span class="service-date">Дата: ' + formattedDate + '</span>' +
-                            '<span class="service-master">Мастер: ' + masterName + '</span>' +
-                            '</div>' +
-                            '<div class="service-actions">' +
-                            '<button class="btn btn-purple book-service" data-id="' + service.service_id + '">' +
-                            '<i class="fas fa-calendar-plus"></i> Записаться' +
-                            '</button>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>';
-
-                        $('.services-grid').append(serviceCard);
+                success: function(stations) {
+                    allStations = stations || [];
+                    const departureSelect = $('#departureStation');
+                    const arrivalSelect = $('#arrivalStation');
+                    
+                    // Очищаем и добавляем опцию "Все станции"
+                    departureSelect.empty().append('<option value="">Все станции</option>');
+                    arrivalSelect.empty().append('<option value="">Все станции</option>');
+                    
+                    if (Array.isArray(allStations) && allStations.length > 0) {
+                        allStations.forEach(function(station) {
+                            const optionText = station.city ? (station.city + ' - ' + station.name) : station.name;
+                            departureSelect.append($('<option>').val(station.id).text(optionText));
+                            arrivalSelect.append($('<option>').val(station.id).text(optionText));
                     });
+                    }
                 },
                 error: function(xhr, status, error) {
-                    console.error('Ошибка при загрузке услуг:', error);
-                    $('.services-grid').html('<p class="text-danger">Ошибка загрузки услуг</p>');
+                    console.error('Ошибка при загрузке станций:', error);
                 }
             });
         }
 
-        // Загружаем все услуги при загрузке страницы
-        $(document).ready(function() {
-            let services = [];
-            let records = [];
-
-            // Функция для загрузки услуг и записей
-            function loadServices() {
-                // Загрузка услуг
+        // Функция для загрузки маршрутов с фильтрацией
+        function loadRoutes() {
+            console.log('Начинаем загрузку маршрутов...');
                 $.ajax({
-                    url: '/services',
+                url: '/routes',
                     type: 'GET',
                     dataType: 'json',
-                    success: function(response) {
-                        services = Array.isArray(response) ? response : [];
-                        filterAndRenderServices();
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Ошибка при загрузке услуг:', error);
+                success: function(routes) {
+                    console.log('Полученные маршруты:', routes);
+                    console.log('Количество маршрутов:', routes ? routes.length : 0);
+                    allRoutes = routes || [];
+                    if (allRoutes.length > 0) {
+                        console.log('Первый маршрут для проверки:', allRoutes[0]);
                     }
-                });
-
-                // Загрузка записей
-                $.ajax({
-                    url: '/records',
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(response) {
-                        records = Array.isArray(response) ? response : [];
-                        filterAndRenderServices();
+                    filterAndDisplayRoutes();
                     },
                     error: function(xhr, status, error) {
-                        console.error('Ошибка при загрузке записей:', error);
+                    console.error('Ошибка при загрузке маршрутов:', error);
+                    console.error('Статус:', xhr.status);
+                    console.error('Ответ сервера:', xhr.responseText);
+                    $('#routesGrid').html('<p class="text-danger" style="text-align: center; padding: 30px;">Ошибка загрузки маршрутов. Проверьте консоль браузера для деталей.</p>');
                     }
                 });
             }
 
-            // Функция для фильтрации и отображения услуг
-            function filterAndRenderServices() {
-                if (services.length === 0 || records.length === 0) {
+        // Функция для фильтрации и отображения маршрутов
+        function filterAndDisplayRoutes() {
+            $('#routesGrid').empty();
+
+            if (!allRoutes || allRoutes.length === 0) {
+                console.log('Нет маршрутов для отображения');
+                $('#routesGrid').html('<p style="text-align: center; padding: 30px; color: var(--slate);">Нет доступных маршрутов в базе данных</p>');
                     return;
                 }
 
-                const bookedServiceIds = records.map(record => record.hairService ? record.hairService.service_id : undefined);
-                console.log("ID забронированных услуг:", bookedServiceIds);
+            console.log('Всего маршрутов для фильтрации:', allRoutes.length);
 
-                const availableServices = services.filter(service => !bookedServiceIds.includes(service.service_id));
-                console.log("Доступные услуги:", availableServices);
+            // Получаем выбранные станции
+            const selectedDepartureId = $('#departureStation').val();
+            const selectedArrivalId = $('#arrivalStation').val();
 
-                renderServices(availableServices);
+            // Фильтруем маршруты: дата отправления должна быть не ранее сегодняшнего дня
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            let filteredRoutes = allRoutes.filter(function(route) {
+                // Фильтр по дате
+                if (!route.departureTime) {
+                    console.log('Маршрут без departureTime пропущен:', route);
+                    return false;
+                }
+                const departureDate = new Date(route.departureTime);
+                departureDate.setHours(0, 0, 0, 0);
+                
+                if (departureDate < today) {
+                    console.log('Маршрут с прошедшей датой пропущен:', route.departureTime);
+                    return false;
+                }
+                
+                if (route.availableSeats === null || route.availableSeats === undefined || route.availableSeats <= 0) {
+                    console.log('Маршрут без доступных мест пропущен:', route);
+                    return false;
+                }
+
+                // Фильтр по станции отправления
+                if (selectedDepartureId) {
+                    const departureId = route.departureStation ? String(route.departureStation.id) : null;
+                    if (departureId !== String(selectedDepartureId)) {
+                        return false;
+                    }
             }
 
-            // Функция для отображения услуг
-            function renderServices(services) {
-                $('.services-grid').empty();
+                // Фильтр по станции прибытия
+                if (selectedArrivalId) {
+                    const arrivalId = route.arrivalStation ? String(route.arrivalStation.id) : null;
+                    if (arrivalId !== String(selectedArrivalId)) {
+                        return false;
+                    }
+                }
 
-                if (!services || services.length === 0) {
-                    $('.services-grid').html('<p>Нет доступных услуг</p>');
+                return true;
+            });
+
+            console.log('Отфильтровано маршрутов:', filteredRoutes.length);
+
+            if (filteredRoutes.length === 0) {
+                $('#routesGrid').html('<p style="text-align: center; padding: 30px; color: var(--slate);">Нет доступных маршрутов по выбранным критериям. Попробуйте изменить фильтры или проверьте, что в базе данных есть маршруты с датой отправления не ранее сегодняшнего дня.</p>');
                     return;
                 }
 
-                services.forEach(function(service) {
-                    const name = service.service_name ? service.service_name.trim() : 'Не указано';
-                    const price = service.price ? service.price + ' Byn' : 'Не указана';
-                    const formattedDate = service.date
-                        ? new Date(service.date).toLocaleString('ru-RU', {
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit'
-                        })
-                        : 'Не указана';
+            // Группируем маршруты по направлению (отправление → прибытие)
+            const routeGroups = {};
+            filteredRoutes.forEach(function(route) {
+                const departureStation = route.departureStation ? route.departureStation.name : 'Не указано';
+                const arrivalStation = route.arrivalStation ? route.arrivalStation.name : 'Не указано';
+                const routeKey = departureStation + ' → ' + arrivalStation;
+                
+                if (!routeGroups[routeKey]) {
+                    routeGroups[routeKey] = [];
+                }
+                routeGroups[routeKey].push(route);
+            });
 
-                    const masterName = service.master && service.master.fullName ? service.master.fullName : 'Не указан';
-                    const serviceCard =
+            // Отображаем сгруппированные маршруты
+            Object.keys(routeGroups).forEach(function(routeName) {
+                const routesInGroup = routeGroups[routeName];
+                const firstRoute = routesInGroup[0];
+                const minPrice = Math.min(...routesInGroup.map(r => r.price || 0));
+                const totalAvailableSeats = routesInGroup.reduce((sum, r) => sum + (r.availableSeats || 0), 0);
+                
+                const routeCard =
                         '<div class="service-card">' +
                         '<div class="service-image">' +
-                        '<img src="/images/elegant.jpg" alt="Изображение услуги" class="service-img">' +
+                    '<i class="fas fa-route" style="font-size: 3rem; color: var(--purple);"></i>' +
                         '</div>' +
                         '<div class="service-body">' +
-                        '<h3 class="service-title">' + name + '</h3>' +
+                    '<h3 class="service-title">' + routeName + '</h3>' +
                         '<div class="service-meta">' +
-                        '<span class="service-price">Цена: ' + price + '</span>' +
-                        '<span class="service-date">Дата: ' + formattedDate + '</span>' +
-                        '<span class="service-master">Мастер: ' + masterName + '</span>' +
+                    '<span class="service-price">От ' + minPrice + ' BYN</span>' +
+                    '<span class="service-master">Доступно рейсов: ' + routesInGroup.length + '</span>' +
+                    '<span class="service-master">Свободных мест: ' + totalAvailableSeats + '</span>' +
                         '</div>' +
                         '<div class="service-actions">' +
-                        '<button class="btn btn-purple book-service" data-id="' + service.service_id + '">' +
-                        '<i class="fas fa-calendar-plus"></i> Записаться' +
+                    '<button class="btn btn-purple view-schedule" data-route-name="' + routeName + '" data-departure="' + (firstRoute.departureStation ? firstRoute.departureStation.name : '') + '" data-arrival="' + (firstRoute.arrivalStation ? firstRoute.arrivalStation.name : '') + '">' +
+                    '<i class="fas fa-calendar-alt"></i> Посмотреть расписание' +
                         '</button>' +
                         '</div>' +
                         '</div>' +
                         '</div>';
 
-                    $('.services-grid').append(serviceCard);
+                $('#routesGrid').append(routeCard);
                 });
             }
 
-            // Загружаем услуги и записи при загрузке страницы
-            loadServices();
+        // Загружаем данные при загрузке страницы
+        loadStations();
+        loadRoutes();
 
-            // Обработчик для записи на услугу
-            $(document).on('click', '.book-service', function() {
-                const serviceId = $(this).data('id');
-                const token = localStorage.getItem("jwtToken");
+        // Обработчики изменения фильтров
+        $('#departureStation, #arrivalStation').on('change', function() {
+            filterAndDisplayRoutes();
+        });
 
-                if (!token) {
-                    alert("Пожалуйста, войдите в систему для записи на услугу.");
-                    return;
-                }
+        // Обработчик кнопки сброса фильтров
+        $('#clearFilter').on('click', function() {
+            $('#departureStation').val('');
+            $('#arrivalStation').val('');
+            filterAndDisplayRoutes();
+        });
 
-                try {
-                    // Декодируем токен и получаем ID пользователя
-                    const decodedToken = jwt_decode(token);
-                    const userId = decodedToken.id;
-                    console.log("ID пользователя:", userId);
+        // Обработчик для просмотра расписания
+        $(document).on('click', '.view-schedule', function() {
+            const routeName = $(this).data('route-name');
+            const departure = $(this).data('departure');
+            const arrival = $(this).data('arrival');
 
-                    // Отправка запроса на сервер для записи на услугу
-                    $.ajax({
-                        url: '/records',
-                        type: 'POST',
-                        contentType: 'application/json',
-                        headers: {
-                            "Authorization": "Bearer " + token
-                        },
-                        data: JSON.stringify({
-                            userId: userId,
-                            serviceId: serviceId
-                        }),
-                        success: function(response) {
-                            alert('Вы успешно записались на услугу!');
-                            loadServices();  // Перезагружаем услуги и фильтруем заново
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Ошибка при записи на услугу:', error);
-                            alert('Не удалось записаться на услугу. Попробуйте позже.');
-                        }
-                    });
-                } catch (error) {
-                    console.error('Ошибка декодирования токена:', error);
-                    alert('Ошибка аутентификации. Пожалуйста, войдите снова.');
-                }
-            });
+            // Сохраняем параметры в sessionStorage для использования на странице расписания
+            sessionStorage.setItem('selectedRoute', JSON.stringify({
+                routeName: routeName,
+                departure: departure,
+                arrival: arrival
+            }));
+            
+            // Перенаправляем на страницу расписания
+            window.location.href = '/routeSchedule?departure=' + encodeURIComponent(departure) + '&arrival=' + encodeURIComponent(arrival);
         });
     });
 
+    function logout() {
+        localStorage.removeItem("jwtToken");
+        sessionStorage.removeItem("jwtToken");
+        document.cookie = "jwtToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+        window.location.href = "/home";
+    }
 </script>
 </body>
 </html>

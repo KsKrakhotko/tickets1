@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Контакты | Парикмахерская "Элегант"</title>
+    <title>Контакты | ЖД-Портал</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -70,11 +70,7 @@
             white-space: nowrap;
         }
 
-        .logo-icon {
-            font-size: 2rem;
-            margin-right: 15px;
-            color: var(--accent-color);
-        }
+        /* Убраны старые стили .logo-icon, чтобы не конфликтовать с <img> */
 
         .logo-text {
             opacity: 1;
@@ -385,199 +381,217 @@
     </style>
 </head>
 <body>
-    <!-- Боковая панель -->
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <a href="/" class="logo">
-                <i class="fas fa-scissors logo-icon"></i>
-                <span class="logo-text">Элегант</span>
+<div class="sidebar">
+    <div class="sidebar-header">
+        <a href="${pageContext.request.contextPath}/" class="logo">
+            <img src="<%= request.getContextPath() %>/images/logo.png"
+                 alt="ЖД-Портал"
+                 style="height: 55px; width: auto; margin-right: 15px;">
+            <span class="logo-text">ЖД-портал</span>
+        </a>
+        <button class="toggle-btn" onclick="toggleSidebar()">
+            <i class="fas fa-angle-left"></i>
+        </button>
+    </div>
+
+    <ul class="nav-links">
+        <li class="nav-item">
+            <a href="${pageContext.request.contextPath}/" class="nav-link">
+                <i class="fas fa-home nav-icon"></i>
+                <span class="nav-text">Главная</span>
             </a>
-            <button class="toggle-btn" onclick="toggleSidebar()">
-                <i class="fas fa-angle-left"></i>
-            </button>
-        </div>
+        </li>
+        <li class="nav-item">
+            <a href="${pageContext.request.contextPath}/contact" class="nav-link active">
+                <i class="fas fa-map-marker-alt nav-icon"></i>
+                <span class="nav-text">Контакты</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="${pageContext.request.contextPath}/signin" class="nav-link">
+                <i class="fas fa-sign-in-alt nav-icon"></i>
+                <span class="nav-text">Вход</span>
+            </a>
+        </li>
+    </ul>
+</div>
 
-        <ul class="nav-links">
-            <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/home" class="nav-link">
-                    <i class="fas fa-home nav-icon"></i>
-                    <span class="nav-text">Главная</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/contact" class="nav-link active">
-                    <i class="fas fa-map-marker-alt nav-icon"></i>
-                    <span class="nav-text">Контакты</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/signin" class="nav-link">
-                    <i class="fas fa-sign-out-alt nav-icon"></i>
-                    <span class="nav-text">Вход</span>
-                </a>
-            </li>
-        </ul>
+<div class="main-content">
+    <div class="header">
+        <h1 class="page-title">Контакты</h1>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars"></i>
+        </button>
     </div>
 
-    <div class="main-content">
-        <div class="header">
-            <h1 class="page-title">Контакты</h1>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-
-        <div class="contact-section">
-            <div class="contact-card">
-                <div class="contact-title">
-                    <i class="fas fa-map-marker-alt contact-icon"></i>
-                    <h3>Адрес</h3>
-                </div>
-                <div class="contact-info">
-                    <strong>Парикмахерская "Элегант"</strong><br>
-                    г. Минск, пр-т Независимости, д. 32А<br>
-                    Вход со стороны двора, 2 этаж
-                </div>
-                <div class="contact-info">
-                    <strong>Ближайшее метро:</strong> Площадь Победы, Октябрьская, Купаловская
-                </div>
+    <div class="contact-section">
+        <div class="contact-card">
+            <div class="contact-title">
+                <i class="fas fa-headset contact-icon"></i>
+                <h3>Центр поддержки</h3>
             </div>
-
-            <div class="contact-card">
-                <div class="contact-title">
-                    <i class="fas fa-clock contact-icon"></i>
-                    <h3>Часы работы</h3>
-                </div>
-                <table class="hours-table">
-                    <tr>
-                        <th>День</th>
-                        <th>Часы</th>
-                    </tr>
-                    <tr>
-                        <td>Понедельник - Пятница</td>
-                        <td>9:00 - 21:00</td>
-                    </tr>
-                    <tr>
-                        <td>Суббота</td>
-                        <td>10:00 - 20:00</td>
-                    </tr>
-                    <tr>
-                        <td>Воскресенье</td>
-                        <td>10:00 - 18:00</td>
-                    </tr>
-                </table>
+            <div class="contact-info">
+                <strong>Центральный офис ЖД-Портал</strong><br>
+                г. Минск, ул. Ленина, д. 15<br>
+                Бизнес-центр "Магистраль", 5 этаж
             </div>
-
-
-            <div class="contact-card">
-                <div class="contact-title">
-                    <i class="fas fa-phone-alt contact-icon"></i>
-                    <h3>Контакты</h3>
-                </div>
-                <div class="contact-info">
-                    <strong>Телефон:</strong> <a href="tel:+375333331771">+375 (33) 333-17-71</a>
-                </div>
-                <div class="contact-info">
-                    <strong>WhatsApp:</strong> <a href="https://wa.me/375333331771">+375 (33) 333-17-71</a>
-                </div>
-                <div class="contact-info">
-                    <strong>Email:</strong> <a href="mailto:info@elegant.ru">info@elegant.ru</a>
-                </div>
-                <div class="contact-info">
-                    <strong>Социальные сети:</strong>
-                    <div style="margin-top: 10px; font-size: 1.5rem;">
-                        <a href="#" target="_blank" style="color: #6b3b98; margin-right: 15px;"><i class="fab fa-viber"></i></a>
-                        <a href="https://www.instagram.com/zzzzkkkkk.k?igsh=MW9heHQ5dTRrcjBvbw==" style="color: #e4405f; margin-right: 15px;"><i class="fab fa-instagram"></i></a>
-                        <a href="#" style="color: #57b0ea;"><i class="fab fa-telegram"></i></a>
-                    </div>
-                </div>
+            <div class="contact-info">
+                <strong>Обработка запросов:</strong> Круглосуточно
             </div>
         </div>
 
-        <div class="map-container">
-            <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2349.978645871203!2d27.576598276847953!3d53.91167803332539!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46dbcfbd0194ad21%3A0x8749e629c5fba7b8!2z0JzQsNC90YLRgCDQmtCw0LfRhtC60LjQuSDQnNC-0YHQv9C-0L3QsNGPINC-0LHQu9Cw0YHRgtGMLCAzMkEsINCb0LDRgdC60L7Qs9C-0LrQsCDQmtCw0LfRhtC60YHRgtGMLCDQmtCw0LfRhtC60L7Qs9C-0LrQsCDQmtCw0LfRhtC60L7Qs9C-0LrQsCAyMDIwNQ!5e0!3m2!1sru!2sby!4v1712039475632!5m2!1sru!2sby"
-                    allowfullscreen=""
-                    loading="lazy">
-            </iframe>
+        <div class="contact-card">
+            <div class="contact-title">
+                <i class="fas fa-clock contact-icon"></i>
+                <h3>Часы работы операторов</h3>
+            </div>
+            <table class="hours-table">
+                <tr>
+                    <th>День</th>
+                    <th>Часы работы операторов</th>
+                </tr>
+                <tr>
+                    <td>Понедельник - Пятница</td>
+                    <td>8:00 - 22:00</td>
+                </tr>
+                <tr>
+                    <td>Суббота, Воскресенье</td>
+                    <td>9:00 - 21:00</td>
+                </tr>
+            </table>
         </div>
 
-        <div class="feedback-form">
-            <h2 class="form-title">Обратная связь</h2>
-            <form id="contactForm">
-                <div class="form-group">
-                    <label for="name" class="form-label">Ваше имя</label>
-                    <input type="text" id="name" name="name" class="form-control" placeholder="Введите имя" required>
-                </div>
 
-                <div class="form-group">
-                    <label for="email" class="form-label">Ваш Email</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="Введите email" required>
+        <div class="contact-card">
+            <div class="contact-title">
+                <i class="fas fa-phone-alt contact-icon"></i>
+                <h3>Контактная информация</h3>
+            </div>
+            <div class="contact-info">
+                <strong>Горячая линия:</strong> <a href="tel:+375175551234">+375 (17) 555-12-34</a>
+            </div>
+            <div class="contact-info">
+                <strong>WhatsApp:</strong> <a href="https://wa.me/375333331771">+375 (33) 333-17-71</a>
+            </div>
+            <div class="contact-info">
+                <strong>Email:</strong> <a href="mailto:info@jd-portal.by">info@jd-portal.by</a>
+            </div>
+            <div class="contact-info">
+                <strong>Социальные сети:</strong>
+                <div style="margin-top: 10px; font-size: 1.5rem;">
+                    <a href="#" target="_blank" style="color: #6b3b98; margin-right: 15px;"><i class="fab fa-viber"></i></a>
+                    <a href="https://www.instagram.com/zzzzkkkkk.k?igsh=MW9heHQ5dTRrcjBvbw==" style="color: #e4405f; margin-right: 15px;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color: #57b0ea;"><i class="fab fa-telegram"></i></a>
                 </div>
-
-                <div class="form-group">
-                    <label for="message" class="form-label">Ваше сообщение</label>
-                    <input id="message" name="message" class="form-control" placeholder="Введите сообщение" required>
-                </div>
-
-                <button type="submit" class="submit-btn">Отправить</button>
-            </form>
+            </div>
         </div>
     </div>
 
-    <script>
-        // Переключение боковой панели
-        function toggleSidebar() {
-            document.querySelector('.sidebar').classList.toggle('collapsed');
+    <div class="map-container">
+        <iframe
+                src="https://maps.google.com/maps?width=100%25&height=600&hl=ru&q=%D0%93.%D0%9C%D0%B8%D0%BD%D1%81%D0%BA,%20%D1%83%D0%BB.%20%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B0,%20%D0%B4.%2015&t=&z=14&ie=UTF8&iwloc=B&output=embed"
+                allowfullscreen=""
+                loading="lazy">
+        </iframe>
+    </div>
+
+    <div class="feedback-form">
+        <h2 class="form-title">Обратная связь</h2>
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="name" class="form-label">Ваше имя</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Введите имя" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="form-label">Ваш Email</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Введите email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="message" class="form-label">Ваше сообщение</label>
+                <textarea id="message" name="message" class="form-control" placeholder="Введите сообщение" required></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Отправить</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Переключение боковой панели
+    function toggleSidebar() {
+        document.querySelector('.sidebar').classList.toggle('collapsed');
+    }
+
+    // Переключение мобильного меню
+    function toggleMobileMenu() {
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar.style.width === '0px' || !sidebar.style.width) {
+            sidebar.style.width = 'var(--sidebar-width)';
+        } else {
+            sidebar.style.width = '0';
         }
+    }
 
-        // Закрытие меню при клике вне его области
-        document.addEventListener('click', function(event) {
-            const sidebar = document.querySelector('.sidebar');
-            const mobileBtn = document.querySelector('.mobile-menu-btn');
+    // Закрытие меню при клике вне его области
+    document.addEventListener('click', function(event) {
+        const sidebar = document.querySelector('.sidebar');
+        const mobileBtn = document.querySelector('.mobile-menu-btn');
 
-            if (window.innerWidth <= 768 &&
-                !sidebar.contains(event.target) &&
-                event.target !== mobileBtn &&
-                !mobileBtn.contains(event.target)) {
-                sidebar.style.width = '0';
+        if (window.innerWidth <= 768 &&
+            !sidebar.contains(event.target) &&
+            event.target !== mobileBtn &&
+            !mobileBtn.contains(event.target)) {
+            sidebar.style.width = '0';
+        }
+    });
+
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const btn = this.querySelector('button[type="submit"]');
+        const originalText = btn.innerHTML;
+
+        // Добавляем индикатор загрузки
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
+        btn.disabled = true;
+
+        const formData = new FormData(this);
+
+        console.log("Отправляемые данные:", Object.fromEntries(formData));
+
+        // Заглушка для формы: здесь должен быть реальный AJAX-запрос
+        setTimeout(() => {
+            alert('Ваше сообщение успешно отправлено! (Имитация)');
+            document.getElementById('contactForm').reset();
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }, 1500);
+
+        /*
+        // Реальный код отправки (раскомментировать при настройке бэкенда)
+        fetch('/contact/send', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams(formData)
+        }).then(response => {
+            if (response.ok) {
+                alert('Ваше сообщение успешно отправлено!');
+                document.getElementById('contactForm').reset();
+            } else {
+                alert('Произошла ошибка при отправке!');
             }
+        }).catch(error => {
+            alert('Ошибка сети!');
+        }).finally(() => {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
         });
-
-        document.getElementById('contactForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const btn = this.querySelector('button[type="submit"]');
-            const originalText = btn.innerHTML;
-
-            // Добавляем индикатор загрузки
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
-            btn.disabled = true;
-
-            const formData = new FormData(this);
-
-            console.log("Отправляемые данные:", Object.fromEntries(formData));
-
-            fetch('/contact/send', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams(formData) // Конвертируем в строку запроса
-            }).then(response => {
-                if (response.ok) {
-                    alert('Ваше сообщение успешно отправлено!');
-                    document.getElementById('contactForm').reset();
-                } else {
-                    alert('Произошла ошибка при отправке!');
-                }
-            }).catch(error => {
-                alert('Ошибка сети!');
-            }).finally(() => {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            });
-        });
-    </script>
+        */
+    });
+</script>
 </body>
 </html>

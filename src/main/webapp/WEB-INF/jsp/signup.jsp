@@ -4,18 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Запись в парикмахерскую | Регистрация</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Регистрация | Железнодорожные перевозки</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #6a4c93;
-            --secondary-color: #8a5a44;
-            --accent-color: #f8bbd0;
-            --light-color: #f9f9f9;
-            --dark-color: #333;
-            --success-color: #4caf50;
-            --error-color: #f44336;
+            --purple: #8A2BE2;
+            --dark-purple: #6A1B9A;
+            --light-purple: #E6E6FA;
+            --ivory: #FFFFF0;
+            --charcoal: #36454F;
+            --slate: #708090;
+            --success: #4CAF50;
+            --danger: #F44336;
         }
 
         * {
@@ -26,7 +27,7 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            background-color: var(--ivory);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -52,26 +53,35 @@
         }
 
         .card-header {
-            background: var(--primary-color);
+            background: var(--purple);
             color: white;
-            padding: 24px;
+            padding: 30px;
             text-align: center;
             position: relative;
         }
 
-        .card-header h2 {
-            font-weight: 600;
-            font-size: 1.8rem;
+        .card-header img {
+            height: 50px;
+            width: auto;
+            margin-bottom: 15px;
         }
 
-        .card-header::after {
+        .card-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: 1.8rem;
+            position: relative;
+        }
+
+        .card-header h2::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: white;
         }
 
         .card-body {
@@ -94,7 +104,7 @@
             position: absolute;
             left: 16px;
             top: 42px;
-            color: var(--primary-color);
+            color: var(--purple);
         }
 
         .form-control {
@@ -107,28 +117,29 @@
         }
 
         .form-control:focus {
-            border-color: var(--primary-color);
+            border-color: var(--purple);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(106, 76, 147, 0.2);
+            box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.2);
         }
 
         .btn {
             display: block;
             width: 100%;
             padding: 14px;
-            background: var(--primary-color);
+            background: var(--purple);
             color: white;
             border: none;
             border-radius: 8px;
             font-size: 16px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
         }
 
         .btn:hover {
-            background: #5a3d7d;
+            background: var(--dark-purple);
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
         }
 
         .btn:active {
@@ -144,26 +155,26 @@
         }
 
         .link {
-            color: var(--primary-color);
+            color: var(--purple);
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
         }
 
         .link:hover {
-            color: var(--secondary-color);
+            color: var(--dark-purple);
             text-decoration: underline;
         }
 
         .error-message {
-            color: var(--error-color);
+            color: var(--danger);
             font-size: 14px;
             margin-top: 4px;
             display: none;
         }
 
         .success-message {
-            color: var(--success-color);
+            color: var(--success);
             text-align: center;
             margin-bottom: 20px;
             font-weight: 500;
@@ -190,6 +201,7 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
+            <i class="fas fa-train" style="font-size: 3rem; color: white; margin-bottom: 15px;"></i>
             <h2>Создать аккаунт</h2>
         </div>
         <div class="card-body">
@@ -321,9 +333,9 @@
 
         // Анимация при фокусе
         $(".form-control").focus(function() {
-            $(this).parent().find("label").css("color", "var(--primary-color)");
+            $(this).parent().find("label").css("color", "var(--purple)");
         }).blur(function() {
-            $(this).parent().find("label").css("color", "var(--dark-color)");
+            $(this).parent().find("label").css("color", "var(--charcoal)");
         });
     });
 </script>

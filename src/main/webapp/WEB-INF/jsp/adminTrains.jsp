@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Стили CSS остаются прежними */
         :root {
             --purple: #8A2BE2;
             --dark-purple: #6A1B9A;
@@ -35,21 +34,18 @@
             line-height: 1.6;
         }
 
-        /* Основной лейаут */
         .admin-layout {
             display: grid;
             grid-template-columns: 280px 1fr;
             min-height: 100vh;
         }
 
-        /* Боковая панель - фиолетовый акцент */
         .admin-sidebar {
             background: linear-gradient(to bottom, #FFFFFF, #F8F8F8);
             box-shadow: 5px 0 15px rgba(0,0,0,0.05);
             border-right: 1px solid rgba(138, 43, 226, 0.3);
         }
 
-        /* Логотип и заголовок */
         .admin-header {
             padding: 30px 25px;
             border-bottom: 1px solid rgba(138, 43, 226, 0.2);
@@ -83,11 +79,6 @@
             width: 40px;
             height: 2px;
             background: var(--purple);
-        }
-
-        /* Навигация */
-        .admin-nav {
-            padding: 0 15px;
         }
 
         .nav-item {
@@ -125,13 +116,11 @@
             text-align: center;
         }
 
-        /* Основное содержимое */
         .admin-content {
             padding: 40px;
             background-color: #FFF;
         }
 
-        /* Заголовок страницы */
         .page-header {
             display: flex;
             justify-content: space-between;
@@ -158,15 +147,14 @@
             background: var(--purple);
         }
 
-        /* Карточки поездов */
-        .trains-grid { /* Переименовано */
+        .trains-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 25px;
             margin-bottom: 40px;
         }
 
-        .train-card{ /* Переименовано */
+        .train-card {
             background: #FFF;
             display: block;
             border-radius: 8px;
@@ -177,8 +165,12 @@
             color: black !important;
         }
 
+        .train-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
 
-        .train-image { /* Переименовано */
+        .train-image {
             height: 100px;
             background-color: #f6f6f6;
             display: flex;
@@ -186,14 +178,13 @@
             align-items: center;
             color: var(--purple);
             font-size: 2.5rem;
-            object-fit: cover;
         }
 
-        .train-body { /* Переименовано */
+        .train-body {
             padding: 20px;
         }
 
-        .train-title { /* Переименовано */
+        .train-title {
             font-family: 'Playfair Display', serif;
             font-size: 1.4rem;
             margin-bottom: 10px;
@@ -231,7 +222,6 @@
             margin-top: 15px;
         }
 
-        /* Кнопки и формы (стили не меняются) */
         .btn {
             padding: 8px 16px;
             border-radius: 4px;
@@ -280,8 +270,7 @@
             box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
         }
 
-        /* Форма добавления/редактирования */
-        .train-form { /* Переименовано */
+        .train-form {
             background: #FFF;
             padding: 30px;
             border-radius: 8px;
@@ -314,6 +303,53 @@
             outline: none;
             border-color: var(--purple);
             box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #FFF;
+            width: 500px;
+            max-width: 90%;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.2);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .modal-header {
+            padding: 20px;
+            background: var(--purple);
+            color: white;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            background: #f9f9f9;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -415,8 +451,14 @@
                         <input type="text" id="trainName" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="trainType" class="form-label">Тип поезда (Скоростной, Пассажирский, и т.д.)</label>
-                        <input type="text" id="trainType" class="form-control">
+                        <label for="trainType" class="form-label">Тип поезда</label>
+                        <select id="trainType" class="form-control">
+                            <option value="">Выберите тип</option>
+                            <option value="Пассажирский">Пассажирский</option>
+                            <option value="Скоростной">Скоростной</option>
+                            <option value="Экспресс">Экспресс</option>
+                            <option value="Местный">Местный</option>
+                        </select>
                     </div>
                 </div>
 
@@ -513,6 +555,15 @@
                     let errorMsg = 'Ошибка при сохранении поезда!';
                     if (xhr.status === 400 && xhr.responseJSON && xhr.responseJSON.message) {
                         errorMsg = 'Ошибка: ' + xhr.responseJSON.message;
+                    } else if (xhr.responseText) {
+                        try {
+                            const error = JSON.parse(xhr.responseText);
+                            if (error.message) {
+                                errorMsg = 'Ошибка: ' + error.message;
+                            }
+                        } catch (e) {
+                            errorMsg = 'Ошибка: ' + xhr.responseText;
+                        }
                     }
                     console.error('Ошибка при сохранении поезда:', errorMsg);
                     alert(errorMsg);
@@ -523,7 +574,16 @@
         // --- Редактирование ---
 
         $(document).on('click', '.edit-train', function() {
-            const trainId = $(this).data('id');
+            const trainIdStr = $(this).attr('data-id');
+            if (!trainIdStr || trainIdStr === '') {
+                alert('Ошибка: не удалось получить ID поезда');
+                return;
+            }
+            const trainId = parseInt(trainIdStr, 10);
+            if (isNaN(trainId) || trainId <= 0) {
+                alert('Ошибка: неверный ID поезда');
+                return;
+            }
 
             $.ajax({
                 url: '${pageContext.request.contextPath}/api/trains/' + trainId,
@@ -531,10 +591,10 @@
                 success: function(train) {
                     $('#formTitle').text('Редактировать поезд');
                     $('#trainId').val(train.id);
-                    $('#trainNumber').val(train.trainNumber);
-                    $('#trainName').val(train.trainName);
-                    $('#trainType').val(train.trainType);
-                    $('#totalSeats').val(train.totalSeats);
+                    $('#trainNumber').val(train.trainNumber || '');
+                    $('#trainName').val(train.trainName || '');
+                    $('#trainType').val(train.trainType || '');
+                    $('#totalSeats').val(train.totalSeats || '');
 
                     // Показать форму редактирования
                     $('#trainForm').show();
@@ -542,8 +602,12 @@
                         scrollTop: $('#trainForm').offset().top - 20
                     }, 300);
                 },
-                error: function() {
-                    alert('Ошибка при загрузке данных поезда.');
+                error: function(xhr) {
+                    let errorMsg = 'Ошибка при загрузке данных поезда.';
+                    if (xhr.status === 404) {
+                        errorMsg = 'Поезд не найден.';
+                    }
+                    alert(errorMsg);
                 }
             });
         });
@@ -552,12 +616,22 @@
 
         let trainToDelete = null;
         $(document).on('click', '.delete-train', function() {
-            trainToDelete = $(this).data('id');
+            const idStr = $(this).attr('data-id');
+            if (!idStr || idStr === '') {
+                alert('Ошибка: не удалось получить ID поезда');
+                return;
+            }
+            const id = parseInt(idStr, 10);
+            if (isNaN(id) || id <= 0) {
+                alert('Ошибка: неверный ID поезда');
+                return;
+            }
+            trainToDelete = id;
             $('#deleteModal').css('display', 'flex');
         });
 
         $('#cancelDeleteBtn').click(function() {
-            $('#deleteModal').hide();
+            $('#deleteModal').css('display', 'none');
             trainToDelete = null;
         });
 
@@ -568,7 +642,7 @@
                     type: 'DELETE',
                     success: function() {
                         alert('Поезд успешно удален!');
-                        $('#deleteModal').hide();
+                        $('#deleteModal').css('display', 'none');
                         trainToDelete = null;
                         loadTrains();
                     },
@@ -576,8 +650,19 @@
                         let errorMsg = 'Произошла ошибка при удалении поезда.';
                         if (xhr.status === 404) {
                             errorMsg = 'Поезд не найден.';
+                        } else if (xhr.responseText) {
+                            try {
+                                const error = JSON.parse(xhr.responseText);
+                                if (error.message) {
+                                    errorMsg = 'Ошибка: ' + error.message;
+                                }
+                            } catch (e) {
+                                errorMsg = 'Ошибка: ' + xhr.responseText;
+                            }
                         }
                         alert(errorMsg);
+                        $('#deleteModal').css('display', 'none');
+                        trainToDelete = null;
                     }
                 });
             }
@@ -595,12 +680,16 @@
                     trainsData = Array.isArray(response) ? response : [];
 
                     if (!trainsData || trainsData.length === 0) {
-                        $('.trains-grid').html('<p>Нет доступных поездов.</p>');
+                        $('.trains-grid').html('<p style="padding: 20px; text-align: center; color: var(--slate);">Нет доступных поездов. Добавьте первый поезд.</p>');
                         return;
                     }
 
                     trainsData.forEach(function(train) {
-                        const id = train.id || '';
+                        const id = train.id ? train.id : null;
+                        if (!id) {
+                            console.warn('Поезд без ID пропущен:', train);
+                            return;
+                        }
 
                         const trainCard =
                             '<div class="train-card">' +
@@ -628,14 +717,15 @@
                         $('.trains-grid').append(trainCard);
                     });
                 },
-                error: function() {
-                    $('.trains-grid').html('<p class="text-danger">Ошибка загрузки списка поездов.</p>');
+                error: function(xhr) {
+                    console.error('Ошибка загрузки поездов:', xhr);
+                    $('.trains-grid').html('<p style="color: var(--danger); text-align: center; padding: 20px;">Ошибка загрузки списка поездов.</p>');
                 }
             });
         }
 
         // --- Экспорт в Excel ---
-        document.getElementById('exportExcelBtn').addEventListener('click', function () {
+        $('#exportExcelBtn').click(function () {
             if (!trainsData || trainsData.length === 0) {
                 alert('Нет данных для экспорта.');
                 return;

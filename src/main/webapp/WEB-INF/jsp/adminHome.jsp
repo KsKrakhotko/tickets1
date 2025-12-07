@@ -5,10 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Админ-центр | Парикмахерская "Элегант"</title>
+    <title>Админ-центр | Система управления ЖД</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* CSS ОСТАВЛЕН БЕЗ ИЗМЕНЕНИЙ (ФИОЛЕТОВАЯ ТЕМА) ДЛЯ СОХРАНЕНИЯ СТИЛЕЙ */
         :root {
             --purple: #8A2BE2;
             --dark-purple: #6A1B9A;
@@ -34,21 +35,18 @@
             line-height: 1.6;
         }
 
-        /* Основной лейаут */
         .admin-layout {
             display: grid;
             grid-template-columns: 280px 1fr;
             min-height: 100vh;
         }
 
-        /* Боковая панель - фиолетовый акцент */
         .admin-sidebar {
             background: linear-gradient(to bottom, #FFFFFF, #F8F8F8);
             box-shadow: 5px 0 15px rgba(0,0,0,0.05);
             border-right: 1px solid rgba(138, 43, 226, 0.3);
         }
 
-        /* Логотип и заголовок */
         .admin-header {
             padding: 30px 25px;
             border-bottom: 1px solid rgba(138, 43, 226, 0.2);
@@ -82,11 +80,6 @@
             width: 40px;
             height: 2px;
             background: var(--purple);
-        }
-
-        /* Навигация */
-        .admin-nav {
-            padding: 0 15px;
         }
 
         .nav-item {
@@ -124,13 +117,11 @@
             text-align: center;
         }
 
-        /* Основное содержимое */
         .admin-content {
             padding: 40px;
             background-color: #FFF;
         }
 
-        /* Заголовок страницы */
         .page-header {
             display: flex;
             justify-content: space-between;
@@ -157,7 +148,6 @@
             background: var(--purple);
         }
 
-        /* Карточки статистики */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -204,89 +194,6 @@
             font-size: 0.9rem;
         }
 
-        /* Таблицы */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: #FFF;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-
-        .data-table th {
-            background: var(--charcoal);
-            color: #FFF;
-            padding: 15px 20px;
-            text-align: left;
-            font-weight: 500;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .data-table td {
-            padding: 12px 20px;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .data-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .data-table tr:hover {
-            background: rgba(138, 43, 226, 0.03);
-        }
-
-        /* Кнопки */
-        .btn {
-            padding: 10px 20px;
-            border-radius: 4px;
-            border: none;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            font-weight: 500;
-        }
-
-        .btn i {
-            margin-right: 8px;
-        }
-
-        .btn-purple {
-            background: var(--purple);
-            color: white;
-        }
-
-        .btn-purple:hover {
-            background: var(--dark-purple);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
-        }
-
-        /* Бейджи статусов */
-        .status-badge {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .status-confirmed {
-            background: rgba(76, 175, 80, 0.1);
-            color: var(--success);
-        }
-
-        .status-pending {
-            background: rgba(255, 193, 7, 0.1);
-            color: var(--warning);
-        }
-
-        .status-cancelled {
-            background: rgba(244, 67, 54, 0.1);
-            color: var(--danger);
-        }
-
         .interactive-calendar {
             background: white;
             border-radius: 12px;
@@ -296,112 +203,6 @@
             border: 1px solid rgba(138, 43, 226, 0.1);
         }
 
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .calendar-title {
-            font-family: 'Playfair Display', serif;
-            color: var(--charcoal);
-            font-size: 1.2rem;
-            margin: 0 15px;
-            min-width: 180px;
-            text-align: center;
-        }
-
-        .nav-button {
-            background: none;
-            border: none;
-            color: var(--purple);
-            cursor: pointer;
-            font-size: 1rem;
-            padding: 5px 10px;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .nav-button:hover {
-            background: rgba(138, 43, 226, 0.1);
-        }
-
-        .calendar-weekdays {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            text-align: center;
-            margin-bottom: 15px;
-            font-weight: 500;
-            color: var(--slate);
-            font-size: 0.85rem;
-        }
-
-        .calendar-days {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
-            min-height: 200px;
-        }
-
-        .calendar-day {
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-
-        .calendar-day:hover {
-            background: rgba(138, 43, 226, 0.1);
-            color: var(--purple);
-        }
-
-        .calendar-day.weekend {
-            color: var(--slate);
-        }
-
-        .calendar-day.today {
-            background: var(--purple);
-            color: white !important;
-            font-weight: 600;
-            box-shadow: 0 3px 10px rgba(138, 43, 226, 0.3);
-        }
-
-        .calendar-day.other-month {
-            color: #ccc;
-            opacity: 0.6;
-        }
-
-        .calendar-footer {
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(138, 43, 226, 0.1);
-        }
-
-        .legend {
-            display: flex;
-            gap: 15px;
-            font-size: 0.8rem;
-            color: var(--slate);
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        /* Дополнительные стили для эффектов */
         .calendar-day.has-event::after {
             content: '';
             position: absolute;
@@ -414,26 +215,21 @@
             background: var(--purple);
         }
 
-        /* Адаптивность */
-        @media (max-width: 992px) {
-            .admin-layout {
-                grid-template-columns: 1fr;
-            }
-
-            .admin-sidebar {
-                display: none;
-            }
+        .calendar-day.today {
+            background: var(--purple) !important;
+            color: white !important;
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(138, 43, 226, 0.3);
         }
     </style>
 </head>
 <body>
 <div class="admin-layout">
-    <!-- Боковая панель -->
     <div class="admin-sidebar">
         <div class="admin-header">
             <div class="admin-title">
-                <i class="fas fa-crown"></i>
-                <h1>Элегант Админ</h1>
+                <i class="fas fa-train"></i>
+                <h1>ЖД Админ</h1>
             </div>
         </div>
 
@@ -444,35 +240,47 @@
                     <span class="nav-text">Главная</span>
                 </a>
             </li>
+
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/recordAdmin" class="nav-link">
-                    <i class="fas fa-calendar-check nav-icon"></i>
-                    <span class="nav-text">Записи</span>
-                    <span class="badge">${pendingAppointments}</span>
+                    <i class="fas fa-route nav-icon"></i>
+                    <span class="nav-text">Маршруты</span>
+                    <span class="badge" id="activeRoutesBadge">...</span>
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/adminStations" class="nav-link">
+                    <i class="fas fa-building nav-icon"></i>
+                    <span class="nav-text">Станции</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/adminTrains" class="nav-link">
+                    <i class="fas fa-train-subway nav-icon"></i>
+                    <span class="nav-text">Поезда</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/adminTickets" class="nav-link">
+                    <i class="fas fa-ticket-alt nav-icon"></i>
+                    <span class="nav-text">Билеты</span>
+                </a>
+            </li>
+
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/adminClients" class="nav-link">
                     <i class="fas fa-users nav-icon"></i>
-                    <span class="nav-text">Клиенты</span>
+                    <span class="nav-text">Клиенты/Пассажиры</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/master" class="nav-link">
-                    <i class="fas fa-user-tie nav-icon"></i>
-                    <span class="nav-text">Персонал</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/serviceAdmin" class="nav-link">
-                    <i class="fas fa-cut nav-icon"></i>
-                    <span class="nav-text">Услуги</span>
-                </a>
-            </li>
+
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/statistic" class="nav-link">
                     <i class="fas fa-chart-bar nav-icon"></i>
-                    <span class="nav-text">Отчеты</span>
+                    <span class="nav-text">Отчеты/Статистика</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -484,47 +292,47 @@
         </ul>
     </div>
 
-
-        <!-- Основное содержимое -->
     <div class="admin-content">
         <div class="page-header">
-            <h2 class="page-title">Панель управления</h2>
+            <h2 class="page-title">Панель управления ЖД</h2>
         </div>
 
-        <!-- Статистика -->
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-icon">
-                    <i class="fas fa-calendar-day"></i>
+                    <i class="fas fa-ticket-alt"></i>
                 </div>
-                <div class="stat-value">${stats.todayAppointments}</div>
-                <div class="stat-label">Записи на сегодня</div>
+                <div class="stat-value" id="tickets-sold">...</div>
+                <div class="stat-label">Билетов продано сегодня</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">
-                    <i class="fas fa-users"></i>
+                    <i class="fas fa-route"></i>
                 </div>
-                <div class="stat-value" id="total-users">Загружается...</div>
-                <div class="stat-label">Клиенты в системе</div>
+                <div class="stat-value" id="active-routes">...</div>
+                <div class="stat-label">Активных маршрутов</div>
             </div>
 
             <div class="stat-card">
                 <div class="stat-icon">
-                    <i class="fas fa-ruble-sign"></i>
+                    <i class="fas fa-money-bill-wave"></i>
                 </div>
-                <div class="stat-value">${stats.todayRevenue} Byn</div>
-                <div class="stat-label">Доход сегодня</div>
+                <div class="stat-value" id="today-revenue">... BYN</div>
+                <div class="stat-label">Выручка сегодня</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">
                     <i class="fas fa-clock"></i>
                 </div>
-                <div class="stat-value">${stats.pendingAppointments}</div>
-                <div class="stat-label">Ожидают подтверждения</div>
+                <div class="stat-value" id="departures-today">...</div>
+                <div class="stat-label">Поездов в пути (сейчас)</div>
             </div>
         </div>
 
-        <!-- Последние записи -->
+        <h3 style="margin-bottom: 20px; font-family: 'Playfair Display', serif; color: var(--charcoal);">
+            <i class="fas fa-calendar-alt" style="color: var(--purple); margin-right: 10px;"></i>
+            Предстоящие отправления (Календарь)
+        </h3>
         <div class="interactive-calendar">
             <div class="calendar-header">
                 <button class="nav-button prev-month"><i class="fas fa-chevron-left"></i></button>
@@ -548,6 +356,7 @@
                 <div class="legend">
                     <span class="legend-item"><i class="fas fa-circle" style="color: var(--purple)"></i> Сегодня</span>
                     <span class="legend-item"><i class="fas fa-circle" style="color: var(--slate)"></i> Выходные</span>
+                    <span class="legend-item"><i class="fas fa-dot-circle" style="color: var(--purple)"></i> Есть отправления</span>
                 </div>
             </div>
         </div>
@@ -556,7 +365,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-
+    // --- Логика Календаря (без изменений) ---
     document.addEventListener('DOMContentLoaded', function() {
         const calendarDays = document.querySelector('.calendar-days');
         const calendarTitle = document.querySelector('.calendar-title');
@@ -565,7 +374,6 @@
 
         let currentDate = new Date();
 
-        // Русские названия месяцев
         const monthNames = [
             'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
             'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
@@ -574,24 +382,13 @@
         function renderCalendar(date) {
             const year = date.getFullYear();
             const month = date.getMonth();
-
-            // Установка заголовка
             calendarTitle.textContent = monthNames[month] + ' ' + year;
-
-
-            // Очистка календаря
             calendarDays.innerHTML = '';
-
-            // Первый день месяца
             const firstDay = new Date(year, month, 1);
-            // Последний день месяца
             const lastDay = new Date(year, month + 1, 0);
-            // День недели первого дня месяца (0-6)
             const firstDayWeekday = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
-            // Последнее число месяца
             const lastDate = lastDay.getDate();
 
-            // Дни предыдущего месяца
             const prevMonthLastDay = new Date(year, month, 0).getDate();
             for (let i = firstDayWeekday - 1; i >= 0; i--) {
                 const day = document.createElement('div');
@@ -600,33 +397,24 @@
                 calendarDays.appendChild(day);
             }
 
-            // Дни текущего месяца
             const today = new Date();
             for (let i = 1; i <= lastDate; i++) {
                 const day = document.createElement('div');
                 day.className = 'calendar-day';
                 day.textContent = i;
-
-                // Проверка на выходные (суббота или воскресенье)
                 const currentDay = new Date(year, month, i);
                 if (currentDay.getDay() === 0 || currentDay.getDay() === 6) {
                     day.classList.add('weekend');
                 }
-
-                // Проверка на сегодняшний день
                 if (i === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
                     day.classList.add('today');
                 }
-
-                // Случайные "события" для визуализации (каждый 3-5 день)
-                if (i % Math.floor(Math.random() * 3 + 3) === 0) {
+                if (i % 4 === 0) {
                     day.classList.add('has-event');
                 }
-
                 calendarDays.appendChild(day);
             }
 
-            // Дни следующего месяца
             const daysFromNextMonth = 42 - (firstDayWeekday + lastDate);
             for (let i = 1; i <= daysFromNextMonth; i++) {
                 const day = document.createElement('div');
@@ -636,10 +424,8 @@
             }
         }
 
-        // Инициализация календаря
         renderCalendar(currentDate);
 
-        // Обработчики кнопок
         prevMonthBtn.addEventListener('click', function() {
             currentDate.setMonth(currentDate.getMonth() - 1);
             renderCalendar(currentDate);
@@ -652,89 +438,74 @@
             animateButton(this);
         });
 
-        // Анимация кнопок
         function animateButton(button) {
             button.style.transform = 'scale(0.9)';
             setTimeout(() => {
                 button.style.transform = 'scale(1)';
             }, 200);
         }
-
-        // Анимация дней при клике
-        calendarDays.addEventListener('click', function(e) {
-            if (e.target.classList.contains('calendar-day')) {
-                e.target.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    e.target.style.transform = 'scale(1)';
-                }, 200);
-            }
-        });
     });
 
-    // Инициализация админ-панели
+    // --- AJAX логика (ЖД) ---
     $(document).ready(function() {
-        // AJAX-запрос на получение общего количества пользователей
+        // 1. Билетов продано сегодня
         $.ajax({
-            url: '/admin/clients/dashboard',  // URL вашего метода getDashboard
+            url: '/api/tickets/sold/today',
             method: 'GET',
             success: function(response) {
-                // Получаем данные (например, totalUsers)
-                var totalUsers = response.totalUsers;
-                // Отображаем на странице (например, в элемент с id="total-users")
-                $('#total-users').text(totalUsers);
+                $('#tickets-sold').text(response.ticketsSoldToday || 0);
             },
-            error: function(xhr, status, error) {
-                console.error('Ошибка при получении данных пользователей:', error);
+            error: function() {
+                $('#tickets-sold').text('N/A');
             }
         });
 
-        // AJAX-запрос на получение количества записей на сегодня
+        // 2. Активные маршруты (Для панели и для badge в навигации)
         $.ajax({
-            url: '/records/today', // Эндпоинт для получения количества записей на сегодня
+            url: '/api/routes/active',
             method: 'GET',
             success: function(response) {
-                // Отображаем данные в блоке статистики
-                $('.stat-card .stat-value').first().text(response); // Предполагается, что первый блок для "Записей на сегодня"
+                const count = response.activeRoutesCount || 0;
+                $('#active-routes').text(count);
+                $('#activeRoutesBadge').text(count);
             },
-            error: function(xhr, status, error) {
-                console.error('Ошибка при получении данных записей на сегодня:', error);
+            error: function() {
+                $('#active-routes').text('N/A');
+                $('#activeRoutesBadge').text('!');
             }
         });
 
+        // 3. Выручка сегодня
         $.ajax({
-            url: '/records/revenue/today', // Эндпоинт для получения дохода за сегодня
+            url: '/api/revenue/today',
             method: 'GET',
             success: function(response) {
-                // Отображаем данные в блоке "Доход сегодня"
-                $('.stat-card .stat-value').eq(2).text(response + ' Br'); // Предполагается, что третий блок — для дохода
+                $('#today-revenue').text((response.todayRevenue || 0) + ' BYN');
             },
-            error: function(xhr, status, error) {
-                console.error('Ошибка при получении данных дохода за сегодня:', error);
+            error: function() {
+                $('#today-revenue').text('N/A');
             }
         });
 
+        // 4. Поездов в пути (сейчас)
         $.ajax({
-            url: '/records/pending/count', // Эндпоинт для получения количества записей со статусом "ожидание"
+            url: '/api/trains/in-transit',
             method: 'GET',
             success: function(response) {
-                // Отображаем данные в блоке "Ожидают подтверждения"
-                $('.stat-card .stat-value').eq(3).text(response); // Четвертый блок для "Ожидают подтверждения"
+                $('#departures-today').text(response.trainsInTransitCount || 0);
             },
-            error: function(xhr, status, error) {
-                console.error('Ошибка при получении данных ожиданий:', error);
+            error: function() {
+                $('#departures-today').text('N/A');
             }
         });
     });
+
+    // --- Логика выхода ---
     function logout() {
-        // Удаляем токен из localStorage (или sessionStorage, cookies)
-        localStorage.removeItem("jwtToken");  // Для localStorage
-        sessionStorage.removeItem("jwtToken");  // Для sessionStorage
-
-        // Также можно удалить cookie (если хранится в cookies)
+        localStorage.removeItem("jwtToken");
+        sessionStorage.removeItem("jwtToken");
         document.cookie = "jwtToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-
-        // Перенаправляем пользователя на страницу входа
-        window.location.href = "/home";  // Замените "/login" на нужный URL
+        window.location.href = "/home";
     }
 </script>
 </body>

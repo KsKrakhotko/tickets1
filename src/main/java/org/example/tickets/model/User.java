@@ -1,5 +1,6 @@
 package org.example.tickets.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,7 @@ public class User {
     private Long id;
 
     private String username;
+    @JsonIgnore
     private String password;
     private String email;
     @Enumerated(EnumType.STRING)

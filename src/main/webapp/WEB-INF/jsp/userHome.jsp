@@ -5,19 +5,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Личный кабинет | Парикмахерская "Элегант"</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Личный кабинет | Железнодорожные перевозки</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #6a4c93;
-            --secondary-color: #8a5a44;
-            --accent-color: #f8bbd0;
-            --light-color: #f9f9f9;
-            --dark-color: #333;
-            --sidebar-width: 280px;
-            --sidebar-collapsed-width: 80px;
-            --transition-speed: 0.3s;
+            --purple: #8A2BE2;
+            --dark-purple: #6A1B9A;
+            --light-purple: #E6E6FA;
+            --ivory: #FFFFF0;
+            --charcoal: #36454F;
+            --slate: #708090;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --danger: #F44336;
         }
 
         * {
@@ -28,212 +29,197 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #f5f7fa;
-            color: var(--dark-color);
-            overflow-x: hidden;
-            transition: all var(--transition-speed) ease;
+            background-color: var(--ivory);
+            color: var(--charcoal);
+            line-height: 1.6;
         }
 
-        /* Сайдбар */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;
-            width: var(--sidebar-width);
-            background: linear-gradient(180deg, var(--primary-color) 0%, #5a3d7d 100%);
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
-            transition: width var(--transition-speed) ease;
-            z-index: 1000;
-            overflow: hidden;
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
         }
 
-        .sidebar.collapsed {
-            width: var(--sidebar-collapsed-width);
+        .admin-sidebar {
+            background: linear-gradient(to bottom, #FFFFFF, #F8F8F8);
+            box-shadow: 5px 0 15px rgba(0,0,0,0.05);
+            border-right: 1px solid rgba(138, 43, 226, 0.3);
         }
 
-        .sidebar-header {
+        .admin-header {
+            padding: 30px 25px;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .admin-title {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 20px;
-            height: 80px;
-            background-color: rgba(0, 0, 0, 0.1);
+            font-family: 'Playfair Display', serif;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            color: white;
-            text-decoration: none;
-            font-size: 1.5rem;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .logo-icon {
+        .admin-title i {
             font-size: 2rem;
             margin-right: 15px;
-            color: var(--accent-color);
+            color: var(--purple);
         }
 
-        .logo-text {
-            opacity: 1;
-            transition: opacity var(--transition-speed);
-        }
-
-        .sidebar.collapsed .logo-text {
-            opacity: 0;
-        }
-
-        .toggle-btn {
-            background: none;
-            border: none;
-            color: white;
+        .admin-title h1 {
             font-size: 1.5rem;
-            cursor: pointer;
-            transition: transform var(--transition-speed);
+            font-weight: 600;
+            color: var(--charcoal);
+            position: relative;
         }
 
-        .sidebar.collapsed .toggle-btn {
-            transform: rotate(180deg);
-        }
-
-        .nav-links {
-            padding: 20px 0;
-            height: calc(100vh - 80px);
-            overflow-y: auto;
+        .admin-title h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--purple);
         }
 
         .nav-item {
-            list-style: none;
             margin-bottom: 5px;
-            padding: 0 15px;
         }
 
         .nav-link {
             display: flex;
             align-items: center;
-            padding: 15px 20px;
-            color: rgba(255, 255, 255, 0.8);
+            padding: 14px 20px;
+            color: var(--slate);
             text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s;
-            white-space: nowrap;
-        }
-
-        .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-
-        .nav-link.active {
-            background-color: var(--accent-color);
-            color: var(--primary-color);
+            border-radius: 4px;
+            transition: all 0.3s ease;
             font-weight: 500;
         }
 
-        .nav-icon {
-            font-size: 1.3rem;
-            margin-right: 20px;
-            min-width: 24px;
+        .nav-link:hover {
+            background: rgba(138, 43, 226, 0.1);
+            color: var(--charcoal);
+            transform: translateX(5px);
+        }
+
+        .nav-link.active {
+            background: rgba(138, 43, 226, 0.15);
+            color: var(--charcoal);
+            border-left: 3px solid var(--purple);
+            font-weight: 600;
+        }
+
+        .nav-link i {
+            width: 24px;
+            margin-right: 12px;
+            color: var(--purple);
             text-align: center;
         }
 
-        .nav-text {
-            opacity: 1;
-            transition: opacity var(--transition-speed);
+        .admin-content {
+            padding: 40px;
+            background-color: #FFF;
         }
 
-        .sidebar.collapsed .nav-text {
-            opacity: 0;
-        }
-
-        /* Основное содержимое */
-        .main-content {
-            margin-left: var(--sidebar-width);
-            padding: 30px;
-            min-height: 100vh;
-            transition: margin-left var(--transition-speed);
-        }
-
-        .sidebar.collapsed ~ .main-content {
-            margin-left: var(--sidebar-collapsed-width);
-        }
-
-        /* Заголовок */
-        .header {
+        .page-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
             padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.2);
         }
 
         .page-title {
-            font-size: 2rem;
-            color: var(--primary-color);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--charcoal);
+            position: relative;
         }
 
-        /* Профиль пользователя */
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: var(--purple);
+        }
+
         .profile-card {
-            background: white;
+            background: #FFF;
             border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            margin-bottom: 30px;
+            padding: 40px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            border-top: 4px solid var(--purple);
             display: flex;
             align-items: center;
+            gap: 30px;
         }
 
         .profile-avatar {
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            object-fit: cover;
-            margin-right: 30px;
-            border: 5px solid var(--accent-color);
+            border: 5px solid var(--light-purple);
+            flex-shrink: 0;
+        }
+
+        .profile-info {
+            flex: 1;
         }
 
         .profile-info h2 {
+            font-family: 'Playfair Display', serif;
             font-size: 1.8rem;
             margin-bottom: 10px;
-            color: var(--primary-color);
+            color: var(--charcoal);
         }
 
         .profile-info p {
-            color: #666;
+            color: var(--slate);
             margin-bottom: 8px;
         }
 
         .profile-info .email {
             font-weight: 500;
-            color: var(--secondary-color);
+            color: var(--purple);
+        }
+
+        .info {
+            flex: 1;
+        }
+
+        .info p {
+            margin-bottom: 10px;
+            color: var(--slate);
+        }
+
+        .info strong {
+            color: var(--charcoal);
         }
 
         .edit-profile-btn {
-            background: var(--primary-color);
+            background: var(--purple);
             color: white;
             border: none;
             border-radius: 8px;
-            padding: 10px 20px;
+            padding: 12px 24px;
             font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s;
             margin-top: 15px;
             display: inline-flex;
             align-items: center;
+            gap: 8px;
         }
 
         .edit-profile-btn:hover {
-            background: #5a3d7d;
+            background: var(--dark-purple);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(106, 76, 147, 0.3);
-        }
-
-        .edit-profile-btn i {
-            margin-right: 8px;
+            box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
         }
 
         .modal {
@@ -245,121 +231,100 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
         }
 
         .modal-content {
             background-color: #fff;
-            margin: 10% auto;
-            padding: 20px;
-            border-radius: 8px;
-            width: 90%;
+            padding: 40px;
+            border-radius: 12px;
             max-width: 500px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            position: relative;
         }
 
         .close-btn {
-            float: right;
-            font-size: 24px;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
             cursor: pointer;
-            color: #aaa;
+            color: var(--slate);
+            transition: color 0.3s;
         }
 
         .close-btn:hover {
-            color: #333;
+            color: var(--charcoal);
+        }
+
+        .modal-content h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--charcoal);
+            margin-bottom: 20px;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--charcoal);
         }
 
         .form-group input {
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.1);
         }
 
         .save-btn {
-            background-color: var(--primary-color);
+            background: var(--purple);
             color: white;
-            padding: 10px 15px;
+            padding: 12px 24px;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .save-btn:hover {
-            background-color: var(--primary-color);
+            background: var(--dark-purple);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
         }
 
-        .cancel-btn {
-            background: none;
-            border: none;
-            color: var(--error-color);
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-
-        .cancel-btn:hover {
-            text-decoration: underline;
-        }
-
-        /* Адаптивность */
         @media (max-width: 992px) {
-            .sidebar {
-                width: var(--sidebar-collapsed-width);
+            .admin-layout {
+                grid-template-columns: 1fr;
             }
 
-            .sidebar .logo-text,
-            .sidebar .nav-text {
-                opacity: 0;
-            }
-
-            .main-content {
-                margin-left: var(--sidebar-collapsed-width);
-            }
-
-            .sidebar:hover {
-                width: var(--sidebar-width);
-            }
-
-            .sidebar:hover .logo-text,
-            .sidebar:hover .nav-text {
-                opacity: 1;
+            .admin-sidebar {
+                display: none;
             }
         }
 
         @media (max-width: 768px) {
-            .sidebar {
-                width: 0;
-            }
-
-            .main-content {
-                margin-left: 0;
+            .admin-content {
                 padding: 20px;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-                position: fixed;
-                top: 20px;
-                left: 20px;
-                z-index: 1100;
-                background: var(--primary-color);
-                color: white;
-                border: none;
-                border-radius: 50%;
-                width: 50px;
-                height: 50px;
-                font-size: 1.5rem;
-                cursor: pointer;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             }
 
             .profile-card {
@@ -368,214 +333,47 @@
             }
 
             .profile-avatar {
-                margin-right: 0;
-                margin-bottom: 20px;
+                margin: 0 auto 20px;
             }
-        }
-
-        /* Стили для карусели баннеров */
-        .banner-carousel {
-            position: relative;
-            max-width: 1200px;
-            width: 100%;
-            height: 300px; /* Фиксированная высота */
-            margin: 20px auto 30px;
-            overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .banner-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-        }
-
-        .banner-slide.active {
-            opacity: 1;
-            z-index: 1;
-        }
-
-        .banner-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .banner-text {
-            position: absolute;
-            bottom: 30px;
-            left: 30px;
-            color: white;
-            font-size: 28px;
-            font-weight: 600;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 12px 25px;
-            border-radius: 8px;
-            max-width: 80%;
-        }
-
-        .carousel-prev, .carousel-next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(255, 255, 255, 0.3);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 24px;
-            z-index: 10;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .carousel-prev:hover, .carousel-next:hover {
-            background-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .carousel-prev {
-            left: 20px;
-        }
-
-        .carousel-next {
-            right: 20px;
-        }
-
-        .carousel-dots {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            z-index: 10;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.5);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .dot.active, .dot:hover {
-            background-color: white;
-            transform: scale(1.2);
-        }
-
-        /* Адаптивность для карусели */
-        @media (max-width: 768px) {
-            .banner-carousel {
-                height: 200px;
-                border-radius: 8px;
-            }
-
-            .banner-text {
-                font-size: 18px;
-                bottom: 15px;
-                left: 15px;
-                padding: 8px 15px;
-            }
-
-            .carousel-prev, .carousel-next {
-                width: 40px;
-                height: 40px;
-                font-size: 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .banner-carousel {
-                height: 150px;
-            }
-
-            .banner-text {
-                font-size: 14px;
-                bottom: 10px;
-                left: 10px;
-                padding: 5px 10px;
-            }
-        }
-
-        /* Анимации */
-        @keyframes fadeIn {
-            from {opacity: 0.4}
-            to {opacity: 1}
-        }
-
-        .profile-card, .info-card, .appointments-table {
-            animation: fadeIn 0.6s ease-out;
-        }
-        .info {
-            margin-left: 340px;
-            margin-bottom: 70px;
         }
     </style>
 </head>
 <body>
-    <!-- Боковая панель -->
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <a href="/" class="logo">
-                <i class="fas fa-scissors logo-icon"></i>
-                <span class="logo-text">Элегант</span>
-            </a>
-            <button class="toggle-btn" onclick="toggleSidebar()">
-                <i class="fas fa-angle-left"></i>
-            </button>
+<div class="admin-layout">
+    <div class="admin-sidebar">
+        <div class="admin-header">
+            <div class="admin-title">
+                <i class="fas fa-train"></i>
+                <h1>ЖД-Портал</h1>
+            </div>
         </div>
 
         <ul class="nav-links">
             <li class="nav-item">
-                <a href="/serviceUser" class="nav-link">
-                    <i class="fas fa-cut nav-icon"></i>
-                    <span class="nav-text">Услуги</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/userMaster" class="nav-link">
-                    <i class="fas fa-user-tie nav-icon"></i>
-                    <span class="nav-text">Мастера</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/booking" class="nav-link">
-                    <i class="fas fa-calendar-check nav-icon"></i>
-                    <span class="nav-text">Запись</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/video" class="nav-link">
-                    <i class="fas fa-spa nav-icon"></i>
-                    <span class="nav-text">Уход за волосами</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/reviews" class="nav-link">
-                    <i class="fas fa-star nav-icon"></i>
-                    <span class="nav-text">Отзывы</span>
-                </a>
-            </li>
-            <li class="nav-item" style="margin-top: 30px;">
-                <a href="/profile" class="nav-link active">
+                <a href="${pageContext.request.contextPath}/userHome" class="nav-link active">
                     <i class="fas fa-user nav-icon"></i>
                     <span class="nav-text">Профиль</span>
                 </a>
             </li>
             <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/serviceUser" class="nav-link">
+                    <i class="fas fa-route nav-icon"></i>
+                    <span class="nav-text">Маршруты</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/booking" class="nav-link">
+                    <i class="fas fa-ticket-alt nav-icon"></i>
+                    <span class="nav-text">Мои билеты</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/reviews" class="nav-link">
+                    <i class="fas fa-star nav-icon"></i>
+                    <span class="nav-text">Отзывы</span>
+                </a>
+            </li>
+            <li class="nav-item" style="margin-top: 30px;">
                 <a href="javascript:void(0);" class="nav-link" onclick="logout()">
                     <i class="fas fa-sign-out-alt nav-icon"></i>
                     <span class="nav-text">Выход</span>
@@ -584,16 +382,15 @@
         </ul>
     </div>
 
-    <!-- Основное содержимое -->
-    <div class="main-content">
-        <div class="header">
-            <h1 class="page-title">Личный кабинет</h1>
+    <div class="admin-content">
+        <div class="page-header">
+            <h2 class="page-title">Личный кабинет</h2>
         </div>
 
-        <!-- Карточка профиля -->
         <div class="profile-card">
-            <img src="https://yt3.ggpht.com/ytc/AKedOLTN8rWKo0IWth4023uuLP2iPNUKeKHdnz9nilOdvQ=s900-c-k-c0x00ffffff-no-rj"
-                 alt="Аватар" class="profile-avatar">
+            <div class="profile-avatar" style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--purple) 0%, var(--dark-purple) 100%); display: flex; align-items: center; justify-content: center; border: 5px solid var(--light-purple); flex-shrink: 0;">
+                <i class="fas fa-user" style="font-size: 3rem; color: white;"></i>
+            </div>
             <div class="profile-info" th:if="${user != null}">
                 <h2 th:text="${user.username}"></h2>
                 <p class="email" th:text="${user.email}"></p>
@@ -606,28 +403,9 @@
                 <p><strong>Телефон:</strong> <span class="phone-number"></span></p>
             </div>
         </div>
-
-        <!-- Карусель баннеров -->
-        <div class="banner-carousel">
-            <div class="banner-slide active">
-                <img src="https://sun9-25.userapi.com/impf/X7jGvos6Yl2CyFtzRjjvjvkKqVCucxXr28zp_A/vUcKzVPmP2I.jpg?size=1818x606&quality=95&crop=270,0,1200,400&sign=3ddf30b412768c244391465f50068219&type=cover_group" alt="Новые стили">
-            </div>
-            <div class="banner-slide">
-                <img src="https://sun9-10.userapi.com/impf/T74zRYbGFA2Fn-RdSNrwOHoMMXpYycBZNrdqGA/ZqBEeJ5DZ_U.jpg?size=1818x606&quality=95&crop=0,0,1590,530&sign=45400adf44a9ca28d042cd57dcf8e58c&type=cover_group" alt="Скидки">
-            </div>
-            <div class="banner-slide">
-                <img src="https://sun9-41.userapi.com/c841124/v841124579/23b75/tKQLZWl-y4w.jpg" alt="Мастер-классы">
-            </div>
-            <button class="carousel-prev" onclick="moveSlide(-1)">&#10094;</button>
-            <button class="carousel-next" onclick="moveSlide(1)">&#10095;</button>
-            <div class="carousel-dots">
-                <span class="dot active" onclick="currentSlide(1)"></span>
-                <span class="dot" onclick="currentSlide(2)"></span>
-                <span class="dot" onclick="currentSlide(3)"></span>
             </div>
         </div>
 
-        <!-- Форма для редактирования -->
         <div id="profileModal" class="modal">
             <div class="modal-content">
                 <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -646,94 +424,19 @@
                     </button>
                 </form>
             </div>
-        </div>
-
     </div>
 
     <script>
-        // Переключение боковой панели
-        function toggleSidebar() {
-            document.querySelector('.sidebar').classList.toggle('collapsed');
-        }
-
         function logout() {
-            // Удаляем токен из localStorage (или sessionStorage, cookies)
             localStorage.removeItem("jwtToken");
             sessionStorage.removeItem("jwtToken");
             document.cookie = "jwtToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
             window.location.href = "/home";
         }
 
-        // Мобильное меню
-        function toggleMobileMenu() {
-            const sidebar = document.querySelector('.sidebar');
-            if (sidebar.style.width === '0px' || !sidebar.style.width) {
-                sidebar.style.width = '280px';
-            } else {
-                sidebar.style.width = '0';
-            }
-        }
-
-        // Закрытие меню при клике вне его области
-        document.addEventListener('click', function (event) {
-            const sidebar = document.querySelector('.sidebar');
-            const mobileBtn = document.querySelector('.mobile-menu-btn');
-
-            if (window.innerWidth <= 768 &&
-                !sidebar.contains(event.target) &&
-                event.target !== mobileBtn &&
-                !mobileBtn.contains(event.target)) {
-                sidebar.style.width = '0';
-            }
-        });
-
-        // Карусель баннеров
-        let slideIndex = 1;
-        showSlides(slideIndex);
-
-        let slideInterval = setInterval(() => {
-            moveSlide(1);
-        }, 5000);
-
-        function moveSlide(n) {
-            showSlides(slideIndex += n);
-            clearInterval(slideInterval);
-            slideInterval = setInterval(() => {
-                moveSlide(1);
-            }, 5000);
-        }
-
-        function currentSlide(n) {
-            showSlides(slideIndex = n);
-            clearInterval(slideInterval);
-            slideInterval = setInterval(() => {
-                moveSlide(1);
-            }, 5000);
-        }
-
-        function showSlides(n) {
-            let i;
-            let slides = document.getElementsByClassName("banner-slide");
-            let dots = document.getElementsByClassName("dot");
-
-            if (n > slides.length) {slideIndex = 1;}
-            if (n < 1) {slideIndex = slides.length;}
-
-            for (i = 0; i < slides.length; i++) {
-                slides[i].classList.remove("active");
-            }
-
-            for (i = 0; i < dots.length; i++) {
-                dots[i].classList.remove("active");
-            }
-
-            slides[slideIndex - 1].classList.add("active");
-            dots[slideIndex - 1].classList.add("active");
-        }
-
         function editProfile() {
             const modal = document.getElementById("profileModal");
-            modal.style.display = "block";
+        modal.style.display = "flex";
 
             const fullName = document.querySelector(".info .full-name").innerText;
             const phoneNumber = document.querySelector(".info .phone-number").innerText;
@@ -756,7 +459,6 @@
         };
 
         document.addEventListener("DOMContentLoaded", function () {
-            // Загрузка профиля
             const token = localStorage.getItem("jwtToken");
             console.log("Токен JWT:", token);
 
@@ -772,7 +474,6 @@
                 .then(data => {
                     console.log("Данные профиля:", data);
 
-                    // Отображение данных
                     if (data.username) {
                         document.querySelector(".profile-info h2").innerText = data.username;
                     }
@@ -788,7 +489,7 @@
                     document.querySelector(".profile-info h2").innerText = "Гость";
                     document.querySelector(".profile-info .email").innerText = "Нет данных";
                 });
-            // Обработчик события для формы редактирования профиля
+
             document.getElementById("editForm").addEventListener("submit", function(event) {
                 event.preventDefault();
 
@@ -830,11 +531,10 @@
                     })
                     .finally(() => {
                         saveBtn.disabled = false;
-                        saveBtn.innerHTML = 'Сохранить';
+                    saveBtn.innerHTML = '<i class="fas fa-save"></i> Сохранить';
                     });
             });
         });
     </script>
-
 </body>
 </html>
