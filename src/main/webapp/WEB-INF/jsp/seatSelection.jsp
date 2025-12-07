@@ -382,10 +382,9 @@
             return;
         }
 
-        // Переходим на страницу оплаты
+        // Перенаправляем на страницу оплаты
         window.location.href = '${pageContext.request.contextPath}/payment?routeId=' + routeId + 
-                               '&seatNumber=' + selectedSeat + 
-                               '&carriageType=Обычный';
+            '&seatNumber=' + selectedSeat + '&userId=' + userId;
     }
 
     function getUserIdFromToken() {

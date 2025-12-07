@@ -203,16 +203,25 @@
             border: 1px solid rgba(138, 43, 226, 0.1);
         }
 
+        .calendar-day {
+            position: relative;
+            cursor: pointer;
+        }
+
         .calendar-day.has-event::after {
             content: '';
             position: absolute;
             bottom: 3px;
             left: 50%;
             transform: translateX(-50%);
-            width: 4px;
-            height: 4px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             background: var(--purple);
+        }
+
+        .calendar-day.has-event:hover {
+            background: rgba(138, 43, 226, 0.1);
         }
 
         .calendar-day.today {
@@ -220,6 +229,95 @@
             color: white !important;
             font-weight: 600;
             box-shadow: 0 3px 10px rgba(138, 43, 226, 0.3);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: var(--charcoal);
+            font-weight: 600;
+        }
+
+        .nav-button {
+            background: rgba(138, 43, 226, 0.1);
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--purple);
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: rgba(138, 43, 226, 0.2);
+            transform: scale(1.1);
+        }
+
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--slate);
+            text-align: center;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .calendar-day {
+            padding: 10px;
+            text-align: center;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .calendar-day.other-month {
+            color: #ccc;
+        }
+
+        .calendar-day.weekend {
+            background: rgba(138, 43, 226, 0.05);
+        }
+
+        .calendar-footer {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(138, 43, 226, 0.1);
+        }
+
+        .legend {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--slate);
         }
     </style>
 </head>
@@ -245,7 +343,6 @@
                 <a href="${pageContext.request.contextPath}/recordAdmin" class="nav-link">
                     <i class="fas fa-route nav-icon"></i>
                     <span class="nav-text">Маршруты</span>
-                    <span class="badge" id="activeRoutesBadge">...</span>
                 </a>
             </li>
 
@@ -280,7 +377,7 @@
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/statistic" class="nav-link">
                     <i class="fas fa-chart-bar nav-icon"></i>
-                    <span class="nav-text">Отчеты/Статистика</span>
+                    <span class="nav-text">Отчёты</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -355,7 +452,7 @@
             <div class="calendar-footer">
                 <div class="legend">
                     <span class="legend-item"><i class="fas fa-circle" style="color: var(--purple)"></i> Сегодня</span>
-                    <span class="legend-item"><i class="fas fa-circle" style="color: var(--slate)"></i> Выходные</span>
+                    <span class="legend-item"><i class="fas fa-circle" style="color: var(--purple); opacity: 0.3;"></i> Выходные</span>
                     <span class="legend-item"><i class="fas fa-dot-circle" style="color: var(--purple)"></i> Есть отправления</span>
                 </div>
             </div>
@@ -365,7 +462,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    // --- Логика Календаря (без изменений) ---
+    // --- Логика Календаря с реальными данными ---
     document.addEventListener('DOMContentLoaded', function() {
         const calendarDays = document.querySelector('.calendar-days');
         const calendarTitle = document.querySelector('.calendar-title');
@@ -373,11 +470,48 @@
         const nextMonthBtn = document.querySelector('.next-month');
 
         let currentDate = new Date();
+        let routesByDay = {}; // Хранит маршруты по дням месяца
 
         const monthNames = [
             'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
             'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
         ];
+
+        // Загружает маршруты для указанного месяца
+        function loadRoutesForMonth(year, month) {
+            $.ajax({
+                url: '/api/routes/by-month',
+                method: 'GET',
+                data: {
+                    year: year,
+                    month: month + 1 // Java месяцы начинаются с 1
+                },
+                success: function(response) {
+                    routesByDay = {};
+                    if (response.routes && Array.isArray(response.routes)) {
+                        response.routes.forEach(function(route) {
+                            if (route.departureTime) {
+                                // Парсим дату отправления
+                                const departureDate = new Date(route.departureTime);
+                                const day = departureDate.getDate();
+                                
+                                if (!routesByDay[day]) {
+                                    routesByDay[day] = [];
+                                }
+                                routesByDay[day].push(route);
+                            }
+                        });
+                    }
+                    // Перерисовываем календарь с новыми данными
+                    renderCalendar(currentDate);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Ошибка при загрузке маршрутов:', error);
+                    routesByDay = {};
+                    renderCalendar(currentDate);
+                }
+            });
+        }
 
         function renderCalendar(date) {
             const year = date.getFullYear();
@@ -409,8 +543,11 @@
                 if (i === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
                     day.classList.add('today');
                 }
-                if (i % 4 === 0) {
+                // Проверяем, есть ли отправления в этот день
+                if (routesByDay[i] && routesByDay[i].length > 0) {
                     day.classList.add('has-event');
+                    // Добавляем подсказку с количеством отправлений
+                    day.title = routesByDay[i].length + ' отправлений';
                 }
                 calendarDays.appendChild(day);
             }
@@ -424,17 +561,19 @@
             }
         }
 
+        // Загружаем маршруты для текущего месяца при загрузке страницы
+        loadRoutesForMonth(currentDate.getFullYear(), currentDate.getMonth());
         renderCalendar(currentDate);
 
         prevMonthBtn.addEventListener('click', function() {
             currentDate.setMonth(currentDate.getMonth() - 1);
-            renderCalendar(currentDate);
+            loadRoutesForMonth(currentDate.getFullYear(), currentDate.getMonth());
             animateButton(this);
         });
 
         nextMonthBtn.addEventListener('click', function() {
             currentDate.setMonth(currentDate.getMonth() + 1);
-            renderCalendar(currentDate);
+            loadRoutesForMonth(currentDate.getFullYear(), currentDate.getMonth());
             animateButton(this);
         });
 
@@ -467,11 +606,9 @@
             success: function(response) {
                 const count = response.activeRoutesCount || 0;
                 $('#active-routes').text(count);
-                $('#activeRoutesBadge').text(count);
             },
             error: function() {
                 $('#active-routes').text('N/A');
-                $('#activeRoutesBadge').text('!');
             }
         });
 

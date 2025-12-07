@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Админ-центр | Парикмахерская "Элегант"</title>
+    <title>Отчёты и статистика | ЖД-Портал</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -34,21 +34,18 @@
             line-height: 1.6;
         }
 
-        /* Основной лейаут */
         .admin-layout {
             display: grid;
             grid-template-columns: 280px 1fr;
             min-height: 100vh;
         }
 
-        /* Боковая панель - фиолетовый акцент */
         .admin-sidebar {
             background: linear-gradient(to bottom, #FFFFFF, #F8F8F8);
             box-shadow: 5px 0 15px rgba(0,0,0,0.05);
             border-right: 1px solid rgba(138, 43, 226, 0.3);
         }
 
-        /* Логотип и заголовок */
         .admin-header {
             padding: 30px 25px;
             border-bottom: 1px solid rgba(138, 43, 226, 0.2);
@@ -82,11 +79,6 @@
             width: 40px;
             height: 2px;
             background: var(--purple);
-        }
-
-        /* Навигация */
-        .admin-nav {
-            padding: 0 15px;
         }
 
         .nav-item {
@@ -124,13 +116,11 @@
             text-align: center;
         }
 
-        /* Основное содержимое */
         .admin-content {
             padding: 40px;
             background-color: #FFF;
         }
 
-        /* Заголовок страницы */
         .page-header {
             display: flex;
             justify-content: space-between;
@@ -157,6 +147,50 @@
             background: var(--purple);
         }
 
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 3px solid var(--purple);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .stat-card h3 {
+            font-size: 0.9rem;
+            color: var(--slate);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--charcoal);
+            margin-bottom: 5px;
+        }
+
+        .stat-card .icon {
+            font-size: 2.5rem;
+            color: var(--purple);
+            opacity: 0.3;
+            float: right;
+            margin-top: -40px;
+        }
+
         .charts-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -169,6 +203,7 @@
             border-radius: 8px;
             padding: 25px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 3px solid var(--purple);
         }
 
         .chart-card h3 {
@@ -190,54 +225,98 @@
             width: 100%;
         }
 
-        /* Кнопки */
+        .popular-routes {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 3px solid var(--purple);
+        }
+
+        .popular-routes h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--charcoal);
+            display: flex;
+            align-items: center;
+        }
+
+        .popular-routes h3 i {
+            margin-right: 10px;
+            color: var(--purple);
+        }
+
+        .route-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: var(--light-purple);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .route-item:hover {
+            background: rgba(138, 43, 226, 0.1);
+            transform: translateX(5px);
+        }
+
+        .route-name {
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+
+        .route-count {
+            color: var(--purple);
+            font-weight: 700;
+        }
+
         .btn {
-            padding: 10px 20px;
-            border-radius: 4px;
+            padding: 12px 24px;
             border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 0.9rem;
             transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
-            font-weight: 500;
+            gap: 8px;
+            text-decoration: none;
         }
 
-        .btn i {
-            margin-right: 8px;
-        }
-
-        .btn-purple {
+        .btn-primary {
             background: var(--purple);
             color: white;
         }
 
-        .btn-purple:hover {
+        .btn-primary:hover {
             background: var(--dark-purple);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
+            box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
         }
 
-        /* Адаптивность */
         @media (max-width: 992px) {
             .admin-layout {
                 grid-template-columns: 1fr;
             }
-
             .admin-sidebar {
                 display: none;
+            }
+            .charts-container {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
 <div class="admin-layout">
-    <!-- Боковая панель -->
     <div class="admin-sidebar">
         <div class="admin-header">
             <div class="admin-title">
-                <i class="fas fa-crown"></i>
-                <h1>Элегант Админ</h1>
+                <i class="fas fa-train"></i>
+                <h1>ЖД Админ</h1>
             </div>
         </div>
 
@@ -250,33 +329,38 @@
             </li>
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/recordAdmin" class="nav-link">
-                    <i class="fas fa-calendar-check nav-icon"></i>
-                    <span class="nav-text">Записи</span>
-                    <span class="badge">${pendingAppointments}</span>
+                    <i class="fas fa-route nav-icon"></i>
+                    <span class="nav-text">Маршруты</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/adminStations" class="nav-link">
+                    <i class="fas fa-building nav-icon"></i>
+                    <span class="nav-text">Станции</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/adminTrains" class="nav-link">
+                    <i class="fas fa-train-subway nav-icon"></i>
+                    <span class="nav-text">Поезда</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/adminTickets" class="nav-link">
+                    <i class="fas fa-ticket-alt nav-icon"></i>
+                    <span class="nav-text">Билеты</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/adminClients" class="nav-link">
                     <i class="fas fa-users nav-icon"></i>
-                    <span class="nav-text">Клиенты</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/master" class="nav-link">
-                    <i class="fas fa-user-tie nav-icon"></i>
-                    <span class="nav-text">Персонал</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/serviceAdmin" class="nav-link">
-                    <i class="fas fa-cut nav-icon"></i>
-                    <span class="nav-text">Услуги</span>
+                    <span class="nav-text">Клиенты/Пассажиры</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/statistic" class="nav-link active">
                     <i class="fas fa-chart-bar nav-icon"></i>
-                    <span class="nav-text">Отчеты</span>
+                    <span class="nav-text">Отчёты</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -288,258 +372,325 @@
         </ul>
     </div>
 
-
-    <!-- Основное содержимое -->
     <div class="admin-content">
         <div class="page-header">
-            <h2 class="page-title">Статистика и отчеты</h2>
-            <button id="generatePdfButton" style="padding: 10px 20px; background-color: #8A2BE2; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                Сгенерировать PDF
+            <h2 class="page-title">Отчёты и статистика</h2>
+            <button class="btn btn-primary" onclick="exportToExcel()">
+                <i class="fas fa-file-excel"></i> Экспорт в Excel
             </button>
         </div>
 
-        <!-- Статистика -->
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <h3>Всего билетов</h3>
+                <div class="value" id="totalTickets">-</div>
+                <i class="fas fa-ticket-alt icon"></i>
+            </div>
+            <div class="stat-card">
+                <h3>Всего маршрутов</h3>
+                <div class="value" id="totalRoutes">-</div>
+                <i class="fas fa-route icon"></i>
+            </div>
+            <div class="stat-card">
+                <h3>Общая выручка</h3>
+                <div class="value" id="totalRevenue">-</div>
+                <i class="fas fa-ruble-sign icon"></i>
+            </div>
+            <div class="stat-card">
+                <h3>Всего пользователей</h3>
+                <div class="value" id="totalUsers">-</div>
+                <i class="fas fa-users icon"></i>
+            </div>
+        </div>
+
         <div class="charts-container">
             <div class="chart-card">
-                <h3><i class="fas fa-chart-pie"></i> Популярность мастеров</h3>
+                <h3><i class="fas fa-chart-bar"></i> Продажи билетов по месяцам</h3>
                 <div class="chart-container">
-                    <canvas id="mastersChart"></canvas>
+                    <canvas id="ticketsChart"></canvas>
                 </div>
             </div>
             <div class="chart-card">
-                <h3><i class="fas fa-chart-line"></i> Планируемый доход</h3>
+                <h3><i class="fas fa-chart-line"></i> Выручка по месяцам</h3>
                 <div class="chart-container">
-                    <canvas id="incomeChart"></canvas>
+                    <canvas id="revenueChart"></canvas>
                 </div>
+            </div>
+        </div>
+
+        <div class="popular-routes">
+            <h3><i class="fas fa-star"></i> Топ-4 популярных маршрута</h3>
+            <div id="popularRoutesList">
+                <p style="text-align: center; color: var(--slate); padding: 20px;">Загрузка данных...</p>
             </div>
         </div>
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Получаем данные о популярности мастеров
-        fetch('${pageContext.request.contextPath}/statistics/masters-popularity')
-            .then(response => response.json())
-            .then(data => {
-                // Обновляем график популярности мастеров
-                const mastersNames = Object.keys(data); // Имена мастеров
-                const mastersCounts = Object.values(data); // Количество записей для каждого мастера
+    let ticketsChart, revenueChart;
 
-                // Создаем график
-                const mastersCtx = document.getElementById('mastersChart').getContext('2d');
-                new Chart(mastersCtx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: mastersNames,
-                        datasets: [{
-                            data: mastersCounts,
-                            backgroundColor: [
-                                '#8A2BE2', '#6A1B9A', '#E6E6FA', '#9370DB', '#D8BFD8'
-                            ], // Цвета для сегментов
-                            borderWidth: 1
-                        }]
+    // Загрузка общей статистики
+    async function loadGeneralStats() {
+        try {
+            // Всего билетов (за всё время)
+            const ticketsRes = await fetch('/api/tickets/total');
+            const ticketsData = await ticketsRes.json();
+            document.getElementById('totalTickets').textContent = ticketsData.totalTickets || 0;
+
+            // Всего маршрутов (за всё время)
+            const routesRes = await fetch('/api/routes/total');
+            const routesData = await routesRes.json();
+            document.getElementById('totalRoutes').textContent = routesData.totalRoutes || 0;
+
+            // Общая выручка (за всё время)
+            const revenueRes = await fetch('/api/revenue/total');
+            const revenueData = await revenueRes.json();
+            document.getElementById('totalRevenue').textContent = (revenueData.totalRevenue || 0).toFixed(2) + ' BYN';
+
+            // Всего пользователей
+            const usersRes = await fetch('/api/users/count');
+            const usersData = await usersRes.json();
+            document.getElementById('totalUsers').textContent = usersData.totalUsers || 0;
+        } catch (error) {
+            console.error('Ошибка загрузки общей статистики:', error);
+        }
+    }
+
+    // Загрузка данных для графика продаж билетов
+    async function loadTicketsChart() {
+        try {
+            const response = await fetch('/api/tickets/by-month');
+            const data = await response.json();
+            const ticketsData = data.ticketsByMonth || {};
+
+            const labels = Object.keys(ticketsData);
+            const values = Object.values(ticketsData);
+
+            const ctx = document.getElementById('ticketsChart').getContext('2d');
+            if (ticketsChart) {
+                ticketsChart.destroy();
+            }
+
+            ticketsChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Проданные билеты',
+                        data: values,
+                        backgroundColor: 'rgba(138, 43, 226, 0.6)',
+                        borderColor: 'rgba(138, 43, 226, 1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
                     },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'right', // Позиция легенды
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        const label = context.label || '';
-                                        const value = context.raw || 0;
-                                        const total = context.dataset.data.reduce((a, b) => a + b, 0); // Сумма всех записей
-                                        const percentage = Math.round((value / total) * 100); // Процент
-                                        return `${label}: ${value} записей (${percentage}%)`;
-                                    }
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        } catch (error) {
+            console.error('Ошибка загрузки графика продаж:', error);
+        }
+    }
+
+    // Загрузка данных для графика выручки
+    async function loadRevenueChart() {
+        try {
+            const response = await fetch('/api/revenue/by-month');
+            const data = await response.json();
+            const revenueData = data.revenueByMonth || {};
+
+            const labels = Object.keys(revenueData);
+            const values = Object.values(revenueData);
+
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            if (revenueChart) {
+                revenueChart.destroy();
+            }
+
+            revenueChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Выручка (BYN)',
+                        data: values,
+                        backgroundColor: 'rgba(138, 43, 226, 0.1)',
+                        borderColor: 'rgba(138, 43, 226, 1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: 'rgba(138, 43, 226, 1)',
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return value.toLocaleString('ru-RU') + ' BYN';
                                 }
                             }
                         }
-                    }
-                });
-            })
-            .catch(error => console.error('Ошибка при загрузке данных о мастерах:', error)); // Логирование ошибок
-
-
-        // Получаем данные о планируемом доходе
-        fetch('${pageContext.request.contextPath}/statistics/income')
-            .then(response => response.json())
-            .then(data => {
-                // Даты и доходы для графика
-                const dates = Object.keys(data); // Даты
-                const incomeData = Object.values(data); // Доходы по датам
-
-                // Создаем график доходов
-                const incomeCtx = document.getElementById('incomeChart').getContext('2d');
-                new Chart(incomeCtx, {
-                    type: 'line',
-                    data: {
-                        labels: dates, // Даты
-                        datasets: [{
-                            label: 'Планируемый доход (BYN)',
-                            data: incomeData, // Доходы по датам
-                            backgroundColor: 'rgba(138, 43, 226, 0.1)',
-                            borderColor: '#8A2BE2',
-                            borderWidth: 2,
-                            tension: 0.4,
-                            fill: true,
-                            pointBackgroundColor: '#8A2BE2',
-                            pointRadius: 4,
-                            pointHoverRadius: 6
-                        }]
                     },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                ticks: {
-                                    callback: function(value) {
-                                        return value.toLocaleString('ru-RU') + ' BYN';
-                                    }
-                                }
-                            }
+                    plugins: {
+                        legend: {
+                            display: false
                         },
-                        plugins: {
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        return context.parsed.y.toLocaleString('ru-RU') + ' BYN';
-                                    }
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.parsed.y.toLocaleString('ru-RU') + ' BYN';
                                 }
                             }
                         }
                     }
-                });
-            })
-            .catch(error => console.error('Ошибка при загрузке данных о доходах:', error)); // Логирование ошибок
+                }
+            });
+        } catch (error) {
+            console.error('Ошибка загрузки графика выручки:', error);
+        }
+    }
 
-        document.getElementById('generatePdfButton').addEventListener('click', function() {
-            const { jsPDF } = window.jspdf;
+    // Загрузка популярных маршрутов
+    async function loadPopularRoutes() {
+        try {
+            const response = await fetch('/api/routes/popular');
+            if (!response.ok) {
+                throw new Error('HTTP error! status: ' + response.status);
+            }
+            const data = await response.json();
+            console.log('Полученные данные популярных маршрутов:', data);
+            const routes = data.popularRoutes || [];
 
-            // Create PDF
-            const doc = new jsPDF();
-
-            console.log("Starting PDF generation...");
-
-            // 1. Check if jsPDF is loaded
-            if (!jsPDF) {
-                console.error("Error: jsPDF not loaded");
-                alert("PDF library not loaded");
+            const container = document.getElementById('popularRoutesList');
+            if (!container) {
+                console.error('Элемент popularRoutesList не найден');
                 return;
             }
 
-            // Translation dictionary for letters
-            const translationMap = {
-                "А": "A",
-                "Б": "B",
-                "В": "V",
-                "Г": "G",
-                "Д": "D",
-                "Е": "E",
-                "Ё": "Yo",
-                "Ж": "Zh",
-                "З": "Z",
-                "И": "I",
-                "Й": "Y",
-                "К": "K",
-                "Л": "L",
-                "М": "M",
-                "Н": "N",
-                "О": "O",
-                "П": "P",
-                "Р": "R",
-                "С": "S",
-                "Т": "T",
-                "У": "U",
-                "Ф": "F",
-                "Х": "Kh",
-                "Ц": "Ts",
-                "Ч": "Ch",
-                "Ш": "Sh",
-                "Щ": "Shch",
-                "Ы": "Y",
-                "Э": "E",
-                "Ю": "Yu",
-                "Я": "Ya"
-            };
-
-            // Function to translate text by replacing each letter
-            function translateName(name) {
-                let translatedName = '';
-                for (let i = 0; i < name.length; i++) {
-                    const letter = name[i];
-                    translatedName += translationMap[letter.toUpperCase()] || letter;
-                }
-                return translatedName;
+            if (routes.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--slate); padding: 20px;">Нет данных о популярных маршрутах</p>';
+                return;
             }
 
-            // 2. Fetch data
-            fetch('${pageContext.request.contextPath}/statistics/masters-popularity')
-                .then(response => {
-                    if (!response.ok) throw new Error("HTTP error! status: " + response.status);
-                    return response.json();
-                })
-                .then(data => {
-                    console.log("Data retrieved from server:", data);
-
-                    // 3. Validate data structure
-                    if (!data || typeof data !== 'object') {
-                        throw new Error("Invalid data format");
-                    }
-
-                    const mastersNames = Object.keys(data);
-                    const mastersCounts = Object.values(data);
-
-                    console.log("Masters:", mastersNames);
-                    console.log("Appointment counts:", mastersCounts);
-
-                    // Add font for English text
-                    doc.setFont('Helvetica');
-
-                    // Add title
-                    doc.text(20, 20, "Masters' Appointment Statistics:");
-
-                    let yPosition = 30;
-
-                    // Add master data
-                    mastersNames.forEach((name, index) => {
-                        const translatedName = translateName(name); // Translate name by letter
-                        const text = translatedName + ": " + mastersCounts[index] + " appointments";
-                        console.log("Adding to PDF:", text);
-                        doc.text(20, yPosition, text);
-                        yPosition += 10;
-                    });
-
-                    // Save PDF
-                    console.log("Saving PDF...");
-                    doc.save("masters_report.pdf");
-                })
-                .catch(error => {
-                    console.error("Full error:", error);
-                    alert(`Error generating report: ${error.message}`);
-                });
-        });
-
-        function logout() {
-            // Удаляем токен из localStorage (или sessionStorage, cookies)
-            localStorage.removeItem("jwtToken");  // Для localStorage
-            sessionStorage.removeItem("jwtToken");  // Для sessionStorage
-
-            // Также можно удалить cookie (если хранится в cookies)
-            document.cookie = "jwtToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-
-            // Перенаправляем пользователя на страницу входа
-            window.location.href = "/home";  // Замените "/login" на нужный URL
+            console.log('Отображаем маршруты:', routes);
+            let html = '';
+            routes.forEach((route, index) => {
+                html += '<div class="route-item">';
+                html += '<span class="route-name">' + (index + 1) + '. ' + (route.route || 'Неизвестный маршрут') + '</span>';
+                html += '<span class="route-count">' + (route.count || 0) + ' билетов</span>';
+                html += '</div>';
+            });
+            container.innerHTML = html;
+        } catch (error) {
+            console.error('Ошибка загрузки популярных маршрутов:', error);
+            const container = document.getElementById('popularRoutesList');
+            if (container) {
+                container.innerHTML = '<p style="text-align: center; color: var(--danger); padding: 20px;">Ошибка загрузки данных: ' + error.message + '</p>';
+            }
         }
+    }
+
+    // Экспорт в Excel
+    async function exportToExcel() {
+        try {
+            const [ticketsData, revenueData, routesData, statsData] = await Promise.all([
+                fetch('/api/tickets/by-month').then(r => r.json()),
+                fetch('/api/revenue/by-month').then(r => r.json()),
+                fetch('/api/routes/popular').then(r => r.json()),
+                Promise.all([
+                    fetch('/api/tickets/total').then(r => r.json()),
+                    fetch('/api/routes/total').then(r => r.json()),
+                    fetch('/api/revenue/total').then(r => r.json()),
+                    fetch('/api/users/count').then(r => r.json())
+                ])
+            ]);
+
+            const wb = XLSX.utils.book_new();
+
+            // Общая статистика
+            const statsSheet = [
+                ['Показатель', 'Значение'],
+                ['Всего билетов (за всё время)', statsData[0].totalTickets || 0],
+                ['Всего маршрутов (за всё время)', statsData[1].totalRoutes || 0],
+                ['Общая выручка (за всё время, BYN)', (statsData[2].totalRevenue || 0).toFixed(2)],
+                ['Всего пользователей', statsData[3].totalUsers || 0]
+            ];
+            const ws1 = XLSX.utils.aoa_to_sheet(statsSheet);
+            ws1['!cols'] = [{ wch: 35 }, { wch: 20 }];
+            XLSX.utils.book_append_sheet(wb, ws1, 'Общая статистика');
+
+            // Продажи по месяцам
+            const ticketsSheet = [
+                ['Месяц', 'Количество билетов'],
+                ...Object.entries(ticketsData.ticketsByMonth || {}).map(([month, count]) => [month, count])
+            ];
+            const ws2 = XLSX.utils.aoa_to_sheet(ticketsSheet);
+            ws2['!cols'] = [{ wch: 15 }, { wch: 20 }];
+            XLSX.utils.book_append_sheet(wb, ws2, 'Продажи по месяцам');
+
+            // Выручка по месяцам
+            const revenueSheet = [
+                ['Месяц', 'Выручка (BYN)'],
+                ...Object.entries(revenueData.revenueByMonth || {}).map(([month, revenue]) => [month, revenue])
+            ];
+            const ws3 = XLSX.utils.aoa_to_sheet(revenueSheet);
+            ws3['!cols'] = [{ wch: 15 }, { wch: 20 }];
+            XLSX.utils.book_append_sheet(wb, ws3, 'Выручка по месяцам');
+
+            // Популярные маршруты
+            const routesSheet = [
+                ['Маршрут', 'Количество проданных билетов'],
+                ...(routesData.popularRoutes || []).map(route => [route.route, route.count])
+            ];
+            const ws4 = XLSX.utils.aoa_to_sheet(routesSheet);
+            ws4['!cols'] = [{ wch: 40 }, { wch: 30 }];
+            XLSX.utils.book_append_sheet(wb, ws4, 'Популярные маршруты');
+
+            XLSX.writeFile(wb, 'statistics_report.xlsx');
+            alert('Отчёт успешно экспортирован!');
+        } catch (error) {
+            console.error('Ошибка экспорта:', error);
+            alert('Ошибка при экспорте отчёта');
+        }
+    }
+
+    // Инициализация при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        loadGeneralStats();
+        loadTicketsChart();
+        loadRevenueChart();
+        loadPopularRoutes();
     });
+
+    function logout() {
+        localStorage.removeItem("jwtToken");
+        sessionStorage.removeItem("jwtToken");
+        document.cookie = "jwtToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+        window.location.href = "/home";
+    }
 </script>
 </body>
 </html>

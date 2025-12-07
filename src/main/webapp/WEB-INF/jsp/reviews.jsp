@@ -5,20 +5,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Отзывы | Железнодорожные перевозки</title>
+    <title>Отзывы | ЖД-Портал</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --purple: #8A2BE2;
-            --dark-purple: #6A1B9A;
-            --light-purple: #E6E6FA;
-            --ivory: #FFFFF0;
-            --charcoal: #36454F;
-            --slate: #708090;
-            --success: #4CAF50;
-            --warning: #FFC107;
-            --danger: #F44336;
+            --primary-color: #6a4c93;
+            --secondary-color: #8a5a44;
+            --accent-color: #f8bbd0;
+            --light-color: #f9f9f9;
+            --dark-color: #333;
+            --sidebar-width: 280px;
+            --sidebar-collapsed-width: 80px;
+            --transition-speed: 0.3s;
         }
 
         * {
@@ -29,111 +28,153 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--ivory);
-            color: var(--charcoal);
-            line-height: 1.6;
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            overflow-x: hidden;
+            transition: all var(--transition-speed) ease;
         }
 
-        .admin-layout {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            min-height: 100vh;
+        /* Сайдбар */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, var(--primary-color) 0%, #5a3d7d 100%);
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            transition: width var(--transition-speed) ease;
+            z-index: 1000;
+            overflow: hidden;
         }
 
-        .admin-sidebar {
-            background: linear-gradient(to bottom, #FFFFFF, #F8F8F8);
-            box-shadow: 5px 0 15px rgba(0,0,0,0.05);
-            border-right: 1px solid rgba(138, 43, 226, 0.3);
+        .sidebar.collapsed {
+            width: var(--sidebar-collapsed-width);
         }
 
-        .admin-header {
-            padding: 30px 25px;
-            border-bottom: 1px solid rgba(138, 43, 226, 0.2);
-            margin-bottom: 20px;
-        }
-
-        .admin-title {
+        .sidebar-header {
             display: flex;
             align-items: center;
-            font-family: 'Playfair Display', serif;
+            justify-content: space-between;
+            padding: 20px;
+            height: 80px;
+            background-color: rgba(0, 0, 0, 0.1);
         }
 
-        .admin-title i {
-            font-size: 2rem;
-            margin-right: 15px;
-            color: var(--purple);
-        }
-
-        .admin-title h1 {
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
             font-size: 1.5rem;
             font-weight: 600;
-            color: var(--charcoal);
-            position: relative;
+            white-space: nowrap;
         }
 
-        .admin-title h1::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background: var(--purple);
+        .logo-icon {
+            font-size: 2rem;
+            margin-right: 15px;
+            color: var(--accent-color);
+        }
+
+        .logo-text {
+            opacity: 1;
+            transition: opacity var(--transition-speed);
+        }
+
+        .sidebar.collapsed .logo-text {
+            opacity: 0;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform var(--transition-speed);
+        }
+
+        .sidebar.collapsed .toggle-btn {
+            transform: rotate(180deg);
+        }
+
+        .nav-links {
+            padding: 20px 0;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
         }
 
         .nav-item {
+            list-style: none;
             margin-bottom: 5px;
+            padding: 0 15px;
         }
 
         .nav-link {
             display: flex;
             align-items: center;
-            padding: 14px 20px;
-            color: var(--slate);
+            padding: 15px 20px;
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.3s;
+            white-space: nowrap;
         }
 
         .nav-link:hover {
-            background: rgba(138, 43, 226, 0.1);
-            color: var(--charcoal);
-            transform: translateX(5px);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
         }
 
         .nav-link.active {
-            background: rgba(138, 43, 226, 0.15);
-            color: var(--charcoal);
-            border-left: 3px solid var(--purple);
-            font-weight: 600;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            font-weight: 500;
         }
 
-        .nav-link i {
-            width: 24px;
-            margin-right: 12px;
-            color: var(--purple);
+        .nav-icon {
+            font-size: 1.3rem;
+            margin-right: 20px;
+            min-width: 24px;
             text-align: center;
         }
 
-        .admin-content {
-            padding: 40px;
-            background-color: #FFF;
+        .nav-text {
+            opacity: 1;
+            transition: opacity var(--transition-speed);
         }
 
-        .page-header {
+        .sidebar.collapsed .nav-text {
+            opacity: 0;
+        }
+
+        /* Основное содержимое */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 30px;
+            min-height: 100vh;
+            transition: margin-left var(--transition-speed);
+        }
+
+        .sidebar.collapsed ~ .main-content {
+            margin-left: var(--sidebar-collapsed-width);
+        }
+
+        /* Заголовок */
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
             padding-bottom: 20px;
-            border-bottom: 1px solid rgba(138, 43, 226, 0.2);
+            border-bottom: 1px solid #eee;
         }
 
         .page-title {
             font-family: 'Playfair Display', serif;
             font-size: 1.8rem;
-            color: var(--charcoal);
+            color: var(--primary-color);
             position: relative;
         }
 
@@ -144,27 +185,25 @@
             left: 0;
             width: 60px;
             height: 2px;
-            background: var(--purple);
+            background: var(--primary-color);
         }
 
         .action-btn {
-            background: var(--purple);
-            color: white;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
             border: none;
-            border-radius: 8px;
-            padding: 12px 24px;
+            padding: 10px 20px;
+            border-radius: 5px;
             font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
+            transition: background-color 0.3s;
+            display: flex;
             align-items: center;
-            gap: 8px;
         }
 
         .action-btn:hover {
-            background: var(--dark-purple);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
+            background-color: #7d4493; /* Изменен цвет при наведении на более темный */
+            color: #fff;
         }
 
         .action-btn i {
@@ -175,21 +214,20 @@
         .reviews-container {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 30px;
         }
 
         .review-card {
-            background: #FFF;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s, box-shadow 0.3s;
-            border-top: 4px solid var(--purple);
         }
 
         .review-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
         .review-header {
@@ -201,41 +239,37 @@
 
         .review-author {
             font-weight: 600;
-            color: var(--charcoal);
-            font-size: 1.1rem;
+            color: var(--primary-color);
         }
 
         .review-date {
-            color: var(--slate);
+            color: #777;
             font-size: 0.9rem;
         }
 
         .review-rating {
             color: #FFD700;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
+            margin-bottom: 10px;
         }
 
         .review-text {
-            line-height: 1.8;
-            color: var(--charcoal);
-            font-size: 1rem;
+            line-height: 1.6;
+            color: #555;
         }
 
         /* Форма добавления отзыва */
         .add-review-form {
-            background: #FFF;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             margin-bottom: 30px;
-            border-top: 4px solid var(--purple);
         }
 
         .form-title {
             font-family: 'Playfair Display', serif;
-            color: var(--charcoal);
-            margin-bottom: 25px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
             font-size: 1.5rem;
         }
 
@@ -247,23 +281,21 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 500;
-            color: var(--charcoal);
+            color: var(--dark-color);
         }
 
         .form-input, .form-textarea {
             width: 100%;
             padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
             font-family: 'Montserrat', sans-serif;
             transition: border-color 0.3s;
-            font-size: 1rem;
         }
 
         .form-input:focus, .form-textarea:focus {
+            border-color: var(--primary-color);
             outline: none;
-            border-color: var(--purple);
-            box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.1);
         }
 
         .form-textarea {
@@ -281,50 +313,60 @@
             font-size: 1.8rem;
             color: #ddd;
             cursor: pointer;
-            transition: color 0.2s, transform 0.2s;
-        }
-
-        .star:hover {
-            transform: scale(1.1);
+            transition: color 0.2s;
         }
 
         .star.active {
-            color: #FFD700;
+            color: #FFD700; /* Цвет активной звезды */
         }
 
         .submit-btn {
-            background: var(--purple);
+            background-color: var(--primary-color);
             color: white;
             border: none;
             padding: 12px 25px;
-            border-radius: 8px;
+            border-radius: 5px;
             font-size: 1rem;
-            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+            transition: background-color 0.3s;
         }
 
         .submit-btn:hover {
-            background: var(--dark-purple);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
+            background-color: #5a3d7d;
         }
 
+        /* Адаптивность */
         @media (max-width: 992px) {
-            .admin-layout {
-                grid-template-columns: 1fr;
+            .sidebar {
+                width: var(--sidebar-collapsed-width);
             }
 
-            .admin-sidebar {
-                display: none;
+            .sidebar .logo-text,
+            .sidebar .nav-text {
+                opacity: 0;
+            }
+
+            .main-content {
+                margin-left: var(--sidebar-collapsed-width);
+            }
+
+            .sidebar:hover {
+                width: var(--sidebar-width);
+            }
+
+            .sidebar:hover .logo-text,
+            .sidebar:hover .nav-text {
+                opacity: 1;
             }
         }
 
         @media (max-width: 768px) {
-            .admin-content {
+            .sidebar {
+                width: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
                 padding: 20px;
             }
 
@@ -335,99 +377,148 @@
             }
 
             .add-review-form {
-                padding: 20px;
-            }
-
-            .page-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
+                padding: 15px;
             }
         }
     </style>
 </head>
 <body>
-<div class="admin-layout">
-    <div class="admin-sidebar">
-        <div class="admin-header">
-            <div class="admin-title">
-                <i class="fas fa-train"></i>
-                <h1>ЖД-Портал</h1>
-            </div>
-        </div>
-
-        <ul class="nav-links">
-            <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/userHome" class="nav-link">
-                    <i class="fas fa-user nav-icon"></i>
-                    <span class="nav-text">Профиль</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/serviceUser" class="nav-link">
-                    <i class="fas fa-route nav-icon"></i>
-                    <span class="nav-text">Маршруты</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/booking" class="nav-link">
-                    <i class="fas fa-ticket-alt nav-icon"></i>
-                    <span class="nav-text">Мои билеты</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/reviews" class="nav-link active">
-                    <i class="fas fa-star nav-icon"></i>
-                    <span class="nav-text">Отзывы</span>
-                </a>
-            </li>
-            <li class="nav-item" style="margin-top: 30px;">
-                <a href="javascript:void(0);" class="nav-link" onclick="logout()">
-                    <i class="fas fa-sign-out-alt nav-icon"></i>
-                    <span class="nav-text">Выход</span>
-                </a>
-            </li>
-        </ul>
+<div class="sidebar">
+    <div class="sidebar-header">
+        <a href="/" class="logo">
+            <img src="<%= request.getContextPath() %>/images/logo.png"
+                 alt="ЖД-Портал"
+                 style="height: 55px; width: auto; margin-right: 15px;">
+            <span class="logo-text">ЖД-портал</span>
+        </a>
+        <button class="toggle-btn" onclick="toggleSidebar()">
+            <i class="fas fa-angle-left"></i>
+        </button>
     </div>
 
-    <div class="admin-content">
-        <div class="page-header">
-            <h2 class="page-title">Отзывы о ЖД-Портале</h2>
-            <button class="action-btn" id="showFormBtn">
-                <i class="fas fa-plus"></i> Добавить отзыв
-            </button>
+    <ul class="nav-links">
+        <li class="nav-item">
+            <a href="${pageContext.request.contextPath}/" class="nav-link">
+                <i class="fas fa-home nav-icon"></i>
+                <span class="nav-text">Главная</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="${pageContext.request.contextPath}/contact" class="nav-link">
+                <i class="fas fa-map-marker-alt nav-icon"></i>
+                <span class="nav-text">Контакты</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="${pageContext.request.contextPath}/booking" class="nav-link">
+                <i class="fas fa-ticket-alt nav-icon"></i>
+                <span class="nav-text">Бронирование</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="${pageContext.request.contextPath}/schedule" class="nav-link">
+                <i class="fas fa-clock nav-icon"></i>
+                <span class="nav-text">Расписание</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="${pageContext.request.contextPath}/reviews" class="nav-link active">
+                <i class="fas fa-star nav-icon"></i>
+                <span class="nav-text">Отзывы</span>
+            </a>
+        </li>
+
+        <li class="nav-item" style="margin-top: 30px;">
+            <a href="${pageContext.request.contextPath}/userHome" class="nav-link">
+                <i class="fas fa-user nav-icon"></i>
+                <span class="nav-text">Профиль</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="javascript:void(0);" class="nav-link" onclick="logout()">
+                <i class="fas fa-sign-out-alt nav-icon"></i>
+                <span class="nav-text">Выход</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div class="main-content">
+    <div class="header">
+        <h2 class="page-title">Отзывы о ЖД-Портале</h2>
+        <button class="action-btn" id="showFormBtn">
+            <i class="fas fa-plus"></i> Добавить отзыв
+        </button>
+    </div>
+
+    <div class="add-review-form" id="reviewForm" style="display: none;">
+        <h3 class="form-title">Оставить отзыв</h3>
+        <form id="reviewFormElement">
+            <div class="form-group">
+                <label class="form-label">Оценка</label>
+                <div class="rating-stars" id="ratingStars">
+                    <i class="far fa-star star" data-value="1"></i>
+                    <i class="far fa-star star" data-value="2"></i>
+                    <i class="far fa-star star" data-value="3"></i>
+                    <i class="far fa-star star" data-value="4"></i>
+                    <i class="far fa-star star" data-value="5"></i>
+                </div>
+                <input type="hidden" id="ratingValue" value="0">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Ваш отзыв</label>
+                <textarea class="form-textarea" id="reviewText" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Отправить отзыв</button>
+        </form>
+    </div>
+
+    <div class="reviews-container" id="reviewsContainer">
+        <div class="review-card">
+            <div class="review-header">
+                <span class="review-author">Анна Иванова</span>
+                <span class="review-date">15 мая 2024</span>
+            </div>
+            <div class="review-rating">
+                <i class="fas fa-star" style="color: #FFD700;"></i>
+                <i class="fas fa-star" style="color: #FFD700;"></i>
+                <i class="fas fa-star" style="color: #FFD700;"></i>
+                <i class="fas fa-star" style="color: #FFD700;"></i>
+                <i class="fas fa-star" style="color: #FFD700;"></i>
+            </div>
+            <p class="review-text">
+                Очень удобный и понятный сервис! Билеты купила за две минуты. Не возникло никаких проблем
+                с оплатой или получением электронного билета. Рекомендую всем, кто ценит свое время.
+            </p>
         </div>
 
-        <div class="add-review-form" id="reviewForm" style="display: none;">
-            <h3 class="form-title">Оставить отзыв</h3>
-            <form id="reviewFormElement">
-                <div class="form-group">
-                    <label class="form-label">Оценка</label>
-                    <div class="rating-stars" id="ratingStars">
-                        <i class="far fa-star star" data-value="1"></i>
-                        <i class="far fa-star star" data-value="2"></i>
-                        <i class="far fa-star star" data-value="3"></i>
-                        <i class="far fa-star star" data-value="4"></i>
-                        <i class="far fa-star star" data-value="5"></i>
-                    </div>
-                    <input type="hidden" id="ratingValue" value="0">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Ваш отзыв</label>
-                    <textarea class="form-textarea" id="reviewText" required></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Отправить отзыв</button>
-            </form>
-        </div>
-
-        <div class="reviews-container" id="reviewsContainer">
-            <!-- Отзывы будут загружены динамически -->
+        <div class="review-card">
+            <div class="review-header">
+                <span class="review-author">Сергей Петров</span>
+                <span class="review-date">3 апреля 2024</span>
+            </div>
+            <div class="review-rating">
+                <i class="fas fa-star" style="color: #FFD700;"></i>
+                <i class="fas fa-star" style="color: #FFD700;"></i>
+                <i class="fas fa-star" style="color: #FFD700;"></i>
+                <i class="fas fa-star" style="color: #FFD700;"></i>
+                <i class="far fa-star" style="color: #FFD700;"></i>
+            </div>
+            <p class="review-text">
+                Хороший интерфейс, но немного сбило с толку расписание рейсов. В итоге разобрался,
+                покупкой доволен. Было бы здорово добавить оповещение о начале продаж на популярные направления.
+            </p>
         </div>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
 <script>
+    // Функция для переключения сайдбара
+    function toggleSidebar() {
+        document.querySelector('.sidebar').classList.toggle('collapsed');
+    }
+
     // Функция для выхода
     function logout() {
         localStorage.removeItem("jwtToken");
@@ -489,28 +580,15 @@
                 console.log("Отзывы успешно получены:", reviews);
                 const reviewsContainer = document.getElementById('reviewsContainer');
                 reviewsContainer.innerHTML = ''; // Очищаем контейнер перед загрузкой новых отзывов
-                
-                if (reviews && reviews.length > 0) {
-                    reviews.forEach(review => {
-                        try {
-                            const reviewCard = createReviewCard(review);
-                            reviewsContainer.appendChild(reviewCard);
-                        } catch (error) {
-                            console.error("Ошибка при создании карточки отзыва:", error, review);
-                        }
-                    });
-                } else {
-                    reviewsContainer.innerHTML = '<div class="review-card"><p class="review-text">Пока нет отзывов. Будьте первым!</p></div>';
-                }
+                reviews.forEach(review => {
+                    const reviewCard = createReviewCard(review);
+                    reviewsContainer.appendChild(reviewCard);
+                });
             } else {
-                console.error("Ошибка загрузки отзывов:", response.status, response.statusText);
-                const reviewsContainer = document.getElementById('reviewsContainer');
-                reviewsContainer.innerHTML = '<div class="review-card"><p class="review-text" style="color: red;">Ошибка при загрузке отзывов. Попробуйте обновить страницу.</p></div>';
+                console.error("Ошибка загрузки отзывов");
             }
         } catch (error) {
             console.error("Ошибка при запросе", error);
-            const reviewsContainer = document.getElementById('reviewsContainer');
-            reviewsContainer.innerHTML = '<div class="review-card"><p class="review-text" style="color: red;">Ошибка при загрузке отзывов. Проверьте подключение к интернету.</p></div>';
         }
     }
 
@@ -519,62 +597,33 @@
         const reviewCard = document.createElement('div');
         reviewCard.className = 'review-card';
 
-        // Проверка на наличие данных
-        if (!review) {
-            throw new Error("Review is null or undefined");
-        }
-
-        // Обработка даты
-        let formattedDate = 'Дата не указана';
-        if (review.createdAt) {
-            try {
-                const currentDate = new Date(review.createdAt);
-                if (!isNaN(currentDate.getTime())) {
-                    formattedDate = currentDate.toLocaleDateString('ru-RU', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric'
-                    });
-                }
-            } catch (e) {
-                console.error("Ошибка форматирования даты:", e);
-            }
-        }
-
-        // Обработка имени пользователя
-        const username = (review.user && review.user.username) ? review.user.username : 'Анонимный пользователь';
+        const currentDate = new Date(review.createdAt);
+        const formattedDate = currentDate.toLocaleDateString('ru-RU', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
 
         // Генерация звезд для рейтинга
         let starsHTML = '';
-        const rating = review.rating || 0;
         for (let i = 0; i < 5; i++) {
             // Используем fas для закрашенных, far для незакрашенных
-            starsHTML += i < rating
+            starsHTML += i < review.rating
                 ? '<i class="fas fa-star" style="color: #FFD700;"></i>'
                 : '<i class="far fa-star" style="color: #FFD700;"></i>';
         }
 
-        // Обработка текста отзыва
-        const reviewText = review.reviewText || 'Текст отзыва отсутствует';
-
         reviewCard.innerHTML =
             '<div class="review-header">' +
-            '<span class="review-author">' + escapeHtml(username) + '</span>' +
+            '<span class="review-author">' + review.user.username + '</span>' +
             '<span class="review-date">' + formattedDate + '</span>' +
             '</div>' +
             '<div class="review-rating">' +
             starsHTML +
             '</div>' +
-            '<p class="review-text">' + escapeHtml(reviewText) + '</p>';
+            '<p class="review-text">' + review.reviewText + '</p>';
 
         return reviewCard;
-    }
-
-    // Функция для экранирования HTML
-    function escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
     }
 
     // Загружаем отзывы и инициализируем звезды при загрузке страницы
@@ -587,22 +636,11 @@
         e.preventDefault();
 
         const rating = document.getElementById('ratingValue').value;
-        const text = document.getElementById('reviewText').value.trim();
-        const token = localStorage.getItem("jwtToken") || sessionStorage.getItem("jwtToken");
+        const text = document.getElementById('reviewText').value;
+        const token = localStorage.getItem("jwtToken");
 
         if (rating === '0') {
             alert('Пожалуйста, поставьте оценку');
-            return;
-        }
-
-        if (!text) {
-            alert('Пожалуйста, введите текст отзыва');
-            return;
-        }
-
-        if (!token) {
-            alert('Ошибка аутентификации. Пожалуйста, войдите снова.');
-            window.location.href = '/signin';
             return;
         }
 
@@ -611,13 +649,6 @@
             // Декодируем токен и получаем ID пользователя
             const decodedToken = jwt_decode(token);
             const userId = decodedToken.id;
-            
-            if (!userId) {
-                alert('Ошибка: не удалось получить ID пользователя. Пожалуйста, войдите снова.');
-                window.location.href = '/signin';
-                return;
-            }
-            
             console.log("ID пользователя:", userId);
 
             // Отправляем новый отзыв на сервер
@@ -630,6 +661,7 @@
 
             console.log("Отправляемый объект на сервер:", JSON.stringify(newReview)); // Отладочный вывод
 
+
             // Создаем новый XMLHttpRequest
             xhr.open('POST', '/review', true);
             xhr.setRequestHeader('Content-Type', 'application/json');
@@ -637,51 +669,25 @@
             // Устанавливаем обработчик для успешного ответа
             xhr.onload = function() {
                 if (xhr.status === 200) {
-                    try {
-                        const response = JSON.parse(xhr.responseText);
-                        alert('Спасибо за ваш отзыв!');
-                        loadReviews(); // Перезагружаем список отзывов
-                        document.getElementById('reviewFormElement').reset();  // Очищаем форму
-                        document.getElementById('ratingValue').value = '0'; // Сбрасываем рейтинг
-                        highlightStars(0); // Сбрасываем подсветку звезд
-                        document.getElementById('reviewForm').style.display = 'none';
-                        document.getElementById('showFormBtn').innerHTML = '<i class="fas fa-plus"></i> Добавить отзыв';
-                    } catch (e) {
-                        console.error('Ошибка парсинга ответа:', e);
-                        alert('Отзыв добавлен, но произошла ошибка при обновлении страницы');
-                        loadReviews();
-                    }
+                    alert('Спасибо за ваш отзыв!');
+                    loadReviews(); // Перезагружаем список отзывов
+                    document.getElementById('reviewFormElement').reset();  // Очищаем форму
+                    document.getElementById('ratingValue').value = '0'; // Сбрасываем рейтинг
+                    highlightStars(0); // Сбрасываем подсветку звезд
                 } else {
-                    let errorMessage = 'Ошибка при добавлении отзыва';
-                    try {
-                        const errorResponse = JSON.parse(xhr.responseText);
-                        if (errorResponse) {
-                            errorMessage = errorResponse.toString();
-                        }
-                    } catch (e) {
-                        // Игнорируем ошибку парсинга
-                    }
-                    alert(errorMessage);
+                    alert('Ошибка при добавлении отзыва');
                 }
             };
 
             // Устанавливаем обработчик для ошибок запроса
             xhr.onerror = function() {
-                alert('Ошибка при отправке отзыва. Проверьте подключение к интернету.');
+                alert('Ошибка при отправке отзыва');
             };
-            
-            // Устанавливаем обработчик для таймаута
-            xhr.ontimeout = function() {
-                alert('Превышено время ожидания ответа. Попробуйте еще раз.');
-            };
-            xhr.timeout = 10000; // 10 секунд
-            
             // Отправляем запрос
             xhr.send(JSON.stringify(newReview));
         } catch (error) {
             console.error('Ошибка декодирования токена:', error);
             alert('Ошибка аутентификации. Пожалуйста, войдите снова.');
-            window.location.href = '/signin';
         }
 
     });

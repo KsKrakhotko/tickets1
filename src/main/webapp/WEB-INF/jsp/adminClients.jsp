@@ -384,8 +384,8 @@
     <div class="admin-sidebar">
         <div class="admin-header">
             <div class="admin-title">
-                <i class="fas fa-crown"></i>
-                <h1>Элегант Админ</h1>
+                <i class="fas fa-train"></i>
+                <h1>ЖД Админ</h1>
             </div>
         </div>
 
@@ -398,33 +398,38 @@
             </li>
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/recordAdmin" class="nav-link">
-                    <i class="fas fa-calendar-check nav-icon"></i>
-                    <span class="nav-text">Записи</span>
-                    <span class="badge">${pendingAppointments}</span>
+                    <i class="fas fa-route nav-icon"></i>
+                    <span class="nav-text">Маршруты</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/adminStations" class="nav-link">
+                    <i class="fas fa-building nav-icon"></i>
+                    <span class="nav-text">Станции</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/adminTrains" class="nav-link">
+                    <i class="fas fa-train-subway nav-icon"></i>
+                    <span class="nav-text">Поезда</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/adminTickets" class="nav-link">
+                    <i class="fas fa-ticket-alt nav-icon"></i>
+                    <span class="nav-text">Билеты</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/adminClients" class="nav-link active">
                     <i class="fas fa-users nav-icon"></i>
-                    <span class="nav-text">Клиенты</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/master" class="nav-link">
-                    <i class="fas fa-user-tie nav-icon"></i>
-                    <span class="nav-text">Персонал</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/serviceAdmin" class="nav-link">
-                    <i class="fas fa-cut nav-icon"></i>
-                    <span class="nav-text">Услуги</span>
+                    <span class="nav-text">Клиенты/Пассажиры</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/statistic" class="nav-link">
                     <i class="fas fa-chart-bar nav-icon"></i>
-                    <span class="nav-text">Отчеты</span>
+                    <span class="nav-text">Отчёты</span>
                 </a>
             </li>
             <li class="nav-item">

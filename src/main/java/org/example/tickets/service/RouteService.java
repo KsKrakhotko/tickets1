@@ -255,4 +255,53 @@ public class RouteService {
         Route route = getRouteById(id);
         routeRepository.delete(route);
     }
+
+    /**
+     * Получает количество активных маршрутов (с доступными местами)
+     */
+    @Transactional(readOnly = true)
+    public int getActiveRoutesCount() {
+        return routeRepository.countByAvailableSeatsGreaterThanZero();
+    }
+
+    /**
+     * Получает количество поездов в пути (отправились, но еще не прибыли)
+     */
+    @Transactional(readOnly = true)
+    public int getTrainsInTransitCount() {
+        java.time.LocalDateTime now = java.time.LocalDateTime.now();
+        List<Route> routesInTransit = routeRepository.findByDepartureTimeBetween(
+            now.minusDays(7), // Поезда, отправившиеся за последние 7 дней
+            now
+        );
+        
+        // Фильтруем только те, которые отправились, но еще не прибыли
+        int count = 0;
+        for (Route route : routesInTransit) {
+            if (route.getDepartureTime() != null && route.getArrivalTime() != null) {
+                if (route.getDepartureTime().isBefore(now) && route.getArrivalTime().isAfter(now)) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
+     * Получает маршруты с отправлениями в указанном месяце
+     */
+    @Transactional(readOnly = true)
+    public List<Route> getRoutesByMonth(int year, int month) {
+        java.time.LocalDateTime startOfMonth = java.time.LocalDateTime.of(year, month, 1, 0, 0);
+        java.time.LocalDateTime endOfMonth = startOfMonth.plusMonths(1);
+        return routeRepository.findByDepartureTimeBetween(startOfMonth, endOfMonth);
+    }
+
+    /**
+     * Получает общее количество маршрутов
+     */
+    @Transactional(readOnly = true)
+    public long getTotalRoutesCount() {
+        return routeRepository.count();
+    }
 }

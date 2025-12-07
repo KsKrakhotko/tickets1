@@ -31,4 +31,16 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     @Query("SELECT t.seatNumber FROM Ticket t WHERE t.route = :route AND t.status = :status")
     List<Integer> findSeatNumbersByRouteAndStatus(@Param("route") Route route, @Param("status") String status);
+
+    @Query("SELECT COUNT(t) FROM Ticket t WHERE YEAR(t.purchaseTime) = :year AND MONTH(t.purchaseTime) = :month")
+    int countByYearAndMonth(@Param("year") int year, @Param("month") int month);
+
+    @Query("SELECT SUM(t.price) FROM Ticket t WHERE YEAR(t.purchaseTime) = :year AND MONTH(t.purchaseTime) = :month AND t.status = 'active'")
+    Double calculateRevenueByYearAndMonth(@Param("year") int year, @Param("month") int month);
+
+    @Query("SELECT t.route.id, COUNT(t) as ticketCount FROM Ticket t WHERE t.status = 'active' GROUP BY t.route.id ORDER BY COUNT(t) DESC")
+    List<Object[]> findPopularRoutesIds();
+
+    @Query("SELECT SUM(t.price) FROM Ticket t WHERE t.status = 'active'")
+    Double calculateTotalRevenue();
 }

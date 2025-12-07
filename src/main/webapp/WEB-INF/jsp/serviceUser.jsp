@@ -338,8 +338,8 @@
     <ul class="nav-links">
         <li class="nav-item">
             <a href="${pageContext.request.contextPath}/userHome" class="nav-link">
-                <i class="fas fa-user nav-icon"></i>
-                <span class="nav-text">Профиль</span>
+                <i class="fas fa-home nav-icon"></i>
+                <span class="nav-text">Главная</span>
             </a>
         </li>
         <li class="nav-item">
@@ -361,6 +361,12 @@
             </a>
         </li>
         <li class="nav-item" style="margin-top: 30px;">
+            <a href="${pageContext.request.contextPath}/userHome" class="nav-link">
+                <i class="fas fa-user nav-icon"></i>
+                <span class="nav-text">Профиль</span>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="javascript:void(0);" class="nav-link" onclick="logout()">
                 <i class="fas fa-sign-out-alt nav-icon"></i>
                 <span class="nav-text">Выход</span>
@@ -562,7 +568,7 @@
                 const routeCard =
                         '<div class="service-card">' +
                         '<div class="service-image">' +
-                    '<i class="fas fa-route" style="font-size: 3rem; color: var(--purple);"></i>' +
+                    '<i class="fas fa-train" style="font-size: 3rem; color: var(--purple);"></i>' +
                         '</div>' +
                         '<div class="service-body">' +
                     '<h3 class="service-title">' + routeName + '</h3>' +

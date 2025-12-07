@@ -15,11 +15,11 @@ import java.time.format.DateTimeFormatter;
 public class EmailService {
 
     private final JavaMailSender mailSender;
-    private final PDFService pdfService;
+    private final PdfService pdfService;
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
     @Autowired
-    public EmailService(JavaMailSender mailSender, PDFService pdfService) {
+    public EmailService(JavaMailSender mailSender, PdfService pdfService) {
         this.mailSender = mailSender;
         this.pdfService = pdfService;
     }
@@ -42,7 +42,7 @@ public class EmailService {
             helper.setText(emailText, true);
 
             // Прикрепляем PDF билета
-            byte[] pdfBytes = pdfService.generateTicketPDF(ticket);
+            byte[] pdfBytes = pdfService.generateTicketPdf(ticket);
             helper.addAttachment("ticket_" + ticket.getPnrCode() + ".pdf", 
                     new ByteArrayResource(pdfBytes), 
                     "application/pdf");
@@ -102,3 +102,5 @@ public class EmailService {
         return text.toString();
     }
 }
+
+

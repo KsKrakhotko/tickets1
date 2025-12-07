@@ -236,18 +236,6 @@
             background-color: rgba(226, 74, 74, 0.2);
         }
 
-        .btn-purple {
-            background-color: var(--purple);
-            color: white;
-            margin-left: 5px;
-        }
-
-        .btn-purple:hover {
-            background-color: var(--dark-purple);
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(138, 43, 226, 0.3);
-        }
-
         .badge {
             padding: 4px 12px;
             border-radius: 12px;
@@ -357,21 +345,21 @@
 
     <ul class="nav-links">
         <li class="nav-item">
-            <a href="${pageContext.request.contextPath}/userHome" class="nav-link">
-                <i class="fas fa-user nav-icon"></i>
-                <span class="nav-text">Профиль</span>
+                <a href="${pageContext.request.contextPath}/userHome" class="nav-link">
+                    <i class="fas fa-home nav-icon"></i>
+                    <span class="nav-text">Главная</span>
             </a>
         </li>
         <li class="nav-item">
-            <a href="${pageContext.request.contextPath}/serviceUser" class="nav-link">
-                <i class="fas fa-route nav-icon"></i>
-                <span class="nav-text">Маршруты</span>
+                <a href="${pageContext.request.contextPath}/serviceUser" class="nav-link">
+                    <i class="fas fa-route nav-icon"></i>
+                    <span class="nav-text">Маршруты</span>
             </a>
         </li>
         <li class="nav-item">
             <a href="${pageContext.request.contextPath}/booking" class="nav-link active">
-                <i class="fas fa-ticket-alt nav-icon"></i>
-                <span class="nav-text">Мои билеты</span>
+                    <i class="fas fa-ticket-alt nav-icon"></i>
+                    <span class="nav-text">Мои билеты</span>
             </a>
         </li>
         <li class="nav-item">
@@ -381,6 +369,12 @@
             </a>
         </li>
         <li class="nav-item" style="margin-top: 30px;">
+            <a href="${pageContext.request.contextPath}/userHome" class="nav-link">
+                <i class="fas fa-user nav-icon"></i>
+                <span class="nav-text">Профиль</span>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="javascript:void(0);" class="nav-link" onclick="logout()">
                 <i class="fas fa-sign-out-alt nav-icon"></i>
                 <span class="nav-text">Выход</span>
@@ -505,8 +499,7 @@
                             "<td><span class='badge badge-" + statusClass + "'>" + statusText + "</span></td>" +
                             "<td>" +
                             (status === 'active' ? 
-                                "<button class='btn btn-cancel' onclick='cancelTicket(" + ticket.id + ")' style='margin-right: 5px;'><i class='fas fa-times'></i> Отменить</button>" +
-                                "<button class='btn btn-purple' onclick='downloadTicketPDF(" + ticket.id + ")'><i class='fas fa-download'></i> PDF</button>" :
+                                "<button class='btn btn-cancel' onclick='cancelTicket(" + ticket.id + ")'><i class='fas fa-times'></i> Отменить</button>" :
                                 "<span style='color: var(--slate);'>-</span>"
                             ) +
                             "</td>" +
@@ -550,16 +543,6 @@
 
 
 
-
-    function downloadTicketPDF(ticketId) {
-        const url = '/payment/ticket/' + ticketId + '/pdf';
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'ticket_' + ticketId + '.pdf';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
 
     function logout() {
         localStorage.removeItem("jwtToken");

@@ -423,7 +423,6 @@
                 <a href="${pageContext.request.contextPath}/recordAdmin" class="nav-link active">
                     <i class="fas fa-route nav-icon"></i>
                     <span class="nav-text">Маршруты</span>
-                    <span class="badge" id="activeRoutesBadge">...</span>
                 </a>
             </li>
 
@@ -458,7 +457,7 @@
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/statistic" class="nav-link">
                     <i class="fas fa-chart-bar nav-icon"></i>
-                    <span class="nav-text">Отчеты/Статистика</span>
+                    <span class="nav-text">Отчёты</span>
                 </a>
             </li>
             <li class="nav-item">

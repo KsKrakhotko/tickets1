@@ -383,7 +383,19 @@
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/adminClients" class="nav-link">
                     <i class="fas fa-users nav-icon"></i>
-                    <span class="nav-text">Клиенты</span>
+                    <span class="nav-text">Клиенты/Пассажиры</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/statistic" class="nav-link">
+                    <i class="fas fa-chart-bar nav-icon"></i>
+                    <span class="nav-text">Отчёты</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="javascript:void(0);" class="nav-link" onclick="logout()">
+                    <i class="fas fa-sign-out-alt nav-icon"></i>
+                    <span class="nav-text">Выход</span>
                 </a>
             </li>
         </ul>
@@ -448,6 +460,7 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
     let allTickets = [];
 
@@ -633,8 +646,10 @@
     }
 
     function exportToExcel() {
-        // Простая реализация экспорта в CSV (можно улучшить)
-        let csv = 'ID,PNR код,Пользователь,Маршрут,Дата отправления,Время отправления,Место,Тип вагона,Цена,Статус,Дата покупки\n';
+        // Подготовка данных для экспорта
+        const data = [
+            ['ID', 'PNR код', 'Пользователь', 'Маршрут', 'Дата отправления', 'Время отправления', 'Место', 'Тип вагона', 'Цена', 'Статус', 'Дата покупки']
+        ];
         
         allTickets.forEach(function(ticket) {
             const user = ticket.user || {};
@@ -646,7 +661,7 @@
             const departureDate = route.departureTime ? new Date(route.departureTime) : null;
             const purchaseDate = ticket.purchaseTime ? new Date(ticket.purchaseTime) : null;
             
-            csv += [
+            data.push([
                 ticket.id || '',
                 ticket.pnrCode || '',
                 user.username || '',
@@ -658,18 +673,42 @@
                 ticket.price || route.price || 0,
                 ticket.status || '',
                 purchaseDate ? purchaseDate.toLocaleString('ru-RU') : ''
-            ].join(',') + '\n';
+            ]);
         });
 
-        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement('a');
-        const url = URL.createObjectURL(blob);
-        link.setAttribute('href', url);
-        link.setAttribute('download', 'tickets_' + new Date().toISOString().split('T')[0] + '.csv');
-        link.style.visibility = 'hidden';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        // Создание рабочего листа
+        const ws = XLSX.utils.aoa_to_sheet(data);
+        
+        // Установка ширины колонок
+        const colWidths = [
+            { wch: 8 },   // ID
+            { wch: 15 },  // PNR код
+            { wch: 20 },  // Пользователь
+            { wch: 30 },  // Маршрут
+            { wch: 15 },  // Дата отправления
+            { wch: 15 },  // Время отправления
+            { wch: 10 },  // Место
+            { wch: 15 },  // Тип вагона
+            { wch: 12 },  // Цена
+            { wch: 12 },  // Статус
+            { wch: 20 }   // Дата покупки
+        ];
+        ws['!cols'] = colWidths;
+
+        // Создание рабочей книги
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Билеты');
+
+        // Экспорт в файл
+        const fileName = 'tickets_' + new Date().toISOString().split('T')[0] + '.xlsx';
+        XLSX.writeFile(wb, fileName);
+    }
+
+    function logout() {
+        localStorage.removeItem("jwtToken");
+        sessionStorage.removeItem("jwtToken");
+        document.cookie = "jwtToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+        window.location.href = "/home";
     }
 </script>
 </body>

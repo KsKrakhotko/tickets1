@@ -163,8 +163,8 @@
             width: 120px;
             height: 120px;
             border-radius: 50%;
+            object-fit: cover;
             border: 5px solid var(--light-purple);
-            flex-shrink: 0;
         }
 
         .profile-info {
@@ -351,8 +351,8 @@
         <ul class="nav-links">
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/userHome" class="nav-link active">
-                    <i class="fas fa-user nav-icon"></i>
-                    <span class="nav-text">Профиль</span>
+                    <i class="fas fa-home nav-icon"></i>
+                    <span class="nav-text">Главная</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -374,6 +374,12 @@
                 </a>
             </li>
             <li class="nav-item" style="margin-top: 30px;">
+                <a href="${pageContext.request.contextPath}/userHome" class="nav-link active">
+                    <i class="fas fa-user nav-icon"></i>
+                    <span class="nav-text">Профиль</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="javascript:void(0);" class="nav-link" onclick="logout()">
                     <i class="fas fa-sign-out-alt nav-icon"></i>
                     <span class="nav-text">Выход</span>
@@ -388,9 +394,7 @@
         </div>
 
         <div class="profile-card">
-            <div class="profile-avatar" style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--purple) 0%, var(--dark-purple) 100%); display: flex; align-items: center; justify-content: center; border: 5px solid var(--light-purple); flex-shrink: 0;">
-                <i class="fas fa-user" style="font-size: 3rem; color: white;"></i>
-            </div>
+            <img src="https://via.placeholder.com/120" alt="Аватар" class="profile-avatar">
             <div class="profile-info" th:if="${user != null}">
                 <h2 th:text="${user.username}"></h2>
                 <p class="email" th:text="${user.email}"></p>

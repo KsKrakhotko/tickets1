@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TicketService {
@@ -34,6 +35,13 @@ public class TicketService {
         // Получаем пользователя и маршрут
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+        
+        // Проверяем, что у пользователя есть email
+        if (user.getEmail() == null || user.getEmail().trim().isEmpty()) {
+            System.out.println("ВНИМАНИЕ: У пользователя " + user.getUsername() + " (ID: " + userId + ") не указан email!");
+        } else {
+            System.out.println("Пользователь найден: " + user.getUsername() + ", Email: " + user.getEmail());
+        }
 
         Route route = routeRepository.findById(routeId)
                 .orElseThrow(() -> new RuntimeException("Route not found with id: " + routeId));
@@ -101,11 +109,6 @@ public class TicketService {
     public Ticket getTicketByPnrCode(String pnrCode) {
         return ticketRepository.findByPnrCode(pnrCode)
                 .orElseThrow(() -> new RuntimeException("Ticket not found with PNR code: " + pnrCode));
-    }
-
-    public Ticket getTicketById(Long id) {
-        return ticketRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ticket not found with id: " + id));
     }
 
     @Transactional
@@ -188,6 +191,54 @@ public class TicketService {
         Route route = routeRepository.findById(routeId)
                 .orElseThrow(() -> new RuntimeException("Route not found with id: " + routeId));
         return ticketRepository.findSeatNumbersByRouteAndStatus(route, "active");
+    }
+
+    public int getTicketsCountByMonth(int year, int month) {
+        return ticketRepository.countByYearAndMonth(year, month);
+    }
+
+    public Double getRevenueByMonth(int year, int month) {
+        Double revenue = ticketRepository.calculateRevenueByYearAndMonth(year, month);
+        return revenue != null ? revenue : 0.0;
+    }
+
+    public List<Object[]> getPopularRoutes() {
+        List<Object[]> routeIds = ticketRepository.findPopularRoutesIds();
+        // Преобразуем ID в объекты Route с загрузкой связей
+        return routeIds.stream()
+            .map(result -> {
+                try {
+                    Long routeId = ((Number) result[0]).longValue();
+                    Route route = routeRepository.findByIdWithRelations(routeId)
+                        .orElse(null);
+                    if (route != null && route.getDepartureStation() != null && route.getArrivalStation() != null) {
+                        return new Object[]{route, result[1]};
+                    }
+                    return null;
+                } catch (Exception e) {
+                    System.err.println("Ошибка при загрузке маршрута: " + e.getMessage());
+                    return null;
+                }
+            })
+            .filter(result -> result != null && result[0] != null)
+            .collect(Collectors.toList());
+    }
+
+    public long getTotalTicketsCount() {
+        return ticketRepository.count();
+    }
+
+    public Double getTotalRevenue() {
+        Double revenue = ticketRepository.calculateTotalRevenue();
+        return revenue != null ? revenue : 0.0;
+    }
+
+    /**
+     * Получает билет по ID
+     */
+    public Ticket getTicketById(Long id) {
+        return ticketRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ticket not found with id: " + id));
     }
 
     private String generatePNRCode() {
