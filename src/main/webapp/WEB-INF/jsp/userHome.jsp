@@ -373,8 +373,8 @@
                     <span class="nav-text">Отзывы</span>
                 </a>
             </li>
-            <li class="nav-item" style="margin-top: 30px;">
-                <a href="${pageContext.request.contextPath}/userHome" class="nav-link active">
+            <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/userMaster" class="nav-link">
                     <i class="fas fa-user nav-icon"></i>
                     <span class="nav-text">Профиль</span>
                 </a>
