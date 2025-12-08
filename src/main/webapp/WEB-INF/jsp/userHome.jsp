@@ -351,8 +351,8 @@
         <ul class="nav-links">
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/userHome" class="nav-link active">
-                    <i class="fas fa-home nav-icon"></i>
-                    <span class="nav-text">Главная</span>
+                    <i class="fas fa-user nav-icon"></i>
+                    <span class="nav-text">Профиль</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -374,12 +374,6 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/userMaster" class="nav-link">
-                    <i class="fas fa-user nav-icon"></i>
-                    <span class="nav-text">Профиль</span>
-                </a>
-            </li>
-            <li class="nav-item">
                 <a href="javascript:void(0);" class="nav-link" onclick="logout()">
                     <i class="fas fa-sign-out-alt nav-icon"></i>
                     <span class="nav-text">Выход</span>
@@ -390,11 +384,13 @@
 
     <div class="admin-content">
         <div class="page-header">
-            <h2 class="page-title">Личный кабинет</h2>
+            <h2 class="page-title">Профиль</h2>
         </div>
 
         <div class="profile-card">
-            <img src="https://via.placeholder.com/120" alt="Аватар" class="profile-avatar">
+            <div class="profile-avatar" style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--purple), var(--dark-purple)); display: flex; align-items: center; justify-content: center; border: 5px solid var(--light-purple);">
+                <i class="fas fa-user" style="font-size: 3.5rem; color: white;"></i>
+            </div>
             <div class="profile-info" th:if="${user != null}">
                 <h2 th:text="${user.username}"></h2>
                 <p class="email" th:text="${user.email}"></p>

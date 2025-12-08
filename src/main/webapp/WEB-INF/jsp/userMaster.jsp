@@ -232,8 +232,8 @@
     <ul class="nav-links">
         <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/userHome" class="nav-link">
-                    <i class="fas fa-home nav-icon"></i>
-                    <span class="nav-text">Главная</span>
+                    <i class="fas fa-user nav-icon"></i>
+                    <span class="nav-text">Профиль</span>
             </a>
         </li>
         <li class="nav-item">
@@ -252,12 +252,6 @@
             <a href="${pageContext.request.contextPath}/reviews" class="nav-link">
                 <i class="fas fa-star nav-icon"></i>
                 <span class="nav-text">Отзывы</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="${pageContext.request.contextPath}/userMaster" class="nav-link active">
-                <i class="fas fa-user nav-icon"></i>
-                <span class="nav-text">Профиль</span>
             </a>
         </li>
         <li class="nav-item">
