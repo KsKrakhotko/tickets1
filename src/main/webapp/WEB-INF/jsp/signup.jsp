@@ -296,20 +296,43 @@
                 contentType: "application/json",
                 data: JSON.stringify(signupData),
                 success: function(response) {
+                    // Проверяем, вернулся ли токен (автоматическая авторизация)
+                    if (response && response.token) {
+                        // Сохраняем токен
+                        localStorage.setItem("jwtToken", response.token);
+                        sessionStorage.setItem("jwtToken", response.token);
+                        
+                        // Устанавливаем cookie для токена
+                        document.cookie = "jwtToken=" + response.token + "; path=/; max-age=86400";
+                        
+                        $(".card-body").prepend(
+                            '<div class="success-message">' +
+                            '<i class="fas fa-check-circle"></i> Регистрация прошла успешно! Вы автоматически вошли в систему.' +
+                            '</div>'
+                        );
 
-                    $(".card-body").prepend(
-                        '<div class="success-message">' +
-                        '<i class="fas fa-check-circle"></i> Регистрация прошла успешно! Теперь вы можете войти.' +
-                        '</div>'
-                    );
+                        $("#signupForm")[0].reset();
+                        $(".btn").html('<i class="fas fa-user-plus"></i> Зарегистрироваться').prop("disabled", false);
 
-                    $("#signupForm")[0].reset();
+                        // Перенаправляем на страницу пользователя
+                        setTimeout(() => {
+                            window.location.href = response.redirectUrl || "/userHome";
+                        }, 1500);
+                    } else {
+                        // Если токен не вернулся, показываем сообщение о необходимости входа
+                        $(".card-body").prepend(
+                            '<div class="success-message">' +
+                            '<i class="fas fa-check-circle"></i> Регистрация прошла успешно! Теперь вы можете войти.' +
+                            '</div>'
+                        );
 
-                    $(".btn").html('<i class="fas fa-user-plus"></i> Зарегистрироваться').prop("disabled", false);
+                        $("#signupForm")[0].reset();
+                        $(".btn").html('<i class="fas fa-user-plus"></i> Зарегистрироваться').prop("disabled", false);
 
-                    setTimeout(() => {
-                        window.location.href = "userHome";
-                    }, 2000);
+                        setTimeout(() => {
+                            window.location.href = "/signin";
+                        }, 2000);
+                    }
                 },
                 error: function(xhr) {
                     // Восстанавливаем кнопку

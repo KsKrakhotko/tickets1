@@ -329,6 +329,63 @@
             background: rgba(112, 128, 144, 0.1);
         }
 
+        .reviews-section {
+            margin-top: 60px;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .review-card {
+            background: #FFF;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 3px solid var(--purple);
+            transition: transform 0.3s ease;
+        }
+
+        .review-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .review-author {
+            font-weight: 600;
+            color: var(--charcoal);
+            font-size: 1.1rem;
+        }
+
+        .review-date {
+            color: var(--slate);
+            font-size: 0.9rem;
+        }
+
+        .review-rating {
+            margin-bottom: 15px;
+        }
+
+        .review-rating i {
+            color: #FFD700;
+            margin-right: 3px;
+        }
+
+        .review-text {
+            color: var(--charcoal);
+            line-height: 1.8;
+        }
+
         @media (max-width: 992px) {
             .admin-layout {
                 grid-template-columns: 1fr;
@@ -336,6 +393,10 @@
 
             .admin-sidebar {
                 display: none;
+            }
+
+            .reviews-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -396,7 +457,6 @@
         <div class="routes-grid">
             <div class="route-card">
                 <div class="route-image" style="background-image: url('<%= request.getContextPath() %>/images/Moscow.png');">
-                    <i class="fas fa-train" style="font-size: 3rem; color: var(--purple); z-index: 1; position: relative;"></i>
     </div>
                 <div class="route-content">
                     <h3 class="route-title">Минск → Москва</h3>
@@ -407,7 +467,6 @@
 
             <div class="route-card">
                 <div class="route-image" style="background-image: url('<%= request.getContextPath() %>/images/Gomel.png');">
-                    <i class="fas fa-train" style="font-size: 3rem; color: var(--purple); z-index: 1; position: relative;"></i>
                 </div>
                 <div class="route-content">
                     <h3 class="route-title">Минск → Гомель</h3>
@@ -418,7 +477,6 @@
 
             <div class="route-card">
                 <div class="route-image" style="background-image: url('<%= request.getContextPath() %>/images/Vitebsk.png');">
-                    <i class="fas fa-train" style="font-size: 3rem; color: var(--purple); z-index: 1; position: relative;"></i>
                 </div>
                 <div class="route-content">
                     <h3 class="route-title">Минск → Витебск</h3>
@@ -426,6 +484,17 @@
                     <div class="route-price">от 20 BYN</div>
             </div>
         </div>
+        </div>
+
+        <div class="reviews-section">
+            <h3 style="margin-bottom: 25px; font-family: 'Playfair Display', serif; color: var(--charcoal);">
+                <i class="fas fa-star" style="color: var(--purple); margin-right: 10px;"></i>
+                Отзывы наших клиентов
+            </h3>
+
+            <div class="reviews-grid" id="reviewsGrid">
+                <!-- Отзывы будут загружаться динамически -->
+            </div>
         </div>
     </div>
 </div>
@@ -465,6 +534,53 @@
                 $('#registrationModal').css('display', 'none');
         }
         });
+
+        // Загрузка отзывов
+        function loadReviews() {
+            $.ajax({
+                url: '/review',
+                method: 'GET',
+                success: function(reviews) {
+                    const container = $('#reviewsGrid');
+                    container.empty();
+                    
+                    if (!reviews || reviews.length === 0) {
+                        container.html('<p style="text-align: center; padding: 40px; color: var(--slate); grid-column: 1 / -1;">Пока нет отзывов. Будьте первым!</p>');
+                        return;
+                    }
+                    
+                    // Показываем только последние 6 отзывов
+                    const recentReviews = reviews.slice(-6).reverse();
+                    
+                    recentReviews.forEach(function(review) {
+                        let starsHtml = '';
+                        for (let i = 1; i <= 5; i++) {
+                            if (i <= (review.rating || 0)) {
+                                starsHtml += '<i class="fas fa-star"></i>';
+                            } else {
+                                starsHtml += '<i class="far fa-star"></i>';
+                            }
+                        }
+                        
+                        const reviewCard = '<div class="review-card">' +
+                            '<div class="review-header">' +
+                            '<span class="review-author">' + (review.user ? (review.user.username || 'Анонимный пользователь') : 'Анонимный пользователь') + '</span>' +
+                            '<span class="review-date">' + (review.createdAt ? new Date(review.createdAt).toLocaleDateString('ru-RU') : '') + '</span>' +
+                            '</div>' +
+                            '<div class="review-rating">' + starsHtml + '</div>' +
+                            '<p class="review-text">' + (review.reviewText || review.text || review.comment || '') + '</p>' +
+                            '</div>';
+                        container.append(reviewCard);
+                    });
+                },
+                error: function() {
+                    $('#reviewsGrid').html('<p style="text-align: center; padding: 40px; color: var(--slate); grid-column: 1 / -1;">Ошибка при загрузке отзывов</p>');
+                }
+            });
+        }
+
+        // Загружаем отзывы при загрузке страницы
+        loadReviews();
     });
 </script>
 </body>

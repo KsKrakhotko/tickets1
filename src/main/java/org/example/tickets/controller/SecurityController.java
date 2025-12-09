@@ -97,7 +97,22 @@ public class SecurityController {
         user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
         user.setRole(Role.USER);
         userRepository.save(user);
-        return ResponseEntity.ok("Signup successful");
+        
+        // Автоматическая авторизация после регистрации
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(signupRequest.getUsername(), signupRequest.getPassword())
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = jwtCore.generateToken(authentication);
+            
+            Map<String, String> response = new HashMap<String, String>();
+            response.put("token", jwt);
+            response.put("redirectUrl", "/userHome");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.ok("Signup successful");
+        }
     }
 
     @GetMapping("/email/{id}")

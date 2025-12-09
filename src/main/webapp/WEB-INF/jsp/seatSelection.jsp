@@ -134,11 +134,24 @@
             opacity: 0.7;
         }
 
-        .seat.selected {
-            background: var(--warning-color);
-            color: #333;
-            border-color: var(--warning-color);
-            box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.5);
+        /* Стили для выбранного места - максимальная специфичность */
+        .seat.selected,
+        .seat.selected.available,
+        .seat.available.selected,
+        div.seat.selected {
+            background: #FFC107 !important;
+            background-color: #FFC107 !important;
+            color: #333 !important;
+            border-color: #FFC107 !important;
+            box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.5) !important;
+            transform: scale(1.05) !important;
+        }
+
+        .seat.selected:hover,
+        .seat.selected.available:hover,
+        .seat.available.selected:hover {
+            transform: scale(1.1) !important;
+            box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.5), 0 4px 8px rgba(255, 193, 7, 0.4) !important;
         }
 
         .seat-info {
@@ -330,11 +343,14 @@
                 .addClass('seat')
                 .addClass(seat.occupied ? 'occupied' : 'available')
                 .text(seat.number)
+                .attr('data-seat-number', seat.number)
                 .data('seat-number', seat.number)
                 .data('occupied', seat.occupied);
 
             if (!seat.occupied) {
-                seatElement.on('click', function() {
+                seatElement.on('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
                     selectSeat(seat.number);
                 });
             }
@@ -346,16 +362,54 @@
     function selectSeat(seatNumber) {
         // Снимаем выделение с предыдущего места
         if (selectedSeat) {
-            $('.seat[data-seat-number="' + selectedSeat + '"]')
-                .removeClass('selected')
-                .addClass('available');
+            const prevSeat = $('.seat[data-seat-number="' + selectedSeat + '"]');
+            const prevDom = prevSeat[0];
+            if (prevDom) {
+                prevDom.style.removeProperty('background-color');
+                prevDom.style.removeProperty('background');
+                prevDom.style.removeProperty('color');
+                prevDom.style.removeProperty('border-color');
+                prevDom.style.removeProperty('box-shadow');
+                prevDom.style.removeProperty('transform');
+            }
+            prevSeat.removeClass('selected');
+            if (!prevSeat.data('occupied')) {
+                prevSeat.addClass('available');
+            }
         }
 
         // Выделяем новое место
         selectedSeat = seatNumber;
-        $('.seat[data-seat-number="' + seatNumber + '"]')
-            .removeClass('available')
-            .addClass('selected');
+        const currentSeat = $('.seat[data-seat-number="' + seatNumber + '"]');
+        const domElement = currentSeat[0];
+        
+        if (!domElement) {
+            console.error('Элемент места не найден:', seatNumber);
+            return;
+        }
+        
+        // Удаляем все классы состояния
+        currentSeat.removeClass('available occupied selected');
+        
+        // Добавляем класс selected
+        currentSeat.addClass('selected');
+        
+        // Принудительно применяем желтый цвет через inline стили с important
+        const yellowColor = '#FFC107';
+        domElement.style.setProperty('background-color', yellowColor, 'important');
+        domElement.style.setProperty('background', yellowColor, 'important');
+        domElement.style.setProperty('color', '#333', 'important');
+        domElement.style.setProperty('border-color', yellowColor, 'important');
+        domElement.style.setProperty('box-shadow', '0 0 0 3px rgba(255, 193, 7, 0.5)', 'important');
+        domElement.style.setProperty('transform', 'scale(1.05)', 'important');
+        
+        // Дополнительная проверка - применяем еще раз через setTimeout
+        setTimeout(function() {
+            if (domElement) {
+                domElement.style.setProperty('background-color', yellowColor, 'important');
+                domElement.style.setProperty('color', '#333', 'important');
+            }
+        }, 0);
 
         // Обновляем информацию
         $('#selectedSeatInfo').text('Выбрано место: №' + seatNumber);
