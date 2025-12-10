@@ -38,6 +38,15 @@ public class MailConfig {
         props.put("mail.smtp.ssl.protocols", "TLSv1.2"); // Устанавливаем версии TLS для безопасности
         props.put("mail.smtp.ssl.trust", "smtp.gmail.com"); // Доверяем сертификату Gmail
         props.put("mail.debug", "false"); // Отключить отладочный вывод (можно включить для диагностики)
+        
+        // Настройки таймаутов для подключения
+        props.put("mail.smtp.connectiontimeout", "10000"); // 10 секунд на подключение
+        props.put("mail.smtp.timeout", "10000"); // 10 секунд на операции чтения/записи
+        props.put("mail.smtp.writetimeout", "10000"); // 10 секунд на запись
+        
+        // Альтернативные настройки для надежности
+        props.put("mail.smtp.starttls.required", "true");
+        props.put("mail.smtp.ssl.checkserveridentity", "true");
 
         return mailSender;
     }

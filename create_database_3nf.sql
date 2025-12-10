@@ -204,3 +204,4 @@ INSERT INTO train (train_number, train_name, train_type, total_seats) VALUES
 
 -- Просмотр структуры таблиц
 SHOW TABLES;
+

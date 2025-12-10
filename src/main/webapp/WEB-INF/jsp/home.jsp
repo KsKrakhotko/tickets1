@@ -282,7 +282,7 @@
             z-index: 1000;
             align-items: center;
             justify-content: center;
-            }
+        }
 
         .modal-content {
             background: white;
@@ -297,41 +297,41 @@
             font-family: 'Playfair Display', serif;
             color: var(--charcoal);
             margin-bottom: 15px;
-            }
+        }
 
         .modal-content p {
             color: var(--slate);
             margin-bottom: 25px;
-            }
+        }
 
         .modal-actions {
             display: flex;
             gap: 15px;
             justify-content: center;
-        }
+            }
 
         .btn-secondary {
             background: var(--slate);
                 color: white;
-        }
+            }
 
         .btn-secondary:hover {
             background: var(--charcoal);
-        }
+            }
 
         .btn-outline {
             background: transparent;
             border: 1px solid var(--slate);
             color: var(--slate);
-        }
+            }
 
         .btn-outline:hover {
             background: rgba(112, 128, 144, 0.1);
-        }
+            }
 
         .reviews-section {
             margin-top: 60px;
-        }
+            }
 
         .reviews-grid {
             display: grid;
@@ -352,7 +352,7 @@
         .review-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-        }
+            }
 
         .review-header {
             display: flex;
@@ -446,8 +446,8 @@
             </p>
             <a href="/booking" class="btn btn-primary" id="bookingBtn">
                 <i class="fas fa-ticket-alt"></i> Забронировать онлайн
-            </a>
-        </div>
+                    </a>
+                </div>
 
         <h3 style="margin-bottom: 25px; font-family: 'Playfair Display', serif; color: var(--charcoal);">
             <i class="fas fa-route" style="color: var(--purple); margin-right: 10px;"></i>
@@ -467,7 +467,7 @@
 
             <div class="route-card">
                 <div class="route-image" style="background-image: url('<%= request.getContextPath() %>/images/Gomel.png');">
-                </div>
+    </div>
                 <div class="route-content">
                     <h3 class="route-title">Минск → Гомель</h3>
                     <p class="route-description">Южное гостеприимство на рельсах. Быстрое и комфортное путешествие.</p>
@@ -483,7 +483,7 @@
                     <p class="route-description">Путешествие на родину гения. Удобное расписание и комфортные вагоны.</p>
                     <div class="route-price">от 20 BYN</div>
             </div>
-        </div>
+            </div>
         </div>
 
         <div class="reviews-section">
@@ -532,7 +532,7 @@
         $(window).on('click', function(e) {
             if ($(e.target).is('#registrationModal')) {
                 $('#registrationModal').css('display', 'none');
-        }
+    }
         });
 
         // Загрузка отзывов
@@ -557,11 +557,11 @@
                         for (let i = 1; i <= 5; i++) {
                             if (i <= (review.rating || 0)) {
                                 starsHtml += '<i class="fas fa-star"></i>';
-                            } else {
+        } else {
                                 starsHtml += '<i class="far fa-star"></i>';
-                            }
-                        }
-                        
+        }
+    }
+
                         const reviewCard = '<div class="review-card">' +
                             '<div class="review-header">' +
                             '<span class="review-author">' + (review.user ? (review.user.username || 'Анонимный пользователь') : 'Анонимный пользователь') + '</span>' +
@@ -575,7 +575,7 @@
                 },
                 error: function() {
                     $('#reviewsGrid').html('<p style="text-align: center; padding: 40px; color: var(--slate); grid-column: 1 / -1;">Ошибка при загрузке отзывов</p>');
-                }
+        }
             });
         }
 

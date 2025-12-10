@@ -143,32 +143,6 @@
             transform: translateY(0);
         }
 
-        .additional-options {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-            font-size: 0.9rem;
-        }
-
-        .remember-me {
-            display: flex;
-            align-items: center;
-        }
-
-        .remember-me input {
-            margin-right: 8px;
-        }
-
-        .forgot-password {
-            color: var(--purple);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .forgot-password:hover {
-            text-decoration: underline;
-        }
-
         .register-link {
             text-align: center;
             margin-top: 30px;
@@ -310,14 +284,6 @@
                 <i class="fas fa-lock input-icon"></i>
                 <input type="password" id="password" name="password" class="form-control" placeholder="Введите пароль" required>
                 <div class="error-message" id="password-error"></div>
-            </div>
-
-            <div class="additional-options">
-                <div class="remember-me">
-                    <input type="checkbox" id="remember" name="remember">
-                    <label for="remember">Запомнить меня</label>
-                </div>
-                <a href="/forgot-password" class="forgot-password">Забыли пароль?</a>
             </div>
 
             <button type="submit" class="btn">

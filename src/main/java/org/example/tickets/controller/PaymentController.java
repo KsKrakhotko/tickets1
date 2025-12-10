@@ -77,12 +77,31 @@ public class PaymentController {
             ticketRequest.setCarriageType(paymentRequest.getCarriageType() != null ? 
                 paymentRequest.getCarriageType() : "Стандарт");
 
-            Ticket ticket = ticketService.createTicket(
-                ticketRequest.getUserId(),
-                ticketRequest.getRouteId(),
-                ticketRequest.getSeatNumber(),
-                ticketRequest.getCarriageType()
-            );
+            Ticket ticket;
+            try {
+                ticket = ticketService.createTicket(
+                    ticketRequest.getUserId(),
+                    ticketRequest.getRouteId(),
+                    ticketRequest.getSeatNumber(),
+                    ticketRequest.getCarriageType()
+                );
+            } catch (RuntimeException e) {
+                // Обрабатываем ошибки создания билета (место занято, нет доступных мест и т.д.)
+                String errorMessage = e.getMessage();
+                if (errorMessage != null && errorMessage.contains("already occupied")) {
+                    throw new ResponseStatusException(HttpStatus.CONFLICT, 
+                        "Место " + paymentRequest.getSeatNumber() + " уже занято. Пожалуйста, выберите другое место.");
+                } else if (errorMessage != null && errorMessage.contains("No available seats")) {
+                    throw new ResponseStatusException(HttpStatus.CONFLICT, 
+                        "На данном маршруте нет доступных мест.");
+                } else if (errorMessage != null && errorMessage.contains("not found")) {
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, 
+                        "Маршрут не найден.");
+                } else {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, 
+                        "Ошибка при создании билета: " + (errorMessage != null ? errorMessage : "Неизвестная ошибка"));
+                }
+            }
             
             System.out.println("Билет создан с ID: " + ticket.getId());
             System.out.println("Пользователь в билете: " + (ticket.getUser() != null ? ticket.getUser().getUsername() : "NULL"));
@@ -131,9 +150,30 @@ public class PaymentController {
                     emailError = "Ошибка аутентификации Gmail. Проверьте пароль приложения в настройках.";
                     System.err.println("ОШИБКА АУТЕНТИФИКАЦИИ GMAIL при отправке email на " + userEmail + ": " + e.getMessage());
                     e.printStackTrace();
+                } catch (jakarta.mail.MessagingException e) {
+                    // Ошибка подключения к почтовому серверу
+                    String errorMsg = e.getMessage();
+                    Throwable cause = e.getCause();
+                    
+                    // Проверяем причину исключения
+                    if (cause instanceof java.net.ConnectException || 
+                        (errorMsg != null && errorMsg.contains("Connection timed out"))) {
+                        emailError = "Не удалось подключиться к почтовому серверу. Проверьте интернет-соединение и настройки SMTP.";
+                    } else if (errorMsg != null && errorMsg.contains("Couldn't connect to host")) {
+                        emailError = "Не удалось подключиться к почтовому серверу. Возможно, порт заблокирован или сервер недоступен.";
+                    } else {
+                        emailError = "Ошибка подключения к почтовому серверу: " + (errorMsg != null ? errorMsg.split("\n")[0] : "Неизвестная ошибка");
+                    }
+                    System.err.println("ОШИБКА ПОДКЛЮЧЕНИЯ при отправке email на " + userEmail + ": " + e.getMessage());
+                    e.printStackTrace();
                 } catch (Exception e) {
                     // Другие ошибки
-                    emailError = "Ошибка при отправке email: " + e.getMessage();
+                    String errorMsg = e.getMessage();
+                    if (errorMsg != null && errorMsg.contains("\n")) {
+                        // Берем только первую строку, чтобы избежать переносов строк в заголовке
+                        errorMsg = errorMsg.split("\n")[0];
+                    }
+                    emailError = "Ошибка при отправке email: " + (errorMsg != null ? errorMsg : "Неизвестная ошибка");
                     System.err.println("ОШИБКА при отправке email на " + userEmail + ": " + e.getMessage());
                     e.printStackTrace();
                 }
@@ -154,7 +194,13 @@ public class PaymentController {
                 headers.add("X-Email-Address", userEmail);
             } else if (emailError != null) {
                 headers.add("X-Email-Status", "failed");
-                headers.add("X-Email-Error", emailError);
+                // Очищаем сообщение об ошибке от переносов строк и специальных символов для HTTP заголовка
+                String cleanError = emailError.replaceAll("[\\r\\n]", " ").replaceAll("\\s+", " ").trim();
+                // Ограничиваем длину, чтобы избежать проблем с заголовками
+                if (cleanError.length() > 200) {
+                    cleanError = cleanError.substring(0, 197) + "...";
+                }
+                headers.add("X-Email-Error", cleanError);
             } else {
                 headers.add("X-Email-Status", "skipped");
             }

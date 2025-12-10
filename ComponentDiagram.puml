@@ -1,0 +1,334 @@
+@startuml Диаграмма компонентов системы продажи железнодорожных билетов
+
+!define PRESENTATION_COLOR #E1F5FF
+!define BUSINESS_COLOR #FFF4E1
+!define DATA_COLOR #E8F5E9
+!define SECURITY_COLOR #FCE4EC
+!define EXTERNAL_COLOR #F3E5F5
+
+package "Presentation Layer (Веб-интерфейс)" PRESENTATION_COLOR {
+    component [JSP Views] as Views {
+        note right
+            JSP страницы:
+            - signin.jsp
+            - signup.jsp
+            - home.jsp
+            - userHome.jsp
+            - adminHome.jsp
+            - booking.jsp
+            - payment.jsp
+            - и другие...
+        end note
+    }
+    
+    component [IndexController] as IndexCtrl {
+        note right
+            Обработка GET запросов
+            для отображения JSP страниц
+        end note
+    }
+}
+
+package "REST API Layer (REST контроллеры)" PRESENTATION_COLOR {
+    component [SecurityController] as SecurityCtrl {
+        note right
+            /auth/signin
+            /auth/signup
+            Аутентификация пользователей
+        end note
+    }
+    
+    component [TicketController] as TicketCtrl {
+        note right
+            /tickets
+            CRUD операции с билетами
+        end note
+    }
+    
+    component [RouteController] as RouteCtrl {
+        note right
+            /routes
+            Управление маршрутами
+        end note
+    }
+    
+    component [TrainController] as TrainCtrl {
+        note right
+            /trains
+            Управление поездами
+        end note
+    }
+    
+    component [StationController] as StationCtrl {
+        note right
+            /stations
+            Управление станциями
+        end note
+    }
+    
+    component [SeatController] as SeatCtrl {
+        note right
+            /seats
+            Выбор мест
+        end note
+    }
+    
+    component [PaymentController] as PaymentCtrl {
+        note right
+            /api/payment/process
+            Обработка платежей
+        end note
+    }
+    
+    component [ReviewController] as ReviewCtrl {
+        note right
+            /reviews
+            Управление отзывами
+        end note
+    }
+    
+    component [StatisticsController] as StatsCtrl {
+        note right
+            /statistics
+            Статистика продаж
+        end note
+    }
+    
+    component [ProfileController] as ProfileCtrl {
+        note right
+            /profile
+            Профиль пользователя
+        end note
+    }
+    
+    component [UserAdminController] as UserAdminCtrl {
+        note right
+            /admin/users
+            Администрирование пользователей
+        end note
+    }
+    
+    component [ContactController] as ContactCtrl {
+        note right
+            /contact
+            Контакты
+        end note
+    }
+    
+    component [MainController] as MainCtrl {
+        note right
+            /secured/user
+            Защищенные ресурсы
+        end note
+    }
+}
+
+package "Business Logic Layer (Сервисы)" BUSINESS_COLOR {
+    component [TicketService] as TicketSvc {
+        note right
+            Бизнес-логика билетов:
+            - Создание билетов
+            - Проверка доступности мест
+            - Генерация PNR кодов
+            - Статистика продаж
+        end note
+    }
+    
+    component [RouteService] as RouteSvc {
+        note right
+            Управление маршрутами:
+            - Создание/обновление маршрутов
+            - Поиск маршрутов
+        end note
+    }
+    
+    component [TrainService] as TrainSvc {
+        note right
+            Управление поездами:
+            - CRUD операции
+            - Проверка дубликатов
+        end note
+    }
+    
+    component [StationService] as StationSvc {
+        note right
+            Управление станциями:
+            - CRUD операции
+            - Поиск по городу/названию
+        end note
+    }
+    
+    component [UserService] as UserSvc {
+        note right
+            Управление пользователями:
+            - Регистрация
+            - Получение данных пользователя
+        end note
+    }
+    
+    component [ReviewService] as ReviewSvc {
+        note right
+            Управление отзывами:
+            - Создание/получение отзывов
+        end note
+    }
+    
+    component [EmailService] as EmailSvc {
+        note right
+            Отправка email:
+            - Отправка билетов на почту
+            - Формирование HTML писем
+        end note
+    }
+    
+    component [PdfService] as PdfSvc {
+        note right
+            Генерация PDF:
+            - Создание PDF билетов
+            - Форматирование документа
+        end note
+    }
+}
+
+package "Security Layer (Безопасность)" SECURITY_COLOR {
+    component [SecurityConfiguration] as SecurityConfig {
+        note right
+            Конфигурация Spring Security:
+            - Настройка фильтров
+            - Правила доступа
+            - CORS настройки
+        end note
+    }
+    
+    component [TokenFilter] as TokenFilter {
+        note right
+            JWT фильтр:
+            - Проверка токенов
+            - Извлечение пользователя
+        end note
+    }
+    
+    component [JwtCore] as JwtCore {
+        note right
+            Работа с JWT:
+            - Генерация токенов
+            - Парсинг токенов
+            - Извлечение данных
+        end note
+    }
+    
+    component [UserdetailsImpl] as UserDetailsImpl {
+        note right
+            UserDetailsService:
+            - Загрузка пользователя
+            - Проверка прав доступа
+        end note
+    }
+}
+
+package "Data Access Layer (Репозитории)" DATA_COLOR {
+    component [TicketRepository] as TicketRepo
+    component [RouteRepository] as RouteRepo
+    component [TrainRepository] as TrainRepo
+    component [StationRepository] as StationRepo
+    component [UserRepository] as UserRepo
+    component [ReviewRepository] as ReviewRepo
+    component [InfoRepository] as InfoRepo
+}
+
+package "Configuration Layer (Конфигурация)" {
+    component [MailConfig] as MailConfig {
+        note right
+            Конфигурация почты:
+            - SMTP настройки
+            - JavaMailSender bean
+        end note
+    }
+}
+
+package "External Systems (Внешние системы)" EXTERNAL_COLOR {
+    database "MySQL Database" as MySQL {
+        note right
+            База данных:
+            railway_tickets_db
+            Таблицы:
+            - users
+            - tickets
+            - routes
+            - trains
+            - stations
+            - reviews
+        end note
+    }
+    
+    component [SMTP Server\n(Gmail)] as SMTP {
+        note right
+            Почтовый сервер:
+            smtp.gmail.com:587
+            Отправка билетов
+        end note
+    }
+}
+
+' Связи Presentation Layer
+IndexCtrl --> Views
+SecurityCtrl --> SecurityConfig
+SecurityCtrl --> UserSvc
+SecurityCtrl --> JwtCore
+SecurityCtrl --> UserRepo
+
+' Связи REST Controllers -> Services
+TicketCtrl --> TicketSvc
+RouteCtrl --> RouteSvc
+TrainCtrl --> TrainSvc
+StationCtrl --> StationSvc
+SeatCtrl --> RouteSvc
+PaymentCtrl --> TicketSvc
+PaymentCtrl --> PdfSvc
+PaymentCtrl --> SMTP
+ReviewCtrl --> ReviewSvc
+StatsCtrl --> TicketSvc
+ProfileCtrl --> UserSvc
+UserAdminCtrl --> UserSvc
+ContactCtrl --> UserSvc
+MainCtrl --> SecurityConfig
+
+' Связи Services -> Repositories
+TicketSvc --> TicketRepo
+TicketSvc --> RouteRepo
+TicketSvc --> UserRepo
+RouteSvc --> RouteRepo
+RouteSvc --> TrainRepo
+RouteSvc --> StationRepo
+TrainSvc --> TrainRepo
+StationSvc --> StationRepo
+UserSvc --> UserRepo
+ReviewSvc --> ReviewRepo
+
+' Связи Services между собой
+EmailSvc --> PdfSvc
+EmailSvc --> SMTP
+TicketSvc --> EmailSvc
+
+' Связи Security
+SecurityConfig --> TokenFilter
+SecurityConfig --> UserDetailsImpl
+TokenFilter --> JwtCore
+TokenFilter --> UserDetailsImpl
+UserDetailsImpl --> UserRepo
+
+' Связи Repositories -> Database
+TicketRepo --> MySQL
+RouteRepo --> MySQL
+TrainRepo --> MySQL
+StationRepo --> MySQL
+UserRepo --> MySQL
+ReviewRepo --> MySQL
+InfoRepo --> MySQL
+
+' Связи Configuration
+MailConfig --> SMTP
+
+@enduml
+
+

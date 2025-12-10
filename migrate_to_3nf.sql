@@ -177,3 +177,4 @@ FROM route_with_available_seats;
 */
 
 SELECT 'Миграция завершена успешно!' AS status;
+

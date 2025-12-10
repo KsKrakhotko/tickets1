@@ -251,3 +251,4 @@ SHOW TABLES;
 
 -- Просмотр созданных VIEW
 SHOW FULL TABLES WHERE Table_type = 'VIEW';
+

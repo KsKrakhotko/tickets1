@@ -320,18 +320,18 @@
                         }, 1500);
                     } else {
                         // Если токен не вернулся, показываем сообщение о необходимости входа
-                        $(".card-body").prepend(
-                            '<div class="success-message">' +
-                            '<i class="fas fa-check-circle"></i> Регистрация прошла успешно! Теперь вы можете войти.' +
-                            '</div>'
-                        );
+                    $(".card-body").prepend(
+                        '<div class="success-message">' +
+                        '<i class="fas fa-check-circle"></i> Регистрация прошла успешно! Теперь вы можете войти.' +
+                        '</div>'
+                    );
 
-                        $("#signupForm")[0].reset();
-                        $(".btn").html('<i class="fas fa-user-plus"></i> Зарегистрироваться').prop("disabled", false);
+                    $("#signupForm")[0].reset();
+                    $(".btn").html('<i class="fas fa-user-plus"></i> Зарегистрироваться').prop("disabled", false);
 
-                        setTimeout(() => {
+                    setTimeout(() => {
                             window.location.href = "/signin";
-                        }, 2000);
+                    }, 2000);
                     }
                 },
                 error: function(xhr) {
